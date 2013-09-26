@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit multilib
+inherit eutils multilib
 
 MY_P="${PN}${PV/./}"
 DESCRIPTION="a static syntax checker for Tcl"
@@ -22,6 +22,10 @@ RDEPEND=">=dev-lang/tcl-8.4"
 S="${WORKDIR}/${MY_P}"
 
 DOCS="$(echo doc/*)"
+
+src_prepare() {
+	epatch "${FILESDIR}/${P}-xterm-exec.patch"
+}
 
 src_test() {
 	"${S}"/${PN}.tcl "${S}"/misctests/test.tcl || die
@@ -47,6 +51,8 @@ src_install() {
 	doins -r packagedb
 
 	# patch paths to point to directories where files will be installed
+	# also patch call to xterm so that it uses the -e option instead of -exec
+	#   current portage versions of xterm don't have -exec
 	sed \
 		-e "/^set dbDir/s:\\\$thisDir.*\$:/usr/share/${P}:" \
 		-e "/^set docDir/s:\\\$thisDir.*\$:/usr/share/doc/${PF}:" \

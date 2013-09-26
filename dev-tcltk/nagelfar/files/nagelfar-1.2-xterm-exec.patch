@@ -1,0 +1,15 @@
+# From: Quentin Minster <quentin@minster.io>
+# Date: Thu Sep 26 20:45:43 UTC 2012
+# Subject: replace use of xterm option -exec with -e
+
+--- nagelfar.tcl	2013-01-04 23:05:06.000000000 +0100
++++ nagelfar.tcl	2013-09-26 22:39:01.186554563 +0200
+@@ -5043,7 +5043,7 @@ proc tryEmacs {filename lineNo} {
+ # Try to show a file using vim
+ proc tryVim {filename lineNo} {
+     if {[catch {exec gvim +$lineNo $filename &}]} {
+-        if {[catch {exec xterm -exec vi +$lineNo $filename &}]} {
++        if {[catch {exec xterm -e vi +$lineNo $filename &}]} {
+             return 0
+         }
+     }
