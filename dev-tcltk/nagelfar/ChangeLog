@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Sep 2013; Quentin <quentin@gentoo.org> files/nagelfar-1.2-xterm-exec.patch:
+  Update ebuild for dev-tcltk/nagelfar  Fix minor typo in patch file
+
   26 Sep 2013; Quentin <quentin@gentoo.org>
   +files/nagelfar-1.2-xterm-exec.patch, nagelfar-1.2.ebuild:
   Updated ebuild dev-tcltk/nagelfar  Replaced use of xterm option -exec with -e
