@@ -2,6 +2,10 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Sep 2013; Quentin <quentin@gentoo.org> nagelfar-1.2.ebuild:
+  Update ebuild dev-tcltk/nagelfar  Remove TODO in ebuild since it has nothing
+  to do with the ebuild but should be brought to the attention of upstream
+
   26 Sep 2013; Quentin <quentin@gentoo.org> files/nagelfar-1.2-xterm-exec.patch:
   Update ebuild for dev-tcltk/nagelfar  Fix minor typo in patch file
 

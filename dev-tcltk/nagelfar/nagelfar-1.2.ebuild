@@ -62,5 +62,3 @@ src_install() {
 	# install script, removing trailing .tcl
 	newbin ${PN}.tcl ${PN}
 }
-
-# TODO: better support for Nagelfar plugins (search directories)
