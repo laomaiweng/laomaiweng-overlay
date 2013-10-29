@@ -1,0 +1,12 @@
+diff -ur a/visual_regexp-3.1.tcl b/visual_regexp-3.1.tcl
+--- a/visual_regexp-3.1.tcl	2013-10-29 09:35:17.747596611 +0100
++++ b/visual_regexp-3.1.tcl	2013-10-29 09:37:14.418730982 +0100
+@@ -742,7 +742,7 @@
+ 	if {$tcl_platform(platform) == "windows"} {
+ 		text .help.text.t -borderwidth 2 -relief groove -font {Courier 10} -yscrollcommand [list .help.text.sy set];
+ 	} else {
+-		text .help.text.t -borderwidth 2 -relief groove -yscrollcommand [list .help.text.sy set];
++		text .help.text.t -borderwidth 2 -relief groove -font {9x15} -yscrollcommand [list .help.text.sy set];
+ 	}
+ 
+ 	scrollbar	.help.text.sy \
