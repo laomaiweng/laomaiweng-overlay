@@ -1,8 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/visual-regexp/visual-regexp-3.0.ebuild,v 1.9 2012/09/05 09:45:09 jlec Exp $
 
-EAPI=4
+EAPI=5
 
 inherit eutils
 
@@ -17,13 +17,15 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 
-DEPEND="dev-lang/tk"
-RDEPEND="${DEPEND}"
+DEPEND=""
+RDEPEND=">=dev-lang/tk-8.3"
 
 S=${WORKDIR}/visual_regexp-${PV}
 
 src_prepare() {
-	epatch "${FILESDIR}"/wish-fix.diff
+	epatch \
+		"${FILESDIR}"/visual-regexp-3.0-wish-fix.patch \
+		"${FILESDIR}"/visual-regexp-3.0-help-font-fix.patch
 }
 
 src_install() {
