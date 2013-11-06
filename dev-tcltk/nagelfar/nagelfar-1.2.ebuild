@@ -17,7 +17,8 @@ KEYWORDS="~amd64"
 IUSE="" # doc should not be optional: it is used by nagelfar
 
 DEPEND=""
-RDEPEND=">=dev-lang/tcl-8.4"
+RDEPEND=">=dev-lang/tcl-8.4
+>=dev-lang/tk-8.4"
 
 S="${WORKDIR}/${MY_P}"
 
