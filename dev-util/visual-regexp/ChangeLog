@@ -2,6 +2,13 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/visual-regexp/ChangeLog,v 1.13 2013/10/23 08:15:15 tomwij Exp $
 
+  10 Nov 2013; Quentin <quentin@gentoo.org>
+  files/visual-regexp-3.0-help-font-fix.patch,
+  files/visual-regexp-3.1-help-font-fix.patch, visual-regexp-3.1.ebuild:
+  Update ebuilds dev-util/visual-regexp-3.0 & dev-util/visual-regexp-3.1  * Fix
+  help-font-fix patches * Use edos2unix instead of dos2unix in visual-
+  regexp-3.1.ebuild
+
 *visual-regexp-3.1 (29 Oct 2013)
 
   29 Oct 2013; Quentin <quentin@gentoo.org>

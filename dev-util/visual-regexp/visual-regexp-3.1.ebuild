@@ -31,7 +31,7 @@ src_unpack() {
 
 src_prepare() {
 	# File comes with DOS newlines
-	dos2unix visual_regexp-3.1.tcl
+	edos2unix visual_regexp-3.1.tcl
 
 	epatch	"${FILESDIR}"/visual-regexp-3.1-wish-fix.patch \
 			"${FILESDIR}"/visual-regexp-3.1-help-font-fix.patch
