@@ -25,7 +25,9 @@ S=${WORKDIR}/visual_regexp-${PV}
 src_prepare() {
 	epatch \
 		"${FILESDIR}"/visual-regexp-3.0-wish-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.0-help-font-fix.patch
+		"${FILESDIR}"/visual-regexp-3.0-help-font-fix.patch \
+		"${FILESDIR}"/visual-regexp-3.0-home-conf-fix.patch \
+		"${FILESDIR}"/visual-regexp-3.0-pattern-load-fix.patch
 }
 
 src_install() {
