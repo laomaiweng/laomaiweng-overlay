@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/tclreadline/${P}.tar.gz"
 
 SLOT="0"
 LICENSE="BSD"
-KEYWORDS="alpha amd64 ppc ~sparc x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~alpha ~amd64 ~ppc ~sparc ~x86 ~amd64-linux ~x86-linux"
 IUSE="static-libs"
 
 DEPEND="
@@ -20,10 +20,13 @@ DEPEND="
 	sys-libs/readline"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}"/${P}-gold.patch )
-
 src_prepare() {
-	sed -e "s/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/" -i configure.in || die
+	epatch \
+		"${FILESDIR}"/${P}-gold.patch \
+		"${FILESDIR}"/${P}-rl-executing-macro.patch
+	sed \
+		-e "s/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/" \
+		-i configure.in || die
 	eautoreconf
 }
 
@@ -33,6 +36,7 @@ src_configure() {
 		--with-tcl-includes="${EPREFIX}/usr/include"
 		--with-readline-includes="${EPREFIX}/usr/include"
 		--with-readline-library="${EPREFIX}/usr/$(get_libdir)"
+		--with-tlib-library="$(pkg-config --libs ncurses)"
 		)
 	autotools-utils_src_configure
 }
