@@ -23,7 +23,10 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	epatch \
 		"${FILESDIR}"/${P}-gold.patch \
-		"${FILESDIR}"/${P}-rl-executing-macro.patch
+		"${FILESDIR}"/${P}-rl-executing-macro.patch \
+		"${FILESDIR}"/${P}-rl-free.patch \
+		"${FILESDIR}"/${P}-rl-history-expand.patch \
+		"${FILESDIR}"/${P}-rl-prompt.patch
 	sed \
 		-e "s/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/" \
 		-i configure.in || die
