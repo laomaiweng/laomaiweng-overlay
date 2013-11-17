@@ -1,6 +1,6 @@
-diff -ur a/configure.in b/configure.in
---- a/configure.in	2000-12-08 01:45:45.000000000 +0100
-+++ b/configure.in	2013-11-15 13:37:36.490520853 +0100
+diff -ur a/configure.ac b/configure.ac
+--- a/configure.ac	2000-12-08 01:45:45.000000000 +0100
++++ b/configure.ac	2013-11-15 13:37:36.490520853 +0100
 @@ -182,29 +182,36 @@
      [  --with-readline-library=DIR
  		  lib spec to readline (e.g. '-L/usr/local/lib -lreadline')],

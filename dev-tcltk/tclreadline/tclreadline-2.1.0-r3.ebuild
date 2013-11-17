@@ -1,10 +1,12 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-tcltk/tclreadline/tclreadline-2.1.0-r2.ebuild,v 1.6 2013/04/27 06:50:43 patrick Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-tcltk/tclreadline/tclreadline-2.1.0-r3.ebuild,v 1.1 2013/11/17 09:31:58 jlec Exp $
 
 EAPI=5
 
-inherit autotools-utils multilib
+AUTOTOOLS_AUTORECONF=true
+
+inherit autotools-utils multilib toolchain-funcs
 
 DESCRIPTION="Readline extension to TCL"
 HOMEPAGE="http://tclreadline.sf.net/"
@@ -20,17 +22,18 @@ DEPEND="
 	sys-libs/readline"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}"/${P}-gold.patch
+	"${FILESDIR}"/${P}-rl-free.patch
+	"${FILESDIR}"/${P}-rl-executing-macro.patch
+	"${FILESDIR}"/${P}-rl-history-expand.patch
+	"${FILESDIR}"/${P}-rl-prompt.patch )
+
 src_prepare() {
-	epatch \
-		"${FILESDIR}"/${P}-gold.patch \
-		"${FILESDIR}"/${P}-rl-executing-macro.patch \
-		"${FILESDIR}"/${P}-rl-free.patch \
-		"${FILESDIR}"/${P}-rl-history-expand.patch \
-		"${FILESDIR}"/${P}-rl-prompt.patch
 	sed \
 		-e "s/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/" \
 		-i configure.in || die
-	eautoreconf
+	mv configure.{in,ac} || die
+	autotools-utils_src_prepare
 }
 
 src_configure() {
@@ -39,7 +42,7 @@ src_configure() {
 		--with-tcl-includes="${EPREFIX}/usr/include"
 		--with-readline-includes="${EPREFIX}/usr/include"
 		--with-readline-library="${EPREFIX}/usr/$(get_libdir)"
-		--with-tlib-library="$(pkg-config --libs ncurses)"
+		--with-tlib-library="$($(tc-getPKG_CONFIG) --libs ncurses)"
 		)
 	autotools-utils_src_configure
 }
