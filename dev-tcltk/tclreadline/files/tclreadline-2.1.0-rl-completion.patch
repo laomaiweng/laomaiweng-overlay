@@ -1,0 +1,12 @@
+diff -ur a/tclreadline.c b/tclreadline.c
+--- a/tclreadline.c	2013-11-18 10:38:57.580692187 +0100
++++ b/tclreadline.c	2013-11-22 03:25:33.414987841 +0100
+@@ -745,7 +745,7 @@
+     }
+ 
+     if (!matches && tclrl_use_builtin_completer) {
+-	matches = completion_matches(text, TclReadline0generator);
++	matches = rl_completion_matches(text, TclReadline0generator);
+     }
+ 
+     return matches;

@@ -23,9 +23,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}"/${P}-gold.patch
-	"${FILESDIR}"/${P}-rl-free.patch
+	"${FILESDIR}"/${P}-alloc-free.patch
 	"${FILESDIR}"/${P}-rl-executing-macro.patch
 	"${FILESDIR}"/${P}-rl-history-expand.patch
+	"${FILESDIR}"/${P}-rl-completion.patch
 	"${FILESDIR}"/${P}-rl-prompt.patch )
 
 src_prepare() {
