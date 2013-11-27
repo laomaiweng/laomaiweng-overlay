@@ -18,9 +18,6 @@ Package status
     <th>Category</th><th>Package</th><th>Comment</th><th>Upstream</th>
   </tr>
   <tr>
-    <td rowspan=1>app-misc</td><td>tmux-mem-cpu-load</td><td>version bump</td><td>Portage</td>
-  </tr>
-  <tr>
     <td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
   <tr>
