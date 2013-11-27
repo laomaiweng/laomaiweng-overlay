@@ -24,25 +24,25 @@ S=${WORKDIR}
 
 src_unpack() {
 	# Manually copy the source file since unpack gets confused by things it can't unpack
-	cp "${DISTDIR}"/visual_regexp-3.1.tcl "${WORKDIR}"
+	cp "${DISTDIR}"/visual_regexp-3.1.tcl "${WORKDIR}"/visual_regexp.tcl
 
 	default
 }
 
 src_prepare() {
 	# File comes with DOS newlines
-	edos2unix visual_regexp-3.1.tcl
+	edos2unix visual_regexp.tcl
 
 	epatch \
 		"${FILESDIR}"/visual-regexp-3.1-wish-fix.patch \
 		"${FILESDIR}"/visual-regexp-3.1-help-font-fix.patch \
 		"${FILESDIR}"/visual-regexp-3.1-make-regexp-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.1-home-conf-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.1-pattern-load-fix.patch
+		"${FILESDIR}"/visual-regexp-3.0-home-conf-fix.patch \
+		"${FILESDIR}"/visual-regexp-3.0-pattern-load-fix.patch
 }
 
 src_install() {
-	newbin visual_regexp-3.1.tcl visualregexp
+	newbin visual_regexp.tcl visualregexp
 
 	dosym visualregexp /usr/bin/tkregexp
 

@@ -20,7 +20,7 @@ diff -ur a/visual_regexp.tcl b/visual_regexp.tcl
  	.help.t insert 1.0 "Version:" bold " $::version
  
 -" normal "Usage:" bold " tkregexp <sampleFile>
-+" normal "Usage:" bold " visualregexp <sampleFile>
++" normal "Usage:" bold " [file tail $::argv0] <sampleFile>
  
  " normal "Key bindings:" bold " Alt-q               exit
                Alt-a               toggle 'all' flag
