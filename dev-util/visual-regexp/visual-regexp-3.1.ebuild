@@ -1,6 +1,6 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/visual-regexp/visual-regexp-3.1.ebuild,v 1.2 2014/02/02 10:15:06 pinkbyte Exp $
 
 EAPI=5
 
@@ -14,17 +14,17 @@ SRC_URI="
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~ppc ~x86 ~amd64-linux ~x86-linux"
 IUSE=""
 
 DEPEND=""
 RDEPEND=">=dev-lang/tk-8.5"
 
-S=${WORKDIR}
+S="${WORKDIR}"
 
 src_unpack() {
 	# Manually copy the source file since unpack gets confused by things it can't unpack
-	cp "${DISTDIR}"/visual_regexp-3.1.tcl "${WORKDIR}"/visual_regexp.tcl
+	cp "${DISTDIR}/visual_regexp-${PV}.tcl" "${WORKDIR}/visual_regexp.tcl"
 
 	default
 }
@@ -34,19 +34,18 @@ src_prepare() {
 	edos2unix visual_regexp.tcl
 
 	epatch \
-		"${FILESDIR}"/visual-regexp-3.1-wish-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.1-help-font-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.1-make-regexp-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.0-home-conf-fix.patch \
-		"${FILESDIR}"/visual-regexp-3.0-pattern-load-fix.patch
+		"${FILESDIR}/${P}-wish-fix.patch" \
+		"${FILESDIR}/${P}-help-font-fix.patch" \
+		"${FILESDIR}/${P}-make-regexp-fix.patch" \
+		"${FILESDIR}/${PN}-3.0-home-conf-fix.patch" \
+		"${FILESDIR}/${PN}-3.0-pattern-load-fix.patch"
+
+	epatch_user
 }
 
 src_install() {
 	newbin visual_regexp.tcl visualregexp
-
 	dosym visualregexp /usr/bin/tkregexp
-
-	doicon "${WORKDIR}"/visualregexp-icon.png
-
-	domenu "${FILESDIR}"/visualregexp.desktop
+	doicon "${WORKDIR}/visualregexp-icon.png"
+	domenu "${FILESDIR}/visualregexp.desktop"
 }

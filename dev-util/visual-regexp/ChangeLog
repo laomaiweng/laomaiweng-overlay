@@ -1,55 +1,28 @@
 # ChangeLog for dev-util/visual-regexp
-# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/visual-regexp/ChangeLog,v 1.13 2013/10/23 08:15:15 tomwij Exp $
+# Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-util/visual-regexp/ChangeLog,v 1.16 2014/02/02 10:15:06 pinkbyte Exp $
 
-  17 Dec 2013; Quentin Minster <quentin@minster.io>
-  -files/visual-regexp-3.0-help-font-fix.patch,
-  -files/visual-regexp-3.0-wish-fix.patch, -visual-regexp-3.0.ebuild:
-  Update package dev-util/visual-regexp  Remove ebuild dev-util/visual-
-  regexp-3.0 since changes have now been included into the Portage tree
+  02 Feb 2014; Sergey Popov <pinkbyte@gentoo.org> visual-regexp-3.1.ebuild:
+  Add ~amd64-linux and ~x86-linux keywords
 
-  27 Nov 2013; Quentin Minster <quentin@minster.io>
-  -files/visual-regexp-3.1-home-conf-fix.patch,
-  -files/visual-regexp-3.1-pattern-load-fix.patch,
-  files/visual-regexp-3.0-help-font-fix.patch,
-  files/visual-regexp-3.1-help-font-fix.patch,
-  files/visual-regexp-3.1-make-regexp-fix.patch,
-  files/visual-regexp-3.1-wish-fix.patch, visual-regexp-3.1.ebuild:
-  Update dev-util/visual-regexp-3.*  Factor in common patches
+*visual-regexp-3.1 (01 Feb 2014)
 
-  12 Nov 2013; Quentin Minster <quentin@minster.io>
+  01 Feb 2014; Sergey Popov <pinkbyte@gentoo.org> -visual-regexp-3.0.ebuild,
+  +visual-regexp-3.1.ebuild, +files/visual-regexp-3.1-help-font-fix.patch,
+  +files/visual-regexp-3.1-make-regexp-fix.patch,
+  +files/visual-regexp-3.1-wish-fix.patch, -files/wish-fix.diff:
+  Version bump, wrt bug #494586, thanks to Quentin Minster <quentin AT
+  minster.io>, drop old
+
+*visual-regexp-3.0-r1 (15 Dec 2013)
+
+  15 Dec 2013; Tom Wijsman <TomWij@gentoo.org>
+  +files/visual-regexp-3.0-help-font-fix.patch,
   +files/visual-regexp-3.0-home-conf-fix.patch,
   +files/visual-regexp-3.0-pattern-load-fix.patch,
-  +files/visual-regexp-3.1-home-conf-fix.patch,
-  +files/visual-regexp-3.1-make-regexp-fix.patch,
-  +files/visual-regexp-3.1-pattern-load-fix.patch, visual-regexp-3.0.ebuild,
-  visual-regexp-3.1.ebuild:
-  Update ebuilds dev-util/visual-regexp-3.0 & dev-util/visual-regexp-3.1  * Fix
-  broken init order (3.x) * Fix broken load from pattern file (3.x) * Fix broken
-  regexp building window (3.1) * Handle automatic loading of files in
-  ~/.visual_regexp (3.x)
-
-  10 Nov 2013; Quentin Minster <quentin@minster.io>
-  files/visual-regexp-3.0-help-font-fix.patch,
-  files/visual-regexp-3.1-help-font-fix.patch, visual-regexp-3.1.ebuild:
-  Update ebuilds dev-util/visual-regexp-3.0 & dev-util/visual-regexp-3.1  * Fix
-  help-font-fix patches * Use edos2unix instead of dos2unix in visual-
-  regexp-3.1.ebuild
-
-*visual-regexp-3.1 (29 Oct 2013)
-
-  29 Oct 2013; Quentin Minster <quentin@minster.io>
-  +files/visual-regexp-3.1-help-font-fix.patch,
-  +files/visual-regexp-3.1-wish-fix.patch, +visual-regexp-3.1.ebuild:
-  Create ebuild dev-util/visual-regexp-3.1
-
-  29 Oct 2013; Quentin Minster <quentin@minster.io>
-  +files/visual-regexp-3.0-help-font-fix.patch,
-  +files/visual-regexp-3.0-wish-fix.patch, -files/wish-fix.diff,
-  visual-regexp-3.0.ebuild:
-  Update ebuild dev-util/visual-regexp-3.0  * Moved ebuild to EAPI 5 * Changed
-  dependency on Tk from DEPEND to RDEPEND * Renamed the wish-fix.diff patch *
-  Added a patch to fix font issue in help window
+  +files/visual-regexp-3.0-wish-fix.patch, +visual-regexp-3.0-r1.ebuild:
+  Revision bump, several fixes from bug #492700; proxied commit for Quentin
+  Minster (laomaiweng).
 
   23 Oct 2013; Tom Wijsman <TomWij@gentoo.org> metadata.xml:
   Added Quentin Minster to metadata.xml whom will proxy maintain this package.
