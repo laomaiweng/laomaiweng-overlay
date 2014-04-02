@@ -1,0 +1,5 @@
+*qcustomplot-1.2.0 (02 Apr 2014)
+
+  02 Apr 2014; Quentin Minster <quentin@minster.io> +files/qcustomplot.pro,
+  +metadata.xml, +qcustomplot-1.2.0.ebuild:
+  Create ebuild sci-libs/qcustomplot-1.2.0
