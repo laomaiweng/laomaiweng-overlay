@@ -24,9 +24,6 @@ Package status
     <td rowspan=1>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td>
   </tr>
   <tr>
-    <td rowspan=1>gnome-extra</td><td>polkit-gnome</td><td>bugfix</td><td>Portage</td>
-  </tr>
-  <tr>
     <td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
 </table>
