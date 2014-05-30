@@ -1,0 +1,16 @@
+#!/bin/bash
+# Diff an package from the overlay with its version in the Portage tree
+# Somewhat similar to overlint, but for a single package
+
+if [[ $# != 1 || "$1" == "-h" || "$1" == "--help" ]]
+then
+    echo "  Usage: ${0##*/} <package>
+Print a diff of the given package between its overlay and Portage versions.
+
+Portage tree location defaults to /usr/portage, but can be overriden by
+setting the PORTAGE_TREE environment variable."
+    exit
+fi
+
+diff -rq "${0%/*}/$1" "${PORTAGE_TREE:-/usr/portage}/$1"
+
