@@ -1,0 +1,5 @@
+*gource-0.42 (30 May 2014)
+
+  30 May 2014; Quentin Minster <quentin@minster.io> +gource-0.42.ebuild,
+  +metadata.xml:
+  Add package dev-util/gource  With ebuild dev-util/gource-0.42.
