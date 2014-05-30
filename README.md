@@ -21,7 +21,10 @@ Package status
     <td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
   <tr>
-    <td rowspan=1>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td>
+    <td rowspan=2>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td>
+  </tr>
+  <tr>
+    <td>gource</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
   <tr>
     <td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
