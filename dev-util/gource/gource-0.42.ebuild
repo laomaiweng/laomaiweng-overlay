@@ -17,7 +17,7 @@ DEPEND="!sdl2? ( media-libs/libsdl )
 	!sdl2? ( media-libs/sdl-image[jpeg,png] )
 	sdl2? ( media-libs/libsdl2 )
 	sdl2? ( media-libs/sdl2-image[jpeg,png] )
-	dev-libs/pcre:3
+	dev-libs/libpcre:3
 	media-libs/freetype:2
 	media-libs/glew
 	>=media-libs/glm-0.9.3

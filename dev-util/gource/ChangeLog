@@ -1,3 +1,7 @@
+  31 May 2014; Quentin Minster <quentin@minster.io> gource-0.42.ebuild:
+  Update dev-util/gource-0.42  Fix invalid atom dev-libs/pcre:3 in DEPEND:
+  should be dev-libs/libpcre:3
+
 *gource-0.42 (30 May 2014)
 
   30 May 2014; Quentin Minster <quentin@minster.io> +gource-0.42.ebuild,
