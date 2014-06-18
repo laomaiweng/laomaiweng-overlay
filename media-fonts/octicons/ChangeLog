@@ -1,0 +1,5 @@
+*octicons-2.0.2 (18 Jun 2014)
+
+  18 Jun 2014; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +octicons-2.0.2.ebuild:
+  Add package media-fonts/octicons  With ebuild media-fonts/octicons-2.0.2
