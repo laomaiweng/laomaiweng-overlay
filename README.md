@@ -27,6 +27,9 @@ Package status
     <td>gource</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
   <tr>
+    <td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
+  </tr>
+  <tr>
     <td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
 </table>
