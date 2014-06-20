@@ -24,7 +24,10 @@ Package status
     <td rowspan=2>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td>
   </tr>
   <tr>
-    <td>gource</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
+    <td>gource</td><td>version bump, due for submission to Portage tree</td><td>Portage</td>
+  </tr>
+  <tr>
+    <td rowspan=1>dev-vcs</td><td>git</td><td>bugfix, filed as #514010</td><td>Portage</td>
   </tr>
   <tr>
     <td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
