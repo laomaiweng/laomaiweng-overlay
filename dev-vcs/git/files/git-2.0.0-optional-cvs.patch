@@ -95,7 +95,7 @@ diff -Nuar --exclude '*.orig' --exclude '*.rej' git-2.0.0.orig/Makefile git-2.0.
 +endif # NO_PERL
 +
 +# This is any perl scripts that were disabled it might be empty...
-+$(patsubst %.perl,%,$(_SCRIPT_PERL_NOBUILD)) git-instaweb: % : unimplemented.sh
++$(patsubst %.perl,%,$(_SCRIPT_PERL_NOBUILD)): % : unimplemented.sh
  	$(QUIET_GEN)$(RM) $@ $@+ && \
  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
  	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
