@@ -27,7 +27,7 @@ Package status
     <td>gource</td><td>version bump, due for submission to Portage tree</td><td>Portage</td>
   </tr>
   <tr>
-    <td rowspan=1>dev-vcs</td><td>git</td><td>bugfix, filed as [#514010](https://bugs.gentoo.org/show_bug.cgi?id=514010)</td><td>Portage</td>
+    <td rowspan=1>dev-vcs</td><td>git</td><td>bugfix, filed as <a href='https://bugs.gentoo.org/show_bug.cgi?id=514010'>#514010</a></td><td>Portage</td>
   </tr>
   <tr>
     <td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
