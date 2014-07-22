@@ -1,0 +1,5 @@
+*expect-lite-4.7.2 (22 Jul 2014)
+
+  22 Jul 2014; Quentin Minster <quentin@minster.io> +expect-lite-4.7.2.ebuild,
+  +metadata.xml:
+  Add dev-tclck/expect-lite  Simple version bump.
