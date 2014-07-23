@@ -1,3 +1,9 @@
+*cheat-2.0.9-r1 (23 Jul 2014)
+
+  23 Jul 2014; Quentin Minster <quentin@minster.io> +cheat-2.0.9-r1.ebuild:
+  Add ebuild app-misc/cheat-2.0.9-r1  Add USE flags for bash-completion and zsh-
+  completion.
+
 *cheat-2.0.9 (23 Jul 2014)
 
   23 Jul 2014; Quentin Minster <quentin@minster.io> +cheat-2.0.9.ebuild,
