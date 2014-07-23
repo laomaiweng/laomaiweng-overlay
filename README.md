@@ -26,6 +26,9 @@ Package status
     <th>Category</th><th>Package</th><th>Comment</th><th>Upstream</th>
   </tr>
   <tr>
+    <td rowspan=1>app-misc</td><td>cheat</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
+  </tr>
+  <tr>
     <td rowspan=2>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
   <tr>
@@ -44,3 +47,4 @@ Package status
     <td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
   </tr>
 </table>
+

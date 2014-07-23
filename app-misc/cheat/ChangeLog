@@ -1,0 +1,5 @@
+*cheat-2.0.9 (23 Jul 2014)
+
+  23 Jul 2014; Quentin Minster <quentin@minster.io> +cheat-2.0.9.ebuild,
+  +metadata.xml:
+  Add package app-misc/cheat  With ebuild app-misc/cheat-2.0.9.
