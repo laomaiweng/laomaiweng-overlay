@@ -22,29 +22,12 @@ Package status
 --------------
 
 <table>
-  <tr>
-    <th>Category</th><th>Package</th><th>Comment</th><th>Upstream</th>
-  </tr>
-  <tr>
-    <td rowspan=1>app-misc</td><td>cheat</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
-  </tr>
-  <tr>
-    <td rowspan=2>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
-  </tr>
-  <tr>
-    <td>expect-lite</td><td>version bump (<a href='https://bugs.gentoo.org/show_bug.cgi?id=517784'>#517784</a>)</td><td>Portage</td>
-  </tr>
-  <tr>
-    <td rowspan=2>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td>
-  </tr>
-  <tr>
-    <td>gource</td><td>version bump, due for submission to Portage tree</td><td>Portage</td>
-  </tr>
-  <tr>
-    <td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
-  </tr>
-  <tr>
-    <td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td>
-  </tr>
+  <tr><th>Category</th><th>Package</th><th>Comment</th><th>Upstream</th></tr>
+  <tr><td rowspan=1>app-misc</td><td>cheat</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
+  <tr><td>gource</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
 </table>
 
