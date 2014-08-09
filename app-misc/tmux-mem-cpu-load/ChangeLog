@@ -1,0 +1,6 @@
+*tmux-mem-cpu-load-2.2.2 (09 Aug 2014)
+
+  09 Aug 2014; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +tmux-mem-cpu-load-2.2.2.ebuild:
+  Add ebuild app-misc/tmux-mem-cpu-load-2.2.2  Version bump; fixes bug with
+  memory display.
