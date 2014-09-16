@@ -1,7 +1,0 @@
-*tcl-8.6.2 (03 Sep 2014)
-
-  03 Sep 2014; Quentin Minster <quentin@minster.io>
-  +files/tcl-8.5.13-multilib.patch, +files/tcl-8.6.1-conf.patch, +metadata.xml,
-  +tcl-8.6.2.ebuild:
-  Add package dev-lang/tcl  With ebuild dev-lang/tcl-8.6.2: simple version bump
-  over Gentoo's 8.6.1.

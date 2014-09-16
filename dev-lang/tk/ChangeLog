@@ -1,7 +1,0 @@
-*tk-8.6.2 (03 Sep 2014)
-
-  03 Sep 2014; Quentin Minster <quentin@minster.io> +files/tk-8.4.15-aqua.patch,
-  +files/tk-8.5.11-fedora-xft.patch, +files/tk-8.5.13-multilib.patch,
-  +files/tk-8.5.14-conf.patch, +metadata.xml, +tk-8.6.2.ebuild:
-  Add package dev-lang/tk  With ebuild dev-lang/tk-8.6.2: simple version bump
-  over Gentoo's 8.6.1.
