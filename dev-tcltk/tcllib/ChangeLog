@@ -1,0 +1,7 @@
+*tcllib-1.16 (19 Sep 2014)
+
+  19 Sep 2014; Quentin Minster <quentin@minster.io>
+  +files/tcllib-1.16-manpage-remove-embedded.patch,
+  +files/tcllib-1.16-manpage-remove.patch, +metadata.xml, +tcllib-1.16.ebuild:
+  Add package dev-tcltk/tcllib  With ebuild dev-tcltk/tcllib-1.16: version bump
+  over Portage's dev-tcltk/tcllib-1.15-r1.
