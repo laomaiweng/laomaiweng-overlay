@@ -1,0 +1,22 @@
+diff -ru CMake/Dependencies.cmake CMake/Dependencies.cmake
+--- CMake/Dependencies.cmake	2014-08-19 21:49:43.000000000 +0200
++++ CMake/Dependencies.cmake	2014-11-07 04:44:06.889169901 +0100
+@@ -34,6 +34,7 @@
+ # Core dependencies
+ #######################################################################
+ 
++find_package(Boost COMPONENTS system REQUIRED)
+ if (MYGUI_USE_FREETYPE)
+ 	# Find FreeType
+ 	find_package(Freetype)
+diff -ru CMake/Utils/MyGUIConfigTargets.cmake CMake/Utils/MyGUIConfigTargets.cmake
+--- CMake/Utils/MyGUIConfigTargets.cmake	2014-08-19 21:49:43.000000000 +0200
++++ Make/Utils/MyGUIConfigTargets.cmake	2014-11-07 04:44:36.725453270 +0100
+@@ -336,6 +336,7 @@
+ 
+ 	target_link_libraries(${PROJECTNAME}
+ 		EditorFramework
++		${Boost_SYSTEM_LIBRARY}
+ 	)
+ endfunction(mygui_tool)
+ 
