@@ -1,0 +1,5 @@
+*afl-0.79b (01 Dec 2014)
+
+  01 Dec 2014; Quentin Minster <quentin@minster.io> +afl-0.79b.ebuild,
+  +metadata.xml:
+  Add ebuild app-forensics/afl-0.79b  Version bump.
