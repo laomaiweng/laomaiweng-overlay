@@ -1,3 +1,9 @@
+*afl-0.80b (01 Dec 2014)
+
+  01 Dec 2014; Quentin Minster <quentin@minster.io> +afl-0.80b.ebuild:
+  Add ebuild app-forensics/afl-0.80b  One more version bump (upstream released
+  overnight).
+
 *afl-0.79b (01 Dec 2014)
 
   01 Dec 2014; Quentin Minster <quentin@minster.io> +afl-0.79b.ebuild,
