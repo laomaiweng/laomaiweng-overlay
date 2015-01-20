@@ -29,8 +29,7 @@ Package status
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=2>dev-tcltk</td><td>nagelfar</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tcllib</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=2>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
-  <tr><td>gource</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>dev-util</td><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-gfx</td><td>splashutils</td><td>bugfix (<a href="https://bugs.gentoo.org/show_bug.cgi?id=506124">#506124</a>), due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-video</td><td>makemkv</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
