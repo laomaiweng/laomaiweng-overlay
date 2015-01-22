@@ -1,3 +1,10 @@
+*eresi-0.82_beta2-r2 (22 Jan 2015)
+
+  22 Jan 2015; Quentin Minster <quentin@minster.io> +eresi-0.82_beta2-r2.ebuild,
+  +files/0.82_beta2-attribute-unbounded.patch, -eresi-0.82_beta2-r1.ebuild:
+  Update dev-util/eresi  Add ebuild dev-util/eresi-0.82_beta2-r2: bugfix for
+  upstream compilation failure.
+
 *eresi-0.82_beta2-r1 (22 Jan 2015)
 
   22 Jan 2015; Quentin Minster <quentin@minster.io> +eresi-0.82_beta2-r1.ebuild,

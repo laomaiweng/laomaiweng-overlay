@@ -38,6 +38,7 @@ PATCHES=(
 	"${FILESDIR}"/0.82_beta2-gentoo-autodetect.patch
 	"${FILESDIR}"/0.82_beta2-relative-symlinks.patch
 	"${FILESDIR}"/0.82_beta2-remove-install-homedir.patch
+	"${FILESDIR}"/0.82_beta2-attribute-unbounded.patch
 )
 
 src_prepare() {
