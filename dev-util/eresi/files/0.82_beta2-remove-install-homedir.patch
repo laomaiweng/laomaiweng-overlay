@@ -1,0 +1,26 @@
+diff -Naur eresi-0.82_beta2.orig//configure eresi-0.82_beta2/configure
+--- eresi-0.82_beta2.orig//configure	2011-05-24 12:12:03.000000000 -0400
++++ eresi-0.82_beta2/configure	2011-05-24 12:13:10.000000000 -0400
+@@ -740,22 +740,6 @@
+ echo "	@echo 'Kernsh has been built successfully.'     "       >> Makefile
+ fi
+ 
+-if [ ! -e ~/.eresirc ]; then
+-echo "	@cp doc/eresirc.example ~/.eresirc "                    >> Makefile
+-fi
+-if [ ! -e ~/.elfshrc ]; then
+-echo "	@ln -sf ~/.eresirc ~/.elfshrc"				>> Makefile
+-fi
+-if [ ! -e ~/.e2dbgrc ]; then
+-echo "	@ln -sf ~/.eresirc ~/.e2dbgrc"				>> Makefile
+-fi
+-if [ ! -e ~/.etracerc ]; then
+-echo "	@ln -sf ~/.eresirc ~/.etracerc"				>> Makefile
+-fi
+-if [ ! -e ~/.kernshrc ]; then
+-echo "	@ln -sf ~/.eresirc ~/.kernshrc"				>> Makefile
+-fi
+-
+ echo ".PHONY: modules "						>> Makefile
+ echo "modules: "						>> Makefile
+ echo "	@echo 'Building ERESI modules...' "			>> Makefile
