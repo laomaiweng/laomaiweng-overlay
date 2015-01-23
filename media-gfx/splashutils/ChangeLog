@@ -1,3 +1,9 @@
+  23 Jan 2015; Quentin Minster <quentin@minster.io>
+  +files/splashutils-1.5.4.4-tailq.patch, splashutils-1.5.4.4-r4.ebuild:
+  Update media-gfx/splashutils  Update ebuild media-gfx/splashutils-1.5.4.4-r4:
+  bugfix for build failure.  (Repoman commit forced to work around XML DTD fetch
+  issue for metadata.xml.)
+
 *splashutils-1.5.4.4-r4 (18 Jan 2015)
 
   18 Jan 2015; Quentin Minster <quentin@minster.io>

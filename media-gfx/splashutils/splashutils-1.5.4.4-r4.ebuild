@@ -79,13 +79,14 @@ src_prepare() {
 	rm "${S}/libs/zlib-${V_ZLIB}/Makefile"
 
 	cd "${SG}"
-	epatch "${FILESDIR}/splashutils-1.5.4.4-gentoo-typo-fix.patch"
+	epatch "${FILESDIR}/${P}-gentoo-typo-fix.patch"
+	epatch "${FILESDIR}/${P}-tailq.patch"
 
 	if use truetype ; then
 		cd "${SM}"
-		epatch "${FILESDIR}/splashutils-1.5.4.4-freetype-bz2.patch"
+		epatch "${FILESDIR}/${P}-freetype-bz2.patch"
 		#cd "${S}"
-		epatch "${FILESDIR}/splashutils-1.5.4.4-ft25.patch"
+		epatch "${FILESDIR}/${P}-ft25.patch"
 	fi
 
 	cd "${S}"
@@ -93,7 +94,7 @@ src_prepare() {
 
 	epatch "${FILESDIR}/${P}-bzip2.patch"
 	epatch "${FILESDIR}/${P}-multi-keyboard.patch"
-	epatch "${FILESDIR}/splashutils-1.5.4.4-freetype2.patch"
+	epatch "${FILESDIR}/${P}-freetype2.patch"
 
 	if ! tc-is-cross-compiler && \
 	   has_version "sys-devel/gcc:$(gcc-version)[vanilla]" ; then
