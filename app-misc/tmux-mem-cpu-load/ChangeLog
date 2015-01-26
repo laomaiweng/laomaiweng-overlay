@@ -1,3 +1,10 @@
+*tmux-mem-cpu-load-3.0.0 (26 Jan 2015)
+
+  26 Jan 2015; Quentin Minster <quentin@minster.io>
+  +tmux-mem-cpu-load-3.0.0.ebuild:
+  Update app-misc/tmux-mem-cpu-load  Version bump: add ebuild app-misc/tmux-mem-
+  cpu-load-3.0.0
+
 *tmux-mem-cpu-load-2.2.2 (09 Aug 2014)
 
   09 Aug 2014; Quentin Minster <quentin@minster.io> +metadata.xml,
