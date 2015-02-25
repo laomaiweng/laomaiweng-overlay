@@ -1,0 +1,9 @@
+*blender-2.72b-r4 (25 Feb 2015)
+
+  25 Feb 2015; Quentin Minster <quentin@minster.io> +blender-2.72b-r4.ebuild,
+  +files/blender-2.68-doxyfile.patch,
+  +files/blender-2.68-fix-install-rules.patch, +files/blender-2.70-sse2.patch,
+  +files/blender-2.72-T42797.diff, +metadata.xml:
+  Add package media-gfx/blender  With ebuild media-gfx/blender-2.72b-r4:
+  enhancement over Gentoo's media-gfx/blender-2.72b-r3, to allow ~media-
+  libs/opencolorio-1.0.9 on top of <=media-libs/opencolorio-1.0.9 in RDEPEND.
