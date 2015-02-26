@@ -36,6 +36,7 @@ Package status
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>media-gfx</td><td>blender</td><td>enhancement, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>splashutils</td><td>bugfixes (<a href="https://bugs.gentoo.org/show_bug.cgi?id=506124">#506124</a> + new TAILQ bug), due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>media-libs</td><td>opencolorio</td><td>bugfix (ported from upstream bug <a href="https://github.com/imageworks/OpenColorIO/issues/369">#369</a>), due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=2>media-video</td><td>makemkv</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>mplayer2</td><td>bugfix (<a href="https://bugs.gentoo.org/show_bug.cgi?id=519212">#519212</a>), due for inclusion in Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>sci-libs</td><td>qcustomplot</td><td>due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>

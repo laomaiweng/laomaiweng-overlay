@@ -1,0 +1,13 @@
+*opencolorio-1.0.9-r1 (26 Feb 2015)
+
+  26 Feb 2015; Quentin Minster <quentin@minster.io>
+  +files/opencolorio-1.0.8-documentation-gen.patch,
+  +files/opencolorio-1.0.8-remove-external-doc-utilities.patch,
+  +files/opencolorio-1.0.9-remove-external-doc-utilities.patch,
+  +files/opencolorio-1.0.9-yaml-0.5-compat2.patch,
+  +files/opencolorio-1.0.9-yaml-0.5-compat3.patch, +metadata.xml,
+  +opencolorio-1.0.9-r1.ebuild:
+  Add package media-libs/opencolorio  With ebuild media-
+  libs/opencolorio-1.0.9-r1: bugfix over Gentoo's media-
+  libs/opencolorio-1.0.9-r1 for compatibility with >=dev-cpp/yaml-cpp-0.5.
+  Ported from upstream's master.
