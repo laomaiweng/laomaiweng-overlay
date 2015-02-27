@@ -38,7 +38,7 @@ DEPEND="${RDEPEND}"
 S=${WORKDIR}/makemkv-oss-${PV}
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-makefile.linux.patch
+	epatch "${FILESDIR}"/${PN}-1.9.0-makefile.linux.patch
 }
 
 src_configure() {

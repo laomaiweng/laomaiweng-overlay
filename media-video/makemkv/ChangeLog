@@ -1,3 +1,11 @@
+*makemkv-1.9.1 (27 Feb 2015)
+
+  27 Feb 2015; Quentin Minster <quentin@minster.io> +makemkv-1.9.1.ebuild,
+  -makemkv-1.9.0.ebuild:
+  Update media-video/makemkv  Version bump: add ebuild media-
+  video/makemkv-1.9.1.  Remove ebuild media-video/makemkv-1.9.0 as the distfiles
+  are unavailable from upstream.
+
 *makemkv-1.9.0 (11 Jan 2015)
 
   11 Jan 2015; Quentin Minster <quentin@minster.io>
