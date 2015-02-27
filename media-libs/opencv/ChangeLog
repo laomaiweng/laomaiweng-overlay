@@ -1,0 +1,10 @@
+*opencv-2.4.9 (27 Feb 2015)
+
+  27 Feb 2015; Quentin Minster <quentin@minster.io>
+  +files/opencv-2.3.1a-libav-0.7.patch, +files/opencv-2.4.2-cflags.patch,
+  +files/opencv-2.4.3-gcc47.patch, +files/opencv-2.4.8-javamagic.patch,
+  +files/opencv-2.4.9-cuda-7.0.patch, +files/opencv-2.4.9-cuda.patch,
+  +files/opencv-2.4.9-libav10.patch, +metadata.xml, +opencv-2.4.9.ebuild:
+  Add package media-libs/opencv  With ebuild media-libs/opencv-2.4.9: bugfix
+  over Gentoo's media-libs/opencv-2.4.9 for upstream incompatibility with CUDA
+  7.0. Corresponding upstream pull request: Itseez/opencv#3763.
