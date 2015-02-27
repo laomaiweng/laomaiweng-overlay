@@ -1,3 +1,11 @@
+*opencv-2.4.9-r1 (27 Feb 2015)
+
+  27 Feb 2015; Quentin Minster <quentin@minster.io> +opencv-2.4.9-r1.ebuild,
+  -opencv-2.4.9.ebuild:
+  Update media-libs/opencv  Revision bump: add ebuild media-
+  libs/opencv-2.4.9-r1.  Update CUDA-gcc compatibility detection using $(cuda-
+  config -s).
+
 *opencv-2.4.9 (27 Feb 2015)
 
   27 Feb 2015; Quentin Minster <quentin@minster.io>

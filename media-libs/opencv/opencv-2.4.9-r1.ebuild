@@ -171,8 +171,12 @@ src_configure() {
 	fi
 
 	if use cuda; then
-		if [[ "$(gcc-version)" > "4.7" ]]; then
-			ewarn "CUDA and >=sys-devel/gcc-4.8 do not play well together. Disabling CUDA support."
+		local cudagccok=false
+		for gccv in $(cuda-config -s); do
+			[[ "$(gcc-version)" == "$gccv" ]] && cudagccok=true
+		done
+		if [[ "$cudagccok" == "false" ]]; then
+			ewarn "sys-devel/gcc-$(gcc-version) is unsupported by your CUDA version. Supported versions are: $(cuda-config -s). Disabling CUDA support."
 			mycmakeargs+=( "-DWITH_CUDA=OFF" )
 			mycmakeargs+=( "-DWITH_CUBLAS=OFF" )
 			mycmakeargs+=( "-DWITH_CUFFT=OFF" )
