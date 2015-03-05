@@ -77,6 +77,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-2.4.8-javamagic.patch"
 	"${FILESDIR}/${PN}-2.4.9-cuda.patch"
 	"${FILESDIR}/${PN}-2.4.9-cuda-7.0.patch"
+	"${FILESDIR}/${PN}-2.4.9-cuda-pkgconfig.patch"
 	"${FILESDIR}/${PN}-2.4.9-libav10.patch"
 )
 

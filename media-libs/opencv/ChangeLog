@@ -1,3 +1,8 @@
+  05 Mar 2015; Quentin Minster <quentin@minster.io>
+  +files/opencv-2.4.9-cuda-pkgconfig.patch, opencv-2.4.9-r1.ebuild:
+  Update media-libs/opencv  New patch in media-libs/opencv-2.4.9-r1: fix
+  OpenCV's pkg-config file which was missing the -L option for CUDA libraries.
+
 *opencv-2.4.9-r1 (27 Feb 2015)
 
   27 Feb 2015; Quentin Minster <quentin@minster.io> +opencv-2.4.9-r1.ebuild,
