@@ -1,7 +1,0 @@
-*cscope-15.8a-r1 (20 Jan 2015)
-
-  20 Jan 2015; Quentin Minster <quentin@minster.io> +cscope-15.8a-r1.ebuild,
-  +files/50cscope-gentoo.el, +files/cscope-15.7a-ocs-sysdir.patch,
-  +metadata.xml:
-  Add package dev-util/cscope  With ebuild dev-util/cscope-15.8a-r1: bugfix over
-  Gentoo's dev-util/cscope-15.8a
