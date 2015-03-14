@@ -38,5 +38,6 @@ Package status
   <tr><td>opencv</td><td>bugfixes (Itseez/opencv#3763 + Itseez/opencv#3792 / <a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a>) + enhancement (gcc limitations), due for submission to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a> already in Portage)</td><td>Portage</td></tr>
   <tr><td rowspan=2>media-video</td><td>makemkv</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>mplayer2</td><td>bugfix (<a href="https://bugs.gentoo.org/show_bug.cgi?id=519212">#519212</a>), due for inclusion in Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>net-libs</td><td>gnutls</td><td>multilib port for gnutls-2*, due for submission to Portage tree</td><td>Portage</td></tr>
 </table>
 

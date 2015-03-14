@@ -1,0 +1,18 @@
+*gnutls-2.12.23-r7 (14 Mar 2015)
+
+  14 Mar 2015; Quentin Minster <quentin@minster.io>
+  +files/gnutls-2.12.20-AF_UNIX.patch,
+  +files/gnutls-2.12.20-guile-parallelmake.patch,
+  +files/gnutls-2.12.20-libadd.patch, +files/gnutls-2.12.23-CVE-2013-2116.patch,
+  +files/gnutls-2.12.23-CVE-2014-0092.patch,
+  +files/gnutls-2.12.23-CVE-2014-1959.patch,
+  +files/gnutls-2.12.23-CVE-2014-3466.patch,
+  +files/gnutls-2.12.23-CVE-2014-3467.patch,
+  +files/gnutls-2.12.23-CVE-2014-3468.patch,
+  +files/gnutls-2.12.23-CVE-2014-3469.patch,
+  +files/gnutls-2.12.23-gdoc-perl-5.18.patch,
+  +files/gnutls-2.12.23-gl-tests-getaddrinfo-skip-if-no-network.patch,
+  +files/gnutls-2.12.23-hppa.patch, +gnutls-2.12.23-r7.ebuild, +metadata.xml:
+  Add package net-libs/gnutls  With ebuild net-libs/gnutls-2.12.23-r7: multilib
+  port of Gentoo's net-libs/gnutls-2.12.23-r6. Required for multilib with
+  OpenVAS (which depends on =gnutls-2*).
