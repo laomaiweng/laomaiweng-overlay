@@ -23,6 +23,7 @@ Package status
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Upstream</th></tr>
+  <tr><td rowspan=1>app-emulation</td><td>vmware-player</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=2>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
@@ -38,6 +39,6 @@ Package status
   <tr><td>opencv</td><td>bugfixes (Itseez/opencv#3763 + Itseez/opencv#3792 / <a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a>) + enhancement (gcc limitations), due for submission to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a> already in Portage)</td><td>Portage</td></tr>
   <tr><td rowspan=2>media-video</td><td>makemkv</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>mplayer2</td><td>bugfix (<a href="https://bugs.gentoo.org/show_bug.cgi?id=519212">#519212</a>), due for inclusion in Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=1>net-libs</td><td>gnutls</td><td>multilib port for gnutls-2*, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>net-libs</td><td>gnutls</td><td>multilib port for gnutls-2*, submitted to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=543280">#543280</a>)</td><td>Portage</td></tr>
 </table>
 

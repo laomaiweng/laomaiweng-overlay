@@ -1,0 +1,8 @@
+*vmware-player-6.0.2.1744117 (16 Mar 2015)
+
+  16 Mar 2015; Quentin Minster <quentin@minster.io> +files/config-3.0,
+  +files/list-bundle-components.xsl, +files/list-component-files.xsl,
+  +files/vmware-3.0.rc, +metadata.xml, +vmware-player-6.0.2.1744117.ebuild:
+  Add package app-emulation/vmware-player  With ebuild app-emulation/vmware-
+  player-6.0.2.1744117: bugfix over Gentoo's own app-emulation/vmware-
+  player-6.0.2.1744117 for missing RDEPEND on dev-libs/libgcrypt:11.
