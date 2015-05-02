@@ -1,0 +1,113 @@
+diff --git a/man/color.map.5 b/man/color.map.5
+index e371e2d..19242ac 100644
+--- a/man/color.map.5
++++ b/man/color.map.5
+@@ -76,6 +76,30 @@ Defines color used for world packages not planned to be merged.
+ Defines color used for packages planned to be uninstalled in order
+ to resolve conflicts.
+ .TP
++\fBATTR_NEW\fR = \fI"green"\fR
++Defines color used for the 'new' package attribute.
++.TP
++\fBATTR_REINSTALL\fR = \fI"red"\fR
++Defines color used for the 'force_reinstall' package attribute.
++.TP
++\fBATTR_REPLACE\fR = \fI"yellow"\fR
++Defines color used for the 'replace' package attribute.
++.TP
++\fBATTR_SLOT\fR = \fI"green"\fR
++Defines color used for the 'new_slot' package attribute.
++.TP
++\fBATTR_FETCH_SATISFIED\fR = \fI"green"\fR
++Defines color used for the 'fetch_restrict_satisfied' package attribute.
++.TP
++\fBATTR_FETCH_RESTRICTED\fR = \fI"red"\fR
++Defines color used for the 'fetch_restrict' package attribute.
++.TP
++\fBATTR_UPGRADE\fR = \fI"turquoise"\fR
++Defines color used for the 'new_version' package attribute.
++.TP
++\fBATTR_DOWNGRADE\fR = \fI"blue"\fR
++Defines color used for the 'downgrade' package attribute.
++.TP
+ \fBUSE_ENABLED\fR = \fI"red"\fR
+ Defines color used for a package's enabled USE flags.
+ .TP
+diff --git a/pym/_emerge/resolver/output_helpers.py b/pym/_emerge/resolver/output_helpers.py
+index ef9d06f..7248f03 100644
+--- a/pym/_emerge/resolver/output_helpers.py
++++ b/pym/_emerge/resolver/output_helpers.py
+@@ -18,8 +18,8 @@ from portage import os
+ from portage import _encodings, _unicode_encode
+ from portage._sets.base import InternalPackageSet
+ from portage.localization import localized_size
+-from portage.output import (blue, bold, colorize, create_color_func,
+-	green, red, teal, turquoise, yellow)
++from portage.output import (bold, colorize, create_color_func,
++	teal)
+ bad = create_color_func("BAD")
+ from portage.util import writemsg
+ from portage.util.SlotObject import SlotObject
+@@ -636,35 +636,35 @@ class PkgAttrDisplay(SlotObject):
+ 
+ 		if self.new or self.force_reinstall:
+ 			if self.force_reinstall:
+-				output.append(red("r"))
++				output.append(colorize("ATTR_REINSTALL", "r"))
+ 			else:
+-				output.append(green("N"))
++				output.append(colorize("ATTR_NEW", "N"))
+ 		else:
+ 			output.append(" ")
+ 
+ 		if self.new_slot or self.replace:
+ 			if self.replace:
+-				output.append(yellow("R"))
++				output.append(colorize("ATTR_REPLACE", "R"))
+ 			else:
+-				output.append(green("S"))
++				output.append(colorize("ATTR_SLOT", "S"))
+ 		else:
+ 			output.append(" ")
+ 
+ 		if self.fetch_restrict or self.fetch_restrict_satisfied:
+ 			if self.fetch_restrict_satisfied:
+-				output.append(green("f"))
++				output.append(colorize("ATTR_FETCH_SATISFIED", "f"))
+ 			else:
+-				output.append(red("F"))
++				output.append(colorize("ATTR_FETCH_RESTRICTED", "F"))
+ 		else:
+ 			output.append(" ")
+ 
+ 		if self.new_version:
+-			output.append(turquoise("U"))
++			output.append(colorize("ATTR_UPGRADE", "U"))
+ 		else:
+ 			output.append(" ")
+ 
+ 		if self.downgrade:
+-			output.append(blue("D"))
++			output.append(colorize("ATTR_DOWNGRADE", "D"))
+ 		else:
+ 			output.append(" ")
+ 
+diff --git a/pym/portage/output.py b/pym/portage/output.py
+index be36357..93494e5 100644
+--- a/pym/portage/output.py
++++ b/pym/portage/output.py
+@@ -144,6 +144,14 @@ _styles["PKG_UNINSTALL"]           = ( "red", )
+ _styles["PKG_NOMERGE"]             = ( "darkblue", )
+ _styles["PKG_NOMERGE_SYSTEM"]      = ( "darkblue", )
+ _styles["PKG_NOMERGE_WORLD"]       = ( "blue", )
++_styles["ATTR_NEW"]                = ( "green", )
++_styles["ATTR_REINSTALL"]          = ( "red", )
++_styles["ATTR_REPLACE"]            = ( "yellow", )
++_styles["ATTR_SLOT"]               = ( "green", )
++_styles["ATTR_FETCH_SATISFIED"]    = ( "green", )
++_styles["ATTR_FETCH_RESTRICTED"]   = ( "red", )
++_styles["ATTR_UPGRADE"]            = ( "turquoise", )
++_styles["ATTR_DOWNGRADE"]          = ( "blue", )
+ _styles["USE_ENABLED"]             = ( "red", )
+ _styles["USE_DISABLED"]            = ( "blue", )
+ _styles["USE_NEW"]                 = ( "yellow", )
