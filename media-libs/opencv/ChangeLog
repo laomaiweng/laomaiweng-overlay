@@ -1,3 +1,10 @@
+*opencv-2.4.10-r1 (04 May 2015)
+
+  04 May 2015; Quentin Minster <quentin@minster.io> +opencv-2.4.10-r1.ebuild:
+  Update media-libs/opencv  Add media-libs/opencv-2.4.10-r1: port of media-
+  libs/opencv-2.4.9-r1's enhancements over media-libs/opencv-2.4.9 to Portage's
+  media-libs/opencv-2.4.10.
+
   04 May 2015; Quentin Minster <quentin@minster.io>
   +files/opencv-2.4.9-cuda-pkg-config.patch,
   -files/opencv-2.4.9-cuda-pkgconfig.patch, opencv-2.4.9-r1.ebuild:
