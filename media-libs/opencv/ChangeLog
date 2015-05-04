@@ -1,3 +1,9 @@
+  04 May 2015; Quentin Minster <quentin@minster.io>
+  +files/opencv-2.4.9-cuda-pkg-config.patch,
+  -files/opencv-2.4.9-cuda-pkgconfig.patch, opencv-2.4.9-r1.ebuild:
+  Update media-libs/opencv  Merge recent changes from Portage's media-
+  libs/opencv-2.4.9 into media-libs/opencv-2.4.9-r1.
+
   05 Mar 2015; Quentin Minster <quentin@minster.io>
   +files/opencv-2.4.9-cuda-pkgconfig.patch, opencv-2.4.9-r1.ebuild:
   Update media-libs/opencv  New patch in media-libs/opencv-2.4.9-r1: fix
