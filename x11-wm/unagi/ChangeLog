@@ -1,0 +1,5 @@
+*unagi-0.3.4 (09 May 2015)
+
+  09 May 2015; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +unagi-0.3.4.ebuild:
+  Add package x11-wm/unagi  With ebuild x11-wm/unagi-0.3.4.

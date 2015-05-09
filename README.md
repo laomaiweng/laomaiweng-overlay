@@ -40,5 +40,6 @@ Package status
   <tr><td rowspan=1>media-video</td><td>makemkv</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>net-libs</td><td>gnutls</td><td>multilib port for gnutls-2*, submitted to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=543280">#543280</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sys-apps</td><td>portage</td><td>enhancement, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>x11-wm</td><td>unagi</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
 </table>
 
