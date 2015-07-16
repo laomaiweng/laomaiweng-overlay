@@ -28,6 +28,7 @@ Package status
   <tr><td>taskd</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>dev-java</td><td>jlatexmath-fop</td><td>bugfix, due for submission to science overlay</td><td>science overlay</td></tr>
   <tr><td rowspan=1>dev-vcs</td><td>hub</td><td>version bump (complete rewrite), due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=2>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tcllib</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
