@@ -1,0 +1,8 @@
+*orpie-1.5.1-r1 (19 Nov 2015)
+
+  19 Nov 2015; Quentin Minster <quentin@minster.io>
+  +files/orpie-1.5.1-nogsl.patch, +files/orpie-1.5.1-ocaml311.patch,
+  +files/orpie-1.5.1-orpierc.patch, +files/orpie-1.5.1-tinfo.patch,
+  +metadata.xml, +orpie-1.5.1-r1.ebuild:
+  sci-calculators/orpie-1.5.1-r1: bugfix for #532776  /usr/bin/camlp4o is
+  provided by || ( <dev-lang/ocaml-4.02 dev-ml/camlp4 )
