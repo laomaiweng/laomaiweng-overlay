@@ -1,3 +1,9 @@
+*cheat-2.1.18 (20 Nov 2015)
+
+  20 Nov 2015; Quentin Minster <quentin@minster.io> +cheat-2.1.18.ebuild,
+  -cheat-2.0.9-r1.ebuild, -cheat-2.0.9.ebuild, -cheat-2.1.8.ebuild:
+  app-misc/cheat-2.1.18: version bump  Remove old.
+
 *cheat-2.1.8 (29 Apr 2015)
 
   29 Apr 2015; Quentin Minster <quentin@minster.io> +cheat-2.1.8.ebuild:
