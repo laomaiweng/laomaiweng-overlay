@@ -42,7 +42,6 @@ Package status
   <tr><td rowspan=1>media-sound</td><td>pasystray</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>net-libs</td><td>gnutls</td><td>multilib port for gnutls-2*, submitted to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=543280">#543280</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sci-calculators</td><td>orpie</td><td>bugfix, due for submission to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=532776">#532776</a>)</td><td>Portage</td></tr>
-  <tr><td rowspan=1>sys-apps</td><td>portage</td><td>enhancement, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>x11-plugins</td><td>vicious</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>x11-wm</td><td>unagi</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
 </table>
