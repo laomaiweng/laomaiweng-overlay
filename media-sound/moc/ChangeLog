@@ -1,0 +1,8 @@
+*moc-2.6_alpha1 (21 Nov 2015)
+
+  21 Nov 2015; Quentin Minster <quentin@minster.io>
+  +files/moc-2.6_alpha1-detect-tinfo.patch, +metadata.xml,
+  +moc-2.6_alpha1.ebuild:
+  media-sound/moc-2.6_alpha1: bugfix for #521860  Patch 
+  configure.in to detect missing cbreak symbol and link 
+  against tinfo if required.
