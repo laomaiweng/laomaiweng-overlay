@@ -23,7 +23,7 @@ Package status
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
-  <tr><td rowspan=3>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-java</td><td>jlatexmath-fop</td><td>bugfix, due for submission to science overlay</td><td>science overlay</td></tr>
@@ -33,8 +33,7 @@ Package status
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-gfx</td><td>blender</td><td>enhancement, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=2>media-libs</td><td>opencolorio</td><td>bugfix (ported from upstream bug imageworks/OpenColorIO#369), due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td>opencv</td><td>bugfixes (Itseez/opencv#3763 + Itseez/opencv#3792 / <a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a>) + enhancement (gcc limitations), due for submission to Portage tree (<a href="https://bugs.gentoo.org/show_bug.cgi?id=531198">#531198</a> already in Portage)</td><td>Portage</td></tr>
+  <tr><td rowspan=1>media-libs</td><td>opencolorio</td><td>bugfix (ported from upstream bug imageworks/OpenColorIO#369), due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=2>media-sound</td><td>moc</td><td>bugfix for <a href="https://bugs.gentoo.org/show_bug.cgi?id=521860">#521860</a>, submitted <a href="http://moc.daper.net/node/1469">upstream</a> and to Portage tree</td><td>Portage</td></tr>
   <tr><td>pasystray</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>www-client</td><td>vimb</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
