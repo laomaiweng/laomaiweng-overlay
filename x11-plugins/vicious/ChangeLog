@@ -1,6 +1,0 @@
-*vicious-2.1.3 (04 Jun 2015)
-
-  04 Jun 2015; Quentin Minster <quentin@minster.io> +metadata.xml,
-  +vicious-2.1.3.ebuild:
-  Add package x11-plugins/vicious  With ebuild x11-plugins/vicious-2.1.3:
-  version bump over Portage's x11-plugins/vicious-2.1.0.
