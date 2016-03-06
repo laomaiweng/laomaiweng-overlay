@@ -34,8 +34,7 @@ Package status
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-gfx</td><td>blender</td><td>enhancement, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-libs</td><td>opencolorio</td><td>bugfix (ported from upstream bug imageworks/OpenColorIO#369), due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=2>media-sound</td><td>moc</td><td>bugfix for <a href="https://bugs.gentoo.org/show_bug.cgi?id=521860">#521860</a>, submitted <a href="http://moc.daper.net/node/1469">upstream</a> and to Portage tree</td><td>Portage</td></tr>
-  <tr><td>pasystray</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>media-sound</td><td>pasystray</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>www-client</td><td>vimb</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>x11-plugins</td><td>vicious</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>x11-wm</td><td>unagi</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
