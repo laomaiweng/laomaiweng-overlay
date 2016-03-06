@@ -23,7 +23,6 @@ Package status
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
-  <tr><td rowspan=1>app-emulation</td><td>vmware-player</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=3>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
