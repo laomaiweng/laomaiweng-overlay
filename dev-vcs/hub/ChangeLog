@@ -1,7 +1,0 @@
-*hub-2.2.0 (05 Mar 2015)
-
-  05 Mar 2015; Quentin Minster <quentin@minster.io> +hub-2.2.0.ebuild,
-  +metadata.xml:
-  Add package dev-vcs/hub  With ebuild dev-vcs/hub-2.2.0: version bump over
-  Gentoo's dev-vcs/hub-1.12.4. v2 is a complete rewrite, so the ebuild looks
-  very different.
