@@ -1,6 +1,0 @@
-*pasystray-0.5.2 (17 May 2015)
-
-  17 May 2015; Quentin Minster <quentin@minster.io> +metadata.xml,
-  +pasystray-0.5.2.ebuild:
-  Add package media-sound/pasystray  With ebuild media-sound/pasystray-0.5.2:
-  version bump over Portage's media-sound/pasystray-0.2.1.
