@@ -28,7 +28,8 @@ Package status
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-java</td><td>jlatexmath-fop</td><td>bugfix, due for submission to science overlay</td><td>science overlay</td></tr>
   <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=3>dev-util</td><td>eresi</td><td>bugfix (upstream bug), due for submission to Sunrise overlay</td><td>Sunrise</td></tr>
+  <tr><td rowspan=4>dev-util</td><td>eresi</td><td>bugfix (upstream bug), due for submission to Sunrise overlay</td><td>Sunrise</td></tr>
+  <tr><td>rr</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>vbindiff</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>

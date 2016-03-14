@@ -1,0 +1,5 @@
+*rr-4.1.0 (14 Mar 2016)
+
+  14 Mar 2016; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +rr-4.1.0.ebuild:
+  dev-util/rr: create package with rr-4.1.0

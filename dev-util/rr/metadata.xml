@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer>
+		<email>quentin@minster.io</email>
+		<name>Quentin Minster</name>
+	</maintainer>
+	<longdescription>rr aspires to be your primary debugging tool, replacing —
+well, enhancing — gdb. You record a failure once, then debug the recording,
+deterministically, as many times as you want. The same execution is replayed
+every time.
+
+rr also provides efficient reverse execution under gdb. Set breakpoints and
+data watchpoints and quickly reverse-execute to where they were hit.
+
+rr works on real applications such as Firefox, with low overhead. It is being
+used by many developers inside and outside Mozilla to fix real
+bugs.</longdescription>
+</pkgmetadata>
