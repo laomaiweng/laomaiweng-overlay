@@ -1,0 +1,6 @@
+*afl-2.35b-r1 (03 Nov 2016)
+
+  03 Nov 2016; Quentin Minster <quentin@minster.io> +afl-2.35b-r1.ebuild,
+  +metadata.xml:
+  app-forensics/afl: add afl-2.35b-r1.ebuild  force clang stdlib and rtlib
+  (#595106)
