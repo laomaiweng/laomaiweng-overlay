@@ -1,5 +1,0 @@
-*vimb-2.11 (06 Mar 2016)
-
-  06 Mar 2016; Quentin Minster <quentin@minster.io> +metadata.xml,
-  +vimb-2.11.ebuild:
-  www-client/vimb-2.11: version bump

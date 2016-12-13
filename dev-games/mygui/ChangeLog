@@ -1,8 +1,0 @@
-*mygui-3.2.1-r1 (07 Nov 2014)
-
-  07 Nov 2014; Quentin Minster <quentin@minster.io>
-  +files/mygui-3.2.0-build.patch, +files/mygui-3.2.0-underlinking.patch,
-  +files/mygui-3.2.1-FHS.patch, +files/mygui-3.2.1-boost.patch, +metadata.xml,
-  +mygui-3.2.1-r1.ebuild:
-  Add package dev-games/mygui  With ebuild dev-games/mygui-3.2.1-r1: bugfix over
-  Gentoo's dev-games/mygui-3.2.1.

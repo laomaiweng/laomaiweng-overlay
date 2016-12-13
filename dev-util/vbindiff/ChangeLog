@@ -1,9 +1,0 @@
-*vbindiff-3.0_beta1-r1 (22 Jan 2015)
-*vbindiff-3.0_beta4-r1 (22 Jan 2015)
-
-  22 Jan 2015; Quentin Minster <quentin@minster.io>
-  +files/vbindiff-3.0_beta1-link-tinfo.patch, +metadata.xml,
-  +vbindiff-3.0_beta1-r1.ebuild, +vbindiff-3.0_beta4-r1.ebuild:
-  Add package dev-util/vbindiff  With ebuilds dev-util/vbindiff-3.0_beta1-r1 &
-  dev-util/vbindiff-3.0_beta4-r1: bugfix (upstream bug) over Gentoo's dev-
-  util/vbindiff-3.0_beta1 & dev-util/vbindiff-3.0_beta4. Also bump to EAPI=5.

@@ -1,7 +1,0 @@
-*jlatexmath-fop-1.0.3 (16 Jul 2015)
-
-  16 Jul 2015; Quentin Minster <quentin@minster.io>
-  +files/jlatexmath-fop-1.0.3-fixpaths.patch, +files/version.xml,
-  +jlatexmath-fop-1.0.3.ebuild, +metadata.xml:
-  Add package dev-java/jlatexmath-fop  With ebuild dev-java/jlatexmath-
-  fop-1.0.3: bugfix over science overlay's dev-java/jlatexmath-fop-1.0.3.
