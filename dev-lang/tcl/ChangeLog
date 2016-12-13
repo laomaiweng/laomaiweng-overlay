@@ -1,0 +1,6 @@
+*tcl-8.6.6-r1 (13 Dec 2016)
+
+  13 Dec 2016; Quentin Minster <quentin@minster.io>
+  +files/tcl-8.5.13-multilib.patch, +files/tcl-8.6.1-conf.patch, +metadata.xml,
+  +tcl-8.6.6-r1.ebuild:
+  dev-lang/tcl: add tcl-8.6.6-r1.ebuild  restore man page for [try]
