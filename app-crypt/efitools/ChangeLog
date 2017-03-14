@@ -1,0 +1,5 @@
+*efitools-1.7.0-r1 (14 Mar 2017)
+
+  14 Mar 2017; Quentin Minster <quentin@minster.io> +efitools-1.7.0-r1.ebuild,
+  +files/efitools-1.7.0-lto-friendly.patch, +metadata.xml:
+  app-crypt/efitools: add efitools-1.7.0-r1.ebuild  patch Makefile for LTO
