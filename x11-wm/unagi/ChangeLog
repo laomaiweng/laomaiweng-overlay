@@ -1,3 +1,9 @@
+*unagi-0.3.4-r1 (19 Mar 2017)
+
+  19 Mar 2017; Quentin Minster <quentin@minster.io> +unagi-0.3.4-r1.ebuild,
+  -unagi-0.3.4.ebuild, metadata.xml:
+  x11-wm/unagi: add dependency on dev-libs/libev
+
 *unagi-0.3.4 (09 May 2015)
 
   09 May 2015; Quentin Minster <quentin@minster.io> +metadata.xml,

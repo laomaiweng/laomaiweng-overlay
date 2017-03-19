@@ -1,10 +1,9 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI="5"
+EAPI="6"
 
-DESCRIPTION="A modular compositing manager which aims to be efficient, lightweight and responsive"
+DESCRIPTION="A modular compositing manager aiming to be efficient, lightweight and responsive"
 HOMEPAGE="http://unagi.mini-dweeb.org/"
 SRC_URI="http://projects.mini-dweeb.org/attachments/download/114/${P}.tar.gz"
 
@@ -15,6 +14,7 @@ IUSE=""
 
 COMMON_DEPEND="
 	dev-libs/confuse
+	dev-libs/libev
 	>=dev-libs/libxdg-basedir-1.0.0
 	sys-apps/dbus
 	x11-libs/libdrm
