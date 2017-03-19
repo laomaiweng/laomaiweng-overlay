@@ -6,15 +6,15 @@ Gentoo overlay for ebuilds I maintain / work on.
 Usage
 -----
 
-### With layman
+* Add to `/etc/portage/repos.conf/laomaiweng-overlay.conf`:
 
-* Add the overlay: `layman -f --overlays http://github.com/laomaiweng/laomaiweng-overlay/raw/master/profiles/layman.xml --add laomaiweng`
-* Emerge stuff
-
-### Without layman
-
-* Clone the overlay: `git clone https://github.com/laomaiweng/laomaiweng-overlay`
-* Add it to Portage: `PORTDIR_OVERLAY="$PORTDIR_OVERLAY /path/to/laomaiweng-overlay"` in /etc/{portage/,}make.conf
+```
+[laomaiweng-overlay]
+location = /var/lib/overlays/laomaiweng-overlay
+sync-type = git
+sync-uri = https://github.com/laomaiweng/laomaiweng-overlay
+auto-sync = yes
+```
 * Emerge stuff
 
 
