@@ -1,0 +1,23 @@
+From ccd6a2f1714d635bac2d4ba7eff6f28caefbf0b4 Mon Sep 17 00:00:00 2001
+From: Quentin Minster <laomaiweng@minster.io>
+Date: Sun, 19 Mar 2017 23:59:03 +0100
+Subject: [PATCH] Honor the TMPDIR environment variable
+
+When creating a temporary directory, use $TMPDIR as base directory if set, otherwise fall back to "/tmp".
+---
+ ldoc.lua | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ldoc.lua b/ldoc.lua
+index 4cb9966..65f3301 100644
+--- a/ldoc.lua
++++ b/ldoc.lua
+@@ -775,7 +775,7 @@ local builtin_style, builtin_template = match_bang(args.style),match_bang(args.t
+ if builtin_style or builtin_template then
+    -- '!' here means 'use built-in templates'
+    local user = path.expanduser('~'):gsub('[/\\: ]','_')
+-   local tmpdir = path.join(path.is_windows and os.getenv('TMP') or '/tmp','ldoc'..user)
++   local tmpdir = path.join(path.is_windows and os.getenv('TMP') or (os.getenv('TMPDIR') or '/tmp'),'ldoc'..user)
+    if not path.isdir(tmpdir) then
+       lfs.mkdir(tmpdir)
+    end

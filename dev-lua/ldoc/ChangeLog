@@ -1,0 +1,6 @@
+*ldoc-1.4.6-r1 (19 Mar 2017)
+
+  19 Mar 2017; Quentin Minster <quentin@minster.io>
+  +files/ldoc-1.4.6-mkdir.patch, +files/ldoc-1.4.6-tmpdir.patch,
+  +ldoc-1.4.6-r1.ebuild, +metadata.xml:
+  dev-lua/ldoc: add ldoc-1.4.6-r1.ebuild  Backport PR #266.
