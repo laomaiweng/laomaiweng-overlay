@@ -1,0 +1,8 @@
+*awesome-4.1 (19 Mar 2017)
+
+  19 Mar 2017; Quentin Minster <quentin@minster.io> +awesome-4.1.ebuild,
+  +files/awesome-4.0-cflag-cleanup.patch, +files/awesome-4.0-convert-path.patch,
+  +files/awesome-gnome-3.session, +files/awesome-gnome-xsession.desktop,
+  +files/awesome-gnome.desktop, +files/awesome-session,
+  +files/awesome-xsession.patch, +metadata.xml:
+  x11-wm/awesome: add awesome-4.1.ebuild  version bump
