@@ -1,0 +1,7 @@
+*libmd-0.0.0-r1 (21 Mar 2017)
+
+  21 Mar 2017; Quentin Minster <quentin@minster.io>
+  +files/libmd-0.0.0-sha384-weak-sym.patch, +libmd-0.0.0-r1.ebuild,
+  +metadata.xml:
+  app-crypt/libmd: add ebuild libmd-0.0.0-r1.ebuild  Fix build failure with app-
+  crypt/signing-party due to weak symbols.

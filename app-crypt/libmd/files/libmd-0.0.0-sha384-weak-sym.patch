@@ -1,0 +1,35 @@
+--- a/include/sha2.h
++++ b/include/sha2.h	2017-03-21 04:42:28 
+@@ -76,9 +76,9 @@
+ char *SHA256Data(const uint8_t *, size_t, char *);
+ 
+ void SHA384Init(SHA2_CTX *);
+-void SHA384Transform(uint64_t state[8], const uint8_t [SHA384_BLOCK_LENGTH]);
+-void SHA384Update(SHA2_CTX *, const uint8_t *, size_t);
+-void SHA384Pad(SHA2_CTX *);
++void __attribute__((weak)) (*SHA384Transform)(uint64_t state[8], const uint8_t [SHA384_BLOCK_LENGTH]);
++void __attribute__((weak)) (*SHA384Update)(SHA2_CTX *, const uint8_t *, size_t);
++void __attribute__((weak)) (*SHA384Pad)(SHA2_CTX *);
+ void SHA384Final(uint8_t [SHA384_DIGEST_LENGTH], SHA2_CTX *);
+ char *SHA384End(SHA2_CTX *, char *);
+ char *SHA384File(const char *, char *);
+
+--- a/src/sha2.c
++++ b/src/sha2.c	2017-03-21 04:39:11 
+@@ -851,9 +851,13 @@
+ 	context->bitcount[0] = context->bitcount[1] = 0;
+ }
+ 
+-__weak_alias(SHA384Transform, SHA512Transform);
+-__weak_alias(SHA384Update, SHA512Update);
+-__weak_alias(SHA384Pad, SHA512Pad);
++//__weak_alias(SHA384Transform, SHA512Transform);
++//__weak_alias(SHA384Update, SHA512Update);
++//__weak_alias(SHA384Pad, SHA512Pad);
++void __attribute__((weak)) (*SHA384Transform)(uint64_t state[8], const uint8_t data[SHA384_BLOCK_LENGTH]) = SHA512Transform;
++void __attribute__((weak)) (*SHA384Update)(SHA2_CTX *context, const uint8_t *data, size_t len) = SHA512Update;
++void __attribute__((weak)) (*SHA384Pad)(SHA2_CTX *context) = SHA512Pad;
++
+ 
+ void
+ SHA384Final(uint8_t digest[SHA384_DIGEST_LENGTH], SHA2_CTX *context)
