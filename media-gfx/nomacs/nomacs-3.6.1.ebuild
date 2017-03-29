@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -8,7 +7,7 @@ inherit cmake-utils fdo-mime
 
 DESCRIPTION="Qt-based image viewer"
 HOMEPAGE="http://www.nomacs.org/"
-SRC_URI="https://github.com/${PN}/${PN}/archive/3.4.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0"
@@ -29,10 +28,8 @@ RDEPEND="
 	dev-qt/qtsvg:5
 	dev-qt/qtwidgets:5
 	>=media-gfx/exiv2-0.25:=
-	opencv? ( || (
-			=media-libs/opencv-2*[-qt4]
-			=media-libs/opencv-3*
-		)
+	opencv? (
+		=media-libs/opencv-3*
 		media-libs/opencv:=
 	)
 	raw? ( >=media-libs/libraw-0.14:= )
@@ -46,17 +43,15 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${P}/ImageLounge"
 
-PATCHES=( "${FILESDIR}/${P}-no-opencv.patch" ) # bug 592134
-
 src_prepare() {
 	default
 
 	# fix build with quazip-0.7.2 - bug 598354
 	sed -i -e "s/find_package(QuaZIP/find_package(QuaZip5/" cmake/Unix.cmake || die
 	sed -e "s/include <quazip/&5/" \
-		-i src/DkLoader/DkImageLoader.cpp \
-		-i src/DkLoader/DkImageContainer.cpp \
-		-i src/DkLoader/DkBasicLoader.cpp \
+		-i src/DkCore/DkImageContainer.cpp \
+		-i src/DkCore/DkImageLoader.cpp \
+		-i src/DkCore/DkBasicLoader.cpp \
 		-i src/DkGui/DkDialog.cpp || die
 
 }
