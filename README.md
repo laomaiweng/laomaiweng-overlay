@@ -15,6 +15,8 @@ sync-type = git
 sync-uri = https://github.com/laomaiweng/laomaiweng-overlay
 auto-sync = yes
 ```
+* Run `emaint sync --repo laomaiweng-overlay`
+
 * Emerge stuff
 
 
