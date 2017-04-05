@@ -1,0 +1,13 @@
+--- a/compat.h
++++ b/compat.h	2017-04-05 04:20:53 PM
+@@ -33,8 +33,8 @@
+   id3_compat_func_t *translate;
+ };
+ 
+-struct id3_compat const *id3_compat_lookup(register char const *,
+-					   register unsigned int);
++const struct id3_compat *id3_compat_lookup(register char const *,
++					   register size_t);
+ 
+ int id3_compat_fixup(struct id3_tag *);
+ 

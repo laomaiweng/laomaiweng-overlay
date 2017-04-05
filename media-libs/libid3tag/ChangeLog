@@ -1,0 +1,15 @@
+*libid3tag-0.15.1b-r5 (05 Apr 2017)
+
+  05 Apr 2017; Quentin Minster <quentin@minster.io>
+  +files/0.15.1b/libid3tag-0.15.1b-64bit-long.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-a_capella.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-compat.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-file-write.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-fix_overflow.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-id3_compat_lookup-mismatch.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-tag.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-unknown-encoding.patch,
+  +files/0.15.1b/libid3tag-0.15.1b-utf16.patchlibid3tag-0.15.1b-utf16.patch,
+  +files/id3tag.pc, +libid3tag-0.15.1b-r5.ebuild, +metadata.xml:
+  media-libs/libid3tag: add ebuild libid3tag-0.15.1b-r5.ebuild  Fix build
+  failure due to inconsistent prototype for id3_compat_lookup.
