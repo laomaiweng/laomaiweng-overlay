@@ -1,0 +1,29 @@
+--- a/Makefile
++++ b/Makefile	2017-04-09 02:35:27 AM
+@@ -1,6 +1,7 @@
+-PREFIX=/usr/local
++DESTDIR=
++PREFIX=${DESTDIR}/usr
+ BINDIR=${PREFIX}/bin
+-MANDIR=${PREFIX}/man
++MANDIR=${PREFIX}/share/man
+ DATADIR=${PREFIX}/share/rig
+ 
+ all: rig rig.6
+@@ -11,10 +12,12 @@
+ 	sed s@DATADIR@"$(DATADIR)"@g < rig.6.in > rig.6
+ 
+ install: rig rig.6
+-	install -g 0 -m 755 -o 0 -s rig $(BINDIR)
++	install -m 755 -d $(BINDIR)
++	install -m 755 -t $(BINDIR) rig
+-	install -g 0 -m 644 -o 0 rig.6 $(MANDIR)/man6/rig.6
++	install -m 755 -d $(MANDIR)/man6
++	install -m 644 -T rig.6 $(MANDIR)/man6/rig.6
+-	install -g 0 -m 755 -o 0 -d $(DATADIR)
++	install -m 755 -d $(DATADIR)
+-	install -g 0 -m 644 -o 0 data/*.idx $(DATADIR)
++	install -m 644 -t $(DATADIR) data/*.idx
+ 
+ clean:
+ 	rm -rf *~ *.rej *.orig *.o rig rig.6

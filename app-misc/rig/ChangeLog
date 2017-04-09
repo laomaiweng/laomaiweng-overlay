@@ -1,0 +1,6 @@
+*rig-1.11 (09 Apr 2017)
+
+  09 Apr 2017; Quentin Minster <quentin@minster.io>
+  +files/rig-1.11-include-cstring.patch, +files/rig-1.11-make-install.patch,
+  +metadata.xml, +rig-1.11.ebuild:
+  app-misc/rig: add ebuild rig-1.11.ebuild

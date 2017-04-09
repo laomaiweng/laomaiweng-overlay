@@ -1,0 +1,10 @@
+--- a/rig.cc
++++ b/rig.cc	2017-04-07 09:47:14 PM
+@@ -21,6 +21,7 @@
+ #include <fstream>
+ #include <vector>
+ #include <string>
++#include <cstring>
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <time.h>
