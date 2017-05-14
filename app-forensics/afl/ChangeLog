@@ -1,3 +1,9 @@
+*afl-2.41b (14 May 2017)
+
+  14 May 2017; Quentin Minster <quentin@minster.io> +afl-2.41b.ebuild,
+  -afl-2.35b-r1.ebuild:
+  app-forensics/afl: add afl-2.41b.ebuild, drop old  Version bump.
+
 *afl-2.35b-r1 (03 Nov 2016)
 
   03 Nov 2016; Quentin Minster <quentin@minster.io> +afl-2.35b-r1.ebuild,
