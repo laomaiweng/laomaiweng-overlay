@@ -43,7 +43,6 @@ Package status
   <tr><td>rr</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=1>media-gfx</td><td>nomacs</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-libs</td><td>libid3tag</td><td>bugfix for <a href="https://bugs.gentoo.org/show_bug.cgi?id=605158">#605158</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>x11-wm</td><td>unagi</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
 </table>
