@@ -1,0 +1,6 @@
+*mypy-0.511 (17 May 2017)
+
+  17 May 2017; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +mypy-0.511.ebuild:
+  dev-python/mypy: add mypy-0.511.ebuild  Version bump, add python3_6 to
+  PYTHON_TARGETS.
