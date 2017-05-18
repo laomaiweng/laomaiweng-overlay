@@ -1,5 +1,0 @@
-*wlc-0.0.8 (17 Mar 2017)
-
-  17 Mar 2017; Quentin Minster <quentin@minster.io> +metadata.xml,
-  +wlc-0.0.8.ebuild:
-  dev-libs/wlc: add dev-libs/wlc-0.0.8  version bump
