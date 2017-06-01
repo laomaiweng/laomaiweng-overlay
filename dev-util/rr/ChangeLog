@@ -1,0 +1,5 @@
+*rr-4.5.0-r1 (01 Jun 2017)
+
+  01 Jun 2017; Quentin Minster <quentin@minster.io>
+  +files/rr-4.5.0-sysmacros.patch, +metadata.xml, +rr-4.5.0-r1.ebuild:
+  dev-util/rr: add rr-4.5.0-r1.ebuild  Fix build failure on amd64/no-multilib.
