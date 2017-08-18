@@ -25,7 +25,7 @@ src_compile() {
 		DOC_PATH="/usr/share/doc/${PF}"
 	CC="clang" CXX="clang++" strip-unsupported-flags
 	append-cxxflags --rtlib=libgcc --stdlib=libstdc++
-	cd llvm_mode
+	cd llvm_mode || die
 	emake \
 		PREFIX="/usr" \
 		HELPER_PATH="/usr/$(get_libdir)/afl" \
