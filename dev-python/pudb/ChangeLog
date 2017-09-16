@@ -1,0 +1,5 @@
+*pudb-2017.1.4 (16 Sep 2017)
+
+  16 Sep 2017; Quentin Minster <quentin@minster.io> +metadata.xml,
+  +pudb-2017.1.4.ebuild:
+  dev-python/pudb: add pudb-2017.1.4.ebuild  Version bump.

@@ -33,8 +33,9 @@ Package status
   <tr><td rowspan=1>dev-lang</td><td>tcl</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-libs</td><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=3>dev-python</td><td>capstone-python</td><td>bump Python targets to 3.5</td><td>Pentoo</td></tr>
+  <tr><td rowspan=4>dev-python</td><td>capstone-python</td><td>bump Python targets to 3.5</td><td>Pentoo</td></tr>
   <tr><td>mypy</td><td>version bump, bump Python targets to 3.6</td><td>Portage</td></tr>
+  <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>typed_ast</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>dev-util</td><td>rr</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
