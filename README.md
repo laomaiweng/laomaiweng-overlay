@@ -31,7 +31,8 @@ Package status
   <tr><td>rig</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lang</td><td>tcl</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=1>dev-libs</td><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=2>dev-libs</td><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td>boost</td><td>enable building of boost_numpy, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=4>dev-python</td><td>capstone-python</td><td>bump Python targets to 3.5</td><td>Pentoo</td></tr>
   <tr><td>mypy</td><td>version bump, bump Python targets to 3.6</td><td>Portage</td></tr>
