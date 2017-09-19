@@ -1,3 +1,6 @@
+  19 Sep 2017; Quentin Minster <quentin@minster.io> boost-1.65.0-r1.ebuild:
+  dev-libs/boost: add missing dependency on dev-python/numpy
+
   19 Sep 2017; Quentin Minster <quentin@minster.io>
   files/boost-1.65.0-fix-python-numpy.patch:
   dev-libs/boost: fix broken patch for boost_numpy

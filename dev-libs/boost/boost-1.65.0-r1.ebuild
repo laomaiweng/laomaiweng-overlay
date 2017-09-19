@@ -22,6 +22,7 @@ IUSE="context debug doc icu +nls mpi numpy python static-libs +threads tools"
 RDEPEND="icu? ( >=dev-libs/icu-3.6:=[${MULTILIB_USEDEP}] )
 	!icu? ( virtual/libiconv[${MULTILIB_USEDEP}] )
 	mpi? ( >=virtual/mpi-2.0-r4[${MULTILIB_USEDEP},cxx,threads] )
+	numpy? ( dev-python/numpy[${PYTHON_USEDEP}] )
 	python? ( ${PYTHON_DEPS} )
 	app-arch/bzip2[${MULTILIB_USEDEP}]
 	sys-libs/zlib[${MULTILIB_USEDEP}]
