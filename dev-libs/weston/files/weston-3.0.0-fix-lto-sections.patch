@@ -1,0 +1,35 @@
+diff --git a/tests/weston-test-runner.h b/tests/weston-test-runner.h
+index 21a059d..a28b8c0 100644
+--- a/tests/weston-test-runner.h
++++ b/tests/weston-test-runner.h
+@@ -53,7 +53,7 @@ struct weston_test {
+ 	static void func(void *);				\
+ 								\
+ 	const struct weston_test test##name			\
+-		__attribute__ ((section ("test_section"))) =	\
++		__attribute__ ((used, section ("test_section"))) =	\
+ 	{							\
+ 		#name, func, data, size, n_elem, ret		\
+ 	};
+diff --git a/tools/zunitc/inc/zunitc/zunitc.h b/tools/zunitc/inc/zunitc/zunitc.h
+index 6ac6f39..16b211b 100644
+--- a/tools/zunitc/inc/zunitc/zunitc.h
++++ b/tools/zunitc/inc/zunitc/zunitc.h
+@@ -268,7 +268,7 @@ zuc_set_output_junit(bool enable);
+ 	static void zuctest_##tcase##_##test(void); \
+ 	\
+ 	const struct zuc_registration zzz_##tcase##_##test \
+-	__attribute__ ((section ("zuc_tsect"))) = \
++	__attribute__ ((used, section ("zuc_tsect"))) = \
+ 	{ \
+ 		#tcase, #test, 0,		\
+ 		zuctest_##tcase##_##test,	\
+@@ -298,7 +298,7 @@ zuc_set_output_junit(bool enable);
+ 	static void zuctest_##tcase##_##test(void *param); \
+ 	\
+ 	const struct zuc_registration zzz_##tcase##_##test \
+-	__attribute__ ((section ("zuc_tsect"))) = \
++	__attribute__ ((used, section ("zuc_tsect"))) = \
+ 	{ \
+ 		#tcase, #test, &tcase,		\
+ 		0,				\
