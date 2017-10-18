@@ -1,0 +1,22 @@
+From f1d8b9ec7e0c7e84d074e83e3fc2a4be65745644 Mon Sep 17 00:00:00 2001
+From: Quentin Minster <laomaiweng@minster.io>
+Date: Mon, 13 Mar 2017 01:39:47 +0100
+Subject: [PATCH] Fix quoting error inside command substitution
+
+---
+ defaults/initrd.d/00-modules.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/defaults/initrd.d/00-modules.sh b/defaults/initrd.d/00-modules.sh
+index e8aaf3a8..4fe9db85 100755
+--- a/defaults/initrd.d/00-modules.sh
++++ b/defaults/initrd.d/00-modules.sh
+@@ -78,7 +78,7 @@ cmdline_hwopts() {
+             if [ "${y}" = "do${x}" ]; then
+                 MY_HWOPTS="${MY_HWOPTS} $x"
+             elif [ "${y}" = "no${x}" ]; then
+-                MY_HWOPTS="$(echo ${MY_HWOPTS} | sed -e \"s/${x}//g\" -)"
++                MY_HWOPTS="$(echo ${MY_HWOPTS} | sed -e "s/${x}//g" -)"
+             fi
+         done
+     done

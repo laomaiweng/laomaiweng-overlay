@@ -1,0 +1,8 @@
+*genkernel-next-68-r1 (18 Oct 2017)
+
+  18 Oct 2017; Quentin Minster <quentin@minster.io>
+  +files/genkernel-next-68-fix-sed-expr.patch,
+  +files/genkernel-next-68-use-kernel-outputdir.patch,
+  +genkernel-next-68-r1.ebuild, +metadata.xml:
+  sys-kernel/genkernel-next: add genkernel-next-68-r1.ebuild  Apply patch for
+  PRs Sabayon/genkernel-next#46 and Sabayon/genkernel-next#49.

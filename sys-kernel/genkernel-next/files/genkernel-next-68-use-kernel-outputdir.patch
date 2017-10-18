@@ -1,0 +1,38 @@
+From 57380acf0f3a602ee86841cc9f7c1ab4ec54c998 Mon Sep 17 00:00:00 2001
+From: Quentin Minster <laomaiweng@minster.io>
+Date: Sun, 26 Feb 2017 20:09:13 +0100
+Subject: [PATCH] Use KERNEL_OUTPUTDIR for integrated initramfs configuration
+
+--integrated-initramfs builds the kernel in 2 passes, and modifies the kernel configuration in-between.
+However it used ${KERNEL_DIR}/.config, which is in the kernel source tree. While this did work for in-tree builds, it made out-of-tree builds fail since the source tree then appeared unclean (and the written .config file only contained the CONFIG_INITRAMFS_* items anyway).
+This commit switches to ${KERNEL_OUTPUTDIR}/.config which is the right path both for in-tree and out-of-tree builds.
+
+Also, some additional quotes are added.
+---
+ gen_initramfs.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/gen_initramfs.sh b/gen_initramfs.sh
+index 0c2dbe37..73032df3 100755
+--- a/gen_initramfs.sh
++++ b/gen_initramfs.sh
+@@ -1084,8 +1084,8 @@ create_initramfs() {
+     then
+         # Explicitly do not compress if we are integrating into the kernel.
+         # The kernel will do a better job of it than us.
+-        mv ${TMPDIR}/initramfs-${KV} ${TMPDIR}/initramfs-${KV}.cpio
+-        sed -i '/^.*CONFIG_INITRAMFS_SOURCE=.*$/d' ${KERNEL_DIR}/.config
++        mv "${TMPDIR}"/initramfs-"${KV}" "${TMPDIR}"/initramfs-"${KV}".cpio
++        sed -i '/^.*CONFIG_INITRAMFS_SOURCE=.*$/d' "${KERNEL_OUTPUTDIR}"/.config
+         compress_config='INITRAMFS_COMPRESSION_NONE'
+         case ${compress_ext} in
+             gz)  compress_config='INITRAMFS_COMPRESSION_GZIP' ;;
+@@ -1098,7 +1098,7 @@ create_initramfs() {
+         esac
+         # All N default except XZ, so there it gets used if the kernel does
+         # compression on it's own.
+-        cat >> ${KERNEL_DIR}/.config << EOF
++        cat >> "${KERNEL_OUTPUTDIR}/".config << EOF
+ CONFIG_INITRAMFS_SOURCE="${TMPDIR}/initramfs-${KV}.cpio${compress_ext}"
+ CONFIG_INITRAMFS_ROOT_UID=0
+ CONFIG_INITRAMFS_ROOT_GID=0
