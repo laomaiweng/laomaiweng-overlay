@@ -1,0 +1,13 @@
+*elinks-0.12_pre6-r2 (27 Oct 2017)
+
+  27 Oct 2017; Quentin Minster <quentin@minster.io> +elinks-0.12_pre6-r2.ebuild,
+  +files/bug605026.0001-ssl-Make-RAND_egd-optional.patch,
+  +files/bug605026.0002-Support-openssl-1.1.0-without-compat-modes.patch,
+  +files/elinks-0.10.4.conf-syscharset.diff, +files/elinks-0.11.2-lua-5.1.patch,
+  +files/elinks-0.12_pre5-compilation-fix.patch,
+  +files/elinks-0.12_pre5-ruby-1.9.patch,
+  +files/elinks-0.12_pre5-sm185-jsval-fixes.patch,
+  +files/elinks-0.12pre5-spidermonkey-callback.patch,
+  +files/elinks-9999-parallel-make.patch, +metadata.xml:
+  www-client/elinks: add elinks-0.12_pre6-r2.ebuild  Compatibility patches for
+  >=dev-libs/openssl-1.1.0, courtesy of #605026.
