@@ -1,0 +1,7 @@
+*serf-1.3.9-r1 (28 Oct 2017)
+
+  28 Oct 2017; Quentin Minster <quentin@minster.io>
+  +files/serf-1.3.8-openssl.patch, +files/serf-1.3.8-static-lib.patch,
+  +files/serf-1.3.9-openssl11-no-deprecated.patch, +metadata.xml,
+  +serf-1.3.9-r1.ebuild:
+  net-libs/serf: add serf-1.3.9-r1.ebuild  Fix QA issues with OpenSSL 1.1.
