@@ -1,0 +1,5 @@
+*bear-2.3.9 (31 Oct 2017)
+
+  31 Oct 2017; Quentin Minster <quentin@minster.io> +bear-2.3.9.ebuild,
+  +metadata.xml:
+  dev-util/bear: new package, new ebuild bear-2.3.9.ebuild
