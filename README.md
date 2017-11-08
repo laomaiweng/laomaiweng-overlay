@@ -26,6 +26,7 @@ Package status
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
   <tr><td rowspan=1>app-crypt</td><td>efitools</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>app-forensics</td><td>afl</td><td>version bump + bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/show_bug.cgi?id=595106">#595106</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=3>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>rig</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>

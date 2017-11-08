@@ -1,0 +1,5 @@
+*make-doc-4.2_p20171108 (08 Nov 2017)
+
+  08 Nov 2017; Quentin Minster <quentin@minster.io>
+  +make-doc-4.2_p20171108.ebuild, +metadata.xml:
+  app-doc/make-doc: new package, new ebuild make-doc-4.2_p20171108.ebuild
