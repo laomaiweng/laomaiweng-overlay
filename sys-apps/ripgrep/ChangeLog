@@ -1,3 +1,9 @@
+*ripgrep-0.7.1-r1 (31 Jan 2018)
+
+  31 Jan 2018; Quentin Minster <quentin@minster.io> +ripgrep-0.7.1-r1.ebuild:
+  sys-apps/ripgrep: add ebuild ripgrep-0.7.1-r1.ebuild  Version bump from the
+  Portage tree.
+
 *ripgrep-0.6.0-r2 (15 Sep 2017)
 
   15 Sep 2017; Quentin Minster <quentin@minster.io> +metadata.xml,
