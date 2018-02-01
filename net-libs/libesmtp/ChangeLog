@@ -1,0 +1,7 @@
+*libesmtp-1.0.6-r3 (01 Feb 2018)
+
+  01 Feb 2018; Quentin Minster <quentin@minster.io>
+  +files/libesmtp-1.0.6-openssl-1.1-api-compatibility.patch,
+  +libesmtp-1.0.6-r3.ebuild, +metadata.xml:
+  net-libs/libesmtp: add libesmtp-1.0.6-r3.ebuild  Fix build failure with
+  OpenSSL 1.1 (Gentoo bug #624412).
