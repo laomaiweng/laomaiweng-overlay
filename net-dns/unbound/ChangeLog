@@ -1,0 +1,10 @@
+*unbound-1.6.8-r1 (01 Feb 2018)
+
+  01 Feb 2018; Quentin Minster <quentin@minster.io>
+  +files/unbound-1.5.7-trust-anchor-file.patch,
+  +files/unbound-1.6.8-missing-openssl-1.1.0-headers.patch,
+  +files/unbound-anchor.service, +files/unbound.confd, +files/unbound.initd,
+  +files/unbound.service, +files/unbound.socket, +files/unbound_at.service,
+  +metadata.xml, +unbound-1.6.8-r1.ebuild:
+  net-dns/unbound: new ebuild unbound-1.6.8-r1.ebuild  Fix missing OpenSSL 1.1.0
+  headers (Gentoo bug #646276).
