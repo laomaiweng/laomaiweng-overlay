@@ -318,3 +318,36 @@ index dd73065..d1e9bf4 100644
      return r;
  }
  
+@@ -1443,8 +1489,10 @@ int otp_server_plug_init(const sasl_utils_t *utils,
+     *pluglist = otp_server_plugins;
+     *plugcount = 1;  
+     
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     /* Add all digests */
+     OpenSSL_add_all_digests();
++#endif
+     
+     return SASL_OK;
+ }
+@@ -1844,8 +1892,10 @@ int otp_client_plug_init(sasl_utils_t *utils,
+     *pluglist = otp_client_plugins;
+     *plugcount = 1;
+     
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     /* Add all digests */
+     OpenSSL_add_all_digests();
++#endif
+     
+     return SASL_OK;
+ }
+--- a/saslauthd/lak.c
++++ b/saslauthd/lak.c
+@@ -729,7 +729,7 @@ int lak_init(
+ 		return rc;
+ 	}
+ 
+-#ifdef HAVE_OPENSSL
++#if defined(HAVE_OPENSSL) && OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	OpenSSL_add_all_digests();
+ #endif
+ 

@@ -1,3 +1,8 @@
+  02 Feb 2018; Quentin Minster <quentin@minster.io>
+  files/cyrus-sasl-2.1.26-openssl-1.1.0-compatibility.patch:
+  dev-libs/cyrus-sasl: update cyrus-sasl-2.1.26-r12.ebuild  Fix incomplete
+  OpenSSL 1.1 patch.
+
 *cyrus-sasl-2.1.26-r12 (02 Feb 2018)
 
   02 Feb 2018; Quentin Minster <quentin@minster.io>
