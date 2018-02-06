@@ -1,7 +1,0 @@
-*ruby-2.3.6-r1 (06 Feb 2018)
-
-  06 Feb 2018; Quentin Minster <quentin@minster.io>
-  +files/ruby-2.3.6-openssl1.1-detection.patch, +metadata.xml,
-  +ruby-2.3.6-r1.ebuild:
-  dev-lang/ruby: add ruby-2.3.6-r1.ebuild  Fix silent failed detection of
-  OpenSSL 1.1.0 (Gentoo bug #646734).
