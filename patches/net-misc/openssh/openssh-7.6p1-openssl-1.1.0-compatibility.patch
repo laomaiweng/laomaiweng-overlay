@@ -1,0 +1,223 @@
+diff --git a/configure.ac b/configure.ac
+index 889f506..f6c53fb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2481,6 +2481,7 @@ if test "x$openssl" = "xyes" ; then
+ 			)
+ 		]
+ 	)
++	AC_CHECK_FUNCS([SSLeay OpenSSL_version_num SSLeay_add_all_algorithms OPENSSL_init_crypto])
+ 
+ 	# Determine OpenSSL header version
+ 	AC_MSG_CHECKING([OpenSSL header version])
+@@ -2536,8 +2537,15 @@ if test "x$openssl" = "xyes" ; then
+ 		if(fd == NULL)
+ 			exit(1);
+ 
++		#if defined(HAVE_SSLEAY)
+ 		if ((rc = fprintf(fd, "%08lx (%s)\n", (unsigned long)SSLeay(),
+ 		    SSLeay_version(SSLEAY_VERSION))) < 0)
++		#elif defined(HAVE_OPENSSL_VERSION_NUM)
++		if ((rc = fprintf(fd, "%08lx (%s)\n", (unsigned long)OpenSSL_version_num(),
++		    OpenSSL_version(OPENSSL_VERSION))) < 0)
++		#else
++		#error
++		#endif
+ 			exit(1);
+ 
+ 		exit(0);
+@@ -2550,9 +2558,10 @@ if test "x$openssl" = "xyes" ; then
+ 					AC_MSG_ERROR([OpenSSL >= 1.0.1 required (have "$ssl_library_ver")])
+ 			                ;;
+ 				100*)   ;; # 1.0.x
++				101*)   ;; # 1.1.x
+ 				200*)   ;; # LibreSSL
+ 			        *)
+-					AC_MSG_ERROR([OpenSSL >= 1.1.0 is not yet supported (have "$ssl_library_ver")])
++					AC_MSG_ERROR([OpenSSL version is not yet supported (have "$ssl_library_ver")])
+ 			                ;;
+ 			esac
+ 			AC_MSG_RESULT([$ssl_library_ver])
+@@ -2574,7 +2583,13 @@ if test "x$openssl" = "xyes" ; then
+ 	#include <openssl/opensslv.h>
+ 	#include <openssl/crypto.h>
+ 		]], [[
++		#if defined(HAVE_SSLEAY)
+ 		exit(SSLeay() == OPENSSL_VERSION_NUMBER ? 0 : 1);
++		#elif defined(HAVE_OPENSSL_VERSION_NUM)
++		exit(OpenSSL_version_num() == OPENSSL_VERSION_NUMBER ? 0 : 1);
++		#else
++		#error
++		#endif
+ 		]])],
+ 		[
+ 			AC_MSG_RESULT([yes])
+@@ -2602,7 +2617,15 @@ if test "x$openssl" = "xyes" ; then
+ 	AC_MSG_CHECKING([if programs using OpenSSL functions will link])
+ 	AC_LINK_IFELSE(
+ 		[AC_LANG_PROGRAM([[ #include <openssl/evp.h> ]],
+-		[[ SSLeay_add_all_algorithms(); ]])],
++		[[
++		#if defined(HAVE_SSLEAY_ADD_ALL_ALGORITHMS)
++		SSLeay_add_all_algorithms();
++		#elif defined(HAVE_OPENSSL_INIT_CRYPTO)
++		OPENSSL_init_crypto(0, NULL);
++		#else
++		#error
++		#endif
++		]])],
+ 		[
+ 			AC_MSG_RESULT([yes])
+ 		],
+@@ -2613,7 +2636,15 @@ if test "x$openssl" = "xyes" ; then
+ 			AC_MSG_CHECKING([if programs using OpenSSL need -ldl])
+ 			AC_LINK_IFELSE(
+ 				[AC_LANG_PROGRAM([[ #include <openssl/evp.h> ]],
+-				[[ SSLeay_add_all_algorithms(); ]])],
++				[[
++				#if defined(HAVE_SSLEAY_ADD_ALL_ALGORITHMS)
++				SSLeay_add_all_algorithms();
++				#elif defined(HAVE_OPENSSL_INIT_CRYPTO)
++				OPENSSL_init_crypto(0, NULL);
++				#else
++				#error
++				#endif
++				]])],
+ 				[
+ 					AC_MSG_RESULT([yes])
+ 				],
+@@ -2626,6 +2657,8 @@ if test "x$openssl" = "xyes" ; then
+ 	)
+ 
+ 	AC_CHECK_FUNCS([ \
++		SSLeay_version \
++		OpenSSL_version \
+ 		BN_is_prime_ex \
+ 		DSA_generate_parameters_ex \
+ 		EVP_DigestInit_ex \
+diff --git a/entropy.c b/entropy.c
+index 9305f89..15bff1a 100644
+--- a/entropy.c
++++ b/entropy.c
+@@ -213,9 +213,17 @@ seed_rng(void)
+ #ifndef OPENSSL_PRNG_ONLY
+ 	unsigned char buf[RANDOM_SEED_SIZE];
+ #endif
++#if defined(HAVE_SSLEAY)
+ 	if (!ssh_compatible_openssl(OPENSSL_VERSION_NUMBER, SSLeay()))
+ 		fatal("OpenSSL version mismatch. Built against %lx, you "
+ 		    "have %lx", (u_long)OPENSSL_VERSION_NUMBER, SSLeay());
++#elif defined(HAVE_OPENSSL_VERSION_NUM)
++	if (!ssh_compatible_openssl(OPENSSL_VERSION_NUMBER, OpenSSL_version_num()))
++		fatal("OpenSSL version mismatch. Built against %lx, you "
++		    "have %lx", (u_long)OPENSSL_VERSION_NUMBER, OpenSSL_version_num());
++#else
++#error
++#endif
+ 
+ #ifndef OPENSSL_PRNG_ONLY
+ 	if (RAND_status() == 1) {
+diff --git a/ssh-keysign.c b/ssh-keysign.c
+index ac5034d..9986ec9 100644
+--- a/ssh-keysign.c
++++ b/ssh-keysign.c
+@@ -229,7 +229,9 @@ main(int argc, char **argv)
+ 		fatal("could not open any host key");
+ 
+ #ifdef WITH_OPENSSL
++# if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	OpenSSL_add_all_algorithms();
++# endif
+ 	arc4random_buf(rnd, sizeof(rnd));
+ 	RAND_seed(rnd, sizeof(rnd));
+ #endif
+diff --git a/ssh.c b/ssh.c
+index ae37432..aa4cb06 100644
+--- a/ssh.c
++++ b/ssh.c
+@@ -765,7 +765,13 @@ main(int ac, char **av)
+ 			fprintf(stderr, "%s, %s\n",
+ 			    SSH_RELEASE,
+ #ifdef WITH_OPENSSL
++# if defined(HAVE_SSLEAY_VERSION)
+ 			    SSLeay_version(SSLEAY_VERSION)
++# elif defined(HAVE_OPENSSL_VERSION)
++			    OpenSSL_version(OPENSSL_VERSION)
++# else
++#  error
++# endif
+ #else
+ 			    "without OpenSSL"
+ #endif
+@@ -956,7 +962,7 @@ main(int ac, char **av)
+ 
+ 	host_arg = xstrdup(host);
+ 
+-#ifdef WITH_OPENSSL
++#if defined(WITH_OPENSSL) && OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	OpenSSL_add_all_algorithms();
+ 	ERR_load_crypto_strings();
+ #endif
+@@ -1003,7 +1009,13 @@ main(int ac, char **av)
+ 	if (debug_flag)
+ 		logit("%s, %s", SSH_RELEASE,
+ #ifdef WITH_OPENSSL
++# if defined(HAVE_SSLEAY_VERSION)
+ 		    SSLeay_version(SSLEAY_VERSION)
++# elif defined(HAVE_OPENSSL_VERSION)
++		    OpenSSL_version(OPENSSL_VERSION)
++# else
++#  error
++# endif
+ #else
+ 		    "without OpenSSL"
+ #endif
+diff --git a/ssh_api.c b/ssh_api.c
+index c84b4e7..e03ddfa 100644
+--- a/ssh_api.c
++++ b/ssh_api.c
+@@ -79,9 +79,9 @@ ssh_init(struct ssh **sshp, int is_server, struct kex_params *kex_params)
+ 	int r;
+ 
+ 	if (!called) {
+-#ifdef WITH_OPENSSL
++#if defined(WITH_OPENSSL) && OPENSSL_VERSION_NUMBER < 0x10100000L
+ 		OpenSSL_add_all_algorithms();
+-#endif /* WITH_OPENSSL */
++#endif /* defined(WITH_OPENSSL) && OPENSSL_VERSION_NUMBER < 0x10100000L */
+ 		called = 1;
+ 	}
+ 
+diff --git a/sshd.c b/sshd.c
+index 51a1aaf..0599b71 100644
+--- a/sshd.c
++++ b/sshd.c
+@@ -902,7 +902,13 @@ usage(void)
+ 	fprintf(stderr, "%s, %s\n",
+ 	    SSH_RELEASE,
+ #ifdef WITH_OPENSSL
+-	    SSLeay_version(SSLEAY_VERSION)
++# if defined(HAVE_SSLEAY_VERSION)
++		    SSLeay_version(SSLEAY_VERSION)
++# elif defined(HAVE_OPENSSL_VERSION)
++		    OpenSSL_version(OPENSSL_VERSION)
++# else
++#  error
++# endif
+ #else
+ 	    "without OpenSSL"
+ #endif
+@@ -1629,7 +1635,13 @@ main(int ac, char **av)
+ 
+ 	debug("sshd version %s, %s", SSH_VERSION,
+ #ifdef WITH_OPENSSL
++# if defined(HAVE_SSLEAY_VERSION)
+ 	    SSLeay_version(SSLEAY_VERSION)
++# elif defined(HAVE_OPENSSL_VERSION)
++	    OpenSSL_version(OPENSSL_VERSION)
++# else
++#  error
++# endif
+ #else
+ 	    "without OpenSSL"
+ #endif

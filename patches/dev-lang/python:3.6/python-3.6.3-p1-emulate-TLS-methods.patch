@@ -1,0 +1,140 @@
+--- Python-3.6.3-orig/Modules/_ssl.c	2017-10-03 16:52:02.000000000 +1100
++++ Python-3.6.3/Modules/_ssl.c	2017-10-13 21:47:02.133444431 +1100
+@@ -2642,39 +2642,75 @@
+     PySSLContext *self;
+     long options;
+     SSL_CTX *ctx = NULL;
+-    int result;
++    int result = 0;
+ #if defined(SSL_MODE_RELEASE_BUFFERS)
+     unsigned long libver;
+ #endif
+ 
+     PySSL_BEGIN_ALLOW_THREADS
+-    if (proto_version == PY_SSL_VERSION_TLS1)
++    switch (proto_version) {
++#ifndef OPENSSL_VERSION_1_1
++    /* OpenSSL < 1.1 */
++#ifndef OPENSSL_NO_SSL2
++    case PY_SSL_VERSION_SSL2:
++        ctx = SSL_CTX_new(SSLv2_method());
++        break;
++#endif
++#ifndef OPENSSL_NO_SSL3
++    case PY_SSL_VERSION_SSL3:
++        ctx = SSL_CTX_new(SSLv3_method());
++        break;
++#endif
++#ifndef OPENSSL_NO_TLS1
++    case PY_SSL_VERSION_TLS1:
+         ctx = SSL_CTX_new(TLSv1_method());
+-#if HAVE_TLSv1_2
+-    else if (proto_version == PY_SSL_VERSION_TLS1_1)
++        break;
++#endif
++#if !defined(OPENSSL_NO_TLS1_1) && HAVE_TLSv1_2
++    case PY_SSL_VERSION_TLS1_1:
+         ctx = SSL_CTX_new(TLSv1_1_method());
+-    else if (proto_version == PY_SSL_VERSION_TLS1_2)
++        break;
++#endif
++#if !defined(OPENSSL_NO_TLS1_2) && HAVE_TLSv1_2
++    case PY_SSL_VERSION_TLS1_2:
+         ctx = SSL_CTX_new(TLSv1_2_method());
++        break;
+ #endif
++#else
++    /* OpenSSL >= 1.1
++     * create context with TLS_method for all protocols
++     * no SSLv2_method in OpenSSL 1.1.
++     */
+ #ifndef OPENSSL_NO_SSL3
+-    else if (proto_version == PY_SSL_VERSION_SSL3)
+-        ctx = SSL_CTX_new(SSLv3_method());
++    case PY_SSL_VERSION_SSL3: /* fallthrough */
+ #endif
+-#ifndef OPENSSL_NO_SSL2
+-    else if (proto_version == PY_SSL_VERSION_SSL2)
+-        ctx = SSL_CTX_new(SSLv2_method());
++#ifndef OPENSSL_NO_TLS1
++    case PY_SSL_VERSION_TLS1: /* fallthrough */
++#endif
++#if !defined(OPENSSL_NO_TLS1_1) && HAVE_TLSv1_2
++    case PY_SSL_VERSION_TLS1_1: /* fallthrough */
++#endif
++#if !defined(OPENSSL_NO_TLS1_2) && HAVE_TLSv1_2
++    case PY_SSL_VERSION_TLS1_2: /* fallthrough */
+ #endif
+-    else if (proto_version == PY_SSL_VERSION_TLS) /* SSLv23 */
++#endif /* OpenSSL >= 1.1 */
++    case PY_SSL_VERSION_TLS:
++        /* SSLv23 */
+         ctx = SSL_CTX_new(TLS_method());
+-    else if (proto_version == PY_SSL_VERSION_TLS_CLIENT)
++        break;
++    case PY_SSL_VERSION_TLS_CLIENT:
+         ctx = SSL_CTX_new(TLS_client_method());
+-    else if (proto_version == PY_SSL_VERSION_TLS_SERVER)
++        break;
++    case PY_SSL_VERSION_TLS_SERVER:
+         ctx = SSL_CTX_new(TLS_server_method());
+-    else
+-        proto_version = -1;
++        break;
++    default:
++        result = -1;
++        break;
++    }
+     PySSL_END_ALLOW_THREADS
+ 
+-    if (proto_version == -1) {
++    if (result == -1) {
+         PyErr_SetString(PyExc_ValueError,
+                         "invalid protocol version");
+         return NULL;
+@@ -2684,6 +2720,45 @@
+         return NULL;
+     }
+ 
++#ifdef OPENSSL_VERSION_1_1
++    /* Emulate version specific methods with set min/max proto version */
++    switch (proto_version) {
++    case PY_SSL_VERSION_SSL3:
++        /* OpenSSL 1.1.0 sets SSL_OP_NO_SSLv3 for TLS_method by default */
++        SSL_CTX_clear_options(ctx, SSL_OP_NO_SSLv3);
++        if (!SSL_CTX_set_min_proto_version(ctx, SSL3_VERSION))
++            result = -1;
++        if (!SSL_CTX_set_max_proto_version(ctx, SSL3_VERSION))
++            result = -1;
++        break;
++    case PY_SSL_VERSION_TLS1:
++        if (!SSL_CTX_set_min_proto_version(ctx, TLS1_VERSION))
++            result = -1;
++        if (!SSL_CTX_set_max_proto_version(ctx, TLS1_VERSION))
++            result = -1;
++        break;
++    case PY_SSL_VERSION_TLS1_1:
++        if (!SSL_CTX_set_min_proto_version(ctx, TLS1_1_VERSION))
++            result = -1;
++        if (!SSL_CTX_set_max_proto_version(ctx, TLS1_1_VERSION))
++            result = -1;
++        break;
++    case PY_SSL_VERSION_TLS1_2:
++        if (!SSL_CTX_set_min_proto_version(ctx, TLS1_2_VERSION))
++            result = -1;
++        if (!SSL_CTX_set_max_proto_version(ctx, TLS1_2_VERSION))
++            result = -1;
++        break;
++    default:
++        break;
++    }
++    if (result == -1) {
++        SSL_CTX_free(ctx);
++        _setSSLError(NULL, 0, __FILE__, __LINE__);
++        return NULL;
++    }
++#endif
++
+     assert(type != NULL && type->tp_alloc != NULL);
+     self = (PySSLContext *) type->tp_alloc(type, 0);
+     if (self == NULL) {

@@ -1,0 +1,104 @@
+diff --git a/auth-pam.c b/auth-pam.c
+index de29c04..e7ceead 100644
+--- a/auth-pam.c
++++ b/auth-pam.c
+@@ -140,7 +140,16 @@ struct pam_ctxt {
+ static void sshpam_free_ctx(void *);
+ static struct pam_ctxt *cleanup_ctxt;
+ 
+-#ifndef UNSUPPORTED_POSIX_THREADS_HACK
++#ifdef UNSUPPORTED_POSIX_THREADS_HACK
++/*
++ * Avoid namespace clash when *not* using pthreads for systems *with*
++ * pthreads, where OpenSSL includes <pthread.h> in openssl/crypto.h
++ */
++# define _pthread_exit pthread_exit
++# define _pthread_create pthread_create
++# define _pthread_cancel pthread_cancel
++# define _pthread_join pthread_join
++#else
+ /*
+  * Simulate threads with processes.
+  */
+@@ -167,7 +176,7 @@ sshpam_sigchld_handler(int sig)
+ 	}
+ 	if (WIFSIGNALED(sshpam_thread_status) &&
+ 	    WTERMSIG(sshpam_thread_status) == SIGTERM)
+-		return;	/* terminated by pthread_cancel */
++		return;	/* terminated by _pthread_cancel */
+ 	if (!WIFEXITED(sshpam_thread_status))
+ 		sigdie("PAM: authentication thread exited unexpectedly");
+ 	if (WEXITSTATUS(sshpam_thread_status) != 0)
+@@ -176,14 +185,14 @@ sshpam_sigchld_handler(int sig)
+ 
+ /* ARGSUSED */
+ static void
+-pthread_exit(void *value)
++_pthread_exit(void *value)
+ {
+ 	_exit(0);
+ }
+ 
+ /* ARGSUSED */
+ static int
+-pthread_create(sp_pthread_t *thread, const void *attr,
++_pthread_create(sp_pthread_t *thread, const void *attr,
+     void *(*thread_start)(void *), void *arg)
+ {
+ 	pid_t pid;
+@@ -209,7 +218,7 @@ pthread_create(sp_pthread_t *thread, const void *attr,
+ }
+ 
+ static int
+-pthread_cancel(sp_pthread_t thread)
++_pthread_cancel(sp_pthread_t thread)
+ {
+ 	signal(SIGCHLD, sshpam_oldsig);
+ 	return (kill(thread, SIGTERM));
+@@ -217,7 +226,7 @@ pthread_cancel(sp_pthread_t thread)
+ 
+ /* ARGSUSED */
+ static int
+-pthread_join(sp_pthread_t thread, void **value)
++_pthread_join(sp_pthread_t thread, void **value)
+ {
+ 	int status;
+ 
+@@ -505,7 +514,7 @@ sshpam_thread(void *ctxtp)
+ 	/* XXX - can't do much about an error here */
+ 	ssh_msg_send(ctxt->pam_csock, sshpam_err, &buffer);
+ 	buffer_free(&buffer);
+-	pthread_exit(NULL);
++	_pthread_exit(NULL);
+ 
+  auth_fail:
+ 	buffer_put_cstring(&buffer,
+@@ -518,7 +527,7 @@ sshpam_thread(void *ctxtp)
+ 	else
+ 		ssh_msg_send(ctxt->pam_csock, PAM_AUTH_ERR, &buffer);
+ 	buffer_free(&buffer);
+-	pthread_exit(NULL);
++	_pthread_exit(NULL);
+ 
+ 	return (NULL); /* Avoid warning for non-pthread case */
+ }
+@@ -530,8 +539,8 @@ sshpam_thread_cleanup(void)
+ 
+ 	debug3("PAM: %s entering", __func__);
+ 	if (ctxt != NULL && ctxt->pam_thread != 0) {
+-		pthread_cancel(ctxt->pam_thread);
+-		pthread_join(ctxt->pam_thread, NULL);
++		_pthread_cancel(ctxt->pam_thread);
++		_pthread_join(ctxt->pam_thread, NULL);
+ 		close(ctxt->pam_psock);
+ 		close(ctxt->pam_csock);
+ 		memset(ctxt, 0, sizeof(*ctxt));
+@@ -695,7 +704,7 @@ sshpam_init_ctx(Authctxt *authctxt)
+ 	}
+ 	ctxt->pam_psock = socks[0];
+ 	ctxt->pam_csock = socks[1];
+-	if (pthread_create(&ctxt->pam_thread, NULL, sshpam_thread, ctxt) == -1) {
++	if (_pthread_create(&ctxt->pam_thread, NULL, sshpam_thread, ctxt) == -1) {
+ 		error("PAM: failed to start authentication thread: %s",
+ 		    strerror(errno));
+ 		close(socks[0]);

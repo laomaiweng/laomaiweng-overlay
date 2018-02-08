@@ -1,0 +1,82 @@
+https://grsecurity.net/~spender/random_timestamp.diff
+diff --git a/grsecurity/Kconfig b/grsecurity/Kconfig
+index 3abaf02..700e56c 100644
+--- a/grsecurity/Kconfig
++++ b/grsecurity/Kconfig
+@@ -925,6 +925,16 @@ config GRKERNSEC_RANDNET
+ 	  here.  Saying Y here has a similar effect as modifying
+ 	  /proc/sys/kernel/random/poolsize.
+ 
++config GRKERNSEC_RANDOM_TIMESTAMPS
++	bool "Add random offset to TCP timestamps"
++	default y if GRKERNSEC_CONFIG_AUTO
++	help
++	  If you say Y here, a simple change will be made to TCP timestamp
++	  behavior that will prevent the system from leaking the jiffies
++	  value remotely to an attacker who has not been persistently
++	  monitoring the system since boot.  The jiffies value can be used
++	  to remotely determine system uptime.
++
+ config GRKERNSEC_BLACKHOLE
+ 	bool "TCP/UDP blackhole and LAST_ACK DoS prevention"
+ 	default y if GRKERNSEC_CONFIG_AUTO
+diff --git a/grsecurity/grsec_init.c b/grsecurity/grsec_init.c
+index ae6c028..c7dbe97d 100644
+--- a/grsecurity/grsec_init.c
++++ b/grsecurity/grsec_init.c
+@@ -7,6 +7,11 @@
+ #include <linux/percpu.h>
+ #include <linux/module.h>
+ 
++#ifdef CONFIG_GRKERNSEC_RANDOM_TIMESTAMPS
++__u32 random_timestamp_base __latent_entropy;
++EXPORT_SYMBOL_GPL(random_timestamp_base);
++#endif
++
+ int grsec_enable_ptrace_readexec __read_only;
+ int grsec_enable_setxid __read_only;
+ int grsec_enable_symlinkown __read_only;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index b2948c0..ccbeda9 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2296,4 +2296,8 @@ extern int sysctl_optmem_max;
+ extern __u32 sysctl_wmem_default;
+ extern __u32 sysctl_rmem_default;
+ 
++#ifdef CONFIG_GRKERNSEC_RANDOM_TIMESTAMPS
++extern __u32 random_timestamp_base;
++#endif
++
+ #endif	/* _SOCK_H */
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 44a58b0..fcdca06 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -684,7 +684,11 @@ void tcp_send_window_probe(struct sock *sk);
+  * to use only the low 32-bits of jiffies and hide the ugly
+  * casts with the following macro.
+  */
++#ifdef CONFIG_GRKERNSEC_RANDOM_TIMESTAMPS
++#define tcp_time_stamp		((__u32)(jiffies) + random_timestamp_base)
++#else
+ #define tcp_time_stamp		((__u32)(jiffies))
++#endif
+ 
+ #define tcp_flag_byte(th) (((u_int8_t *)th)[13])
+ 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index f3e28ec..8b1cf12 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6986,6 +6986,10 @@ static int __init net_dev_init(void)
+ 
+ 	BUG_ON(!dev_boot_phase);
+ 
++#ifdef CONFIG_GRKERNSEC_RANDOM_TIMESTAMPS
++	random_timestamp_base += prandom_u32();
++#endif
++
+ 	if (dev_proc_init())
+ 		goto out;
+ 

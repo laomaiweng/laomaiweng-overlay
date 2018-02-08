@@ -1,0 +1,166 @@
+diff --git a/ext/openssl/extconf.rb b/ext/openssl/extconf.rb
+index 75da65c..98f3bd3 100644
+--- a/ext/openssl/extconf.rb
++++ b/ext/openssl/extconf.rb
+@@ -122,6 +122,10 @@ def find_openssl_library
+   OpenSSL.check_func_or_macro("ENGINE_load_#{name}", "openssl/engine.h")
+ }
+ 
++# newer, OpenSSL-dubbed versions of SSLeay*() exist, and the old names may be
++# removed in future versions of OpenSSL
++have_func("SSLeay_version")
++
+ # added in 0.9.8X
+ have_func("EVP_CIPHER_CTX_new")
+ have_func("EVP_CIPHER_CTX_free")
+@@ -188,6 +192,10 @@ def find_openssl_library
+ OpenSSL.check_func_or_macro("SSL_CTX_set_min_proto_version", "openssl/ssl.h")
+ have_func("SSL_CTX_get_security_level")
+ have_func("X509_get0_notBefore")
++have_func("X509_set1_notBefore")
++have_func("X509_set1_notAfter")
++have_func("X509_CRL_set1_lastUpdate")
++have_func("X509_CRL_set1_nextUpdate")
+ have_func("SSL_SESSION_get_protocol_version")
+ 
+ Logging::message "=== Checking done. ===\n"
+diff --git a/ext/openssl/ossl.c b/ext/openssl/ossl.c
+index c22966d..7d48944 100644
+--- a/ext/openssl/ossl.c
++++ b/ext/openssl/ossl.c
+@@ -1010,10 +1010,12 @@ Init_openssl(void)
+      */
+     /* CRYPTO_malloc_init(); */
+     /* ENGINE_load_builtin_engines(); */
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     OpenSSL_add_ssl_algorithms();
+     OpenSSL_add_all_algorithms();
+     ERR_load_crypto_strings();
+     SSL_load_error_strings();
++#endif
+ 
+     /*
+      * FIXME:
+@@ -1048,7 +1050,11 @@ Init_openssl(void)
+     /*
+      * Version of OpenSSL the ruby OpenSSL extension is running with
+      */
++#ifdef HAVE_SSLEAY_VERSION
+     rb_define_const(mOSSL, "OPENSSL_LIBRARY_VERSION", rb_str_new2(SSLeay_version(SSLEAY_VERSION)));
++#else
++    rb_define_const(mOSSL, "OPENSSL_LIBRARY_VERSION", rb_str_new2(OpenSSL_version(OPENSSL_VERSION)));
++#endif
+ 
+     /*
+      * Version number of OpenSSL the ruby OpenSSL extension was built with
+diff --git a/ext/openssl/ossl.h b/ext/openssl/ossl.h
+index 78eddd0..184a52e 100644
+--- a/ext/openssl/ossl.h
++++ b/ext/openssl/ossl.h
+@@ -19,6 +19,11 @@
+ #include <ruby/thread.h>
+ #include <openssl/opensslv.h>
+ #include <openssl/err.h>
++#include <openssl/bn.h>
++#include <openssl/evp.h>
++#include <openssl/rsa.h>
++#include <openssl/dsa.h>
++#include <openssl/dh.h>
+ #include <openssl/asn1.h>
+ #include <openssl/x509v3.h>
+ #include <openssl/ssl.h>
+diff --git a/ext/openssl/ossl_cipher.c b/ext/openssl/ossl_cipher.c
+index c2f0927..ed3ccdd 100644
+--- a/ext/openssl/ossl_cipher.c
++++ b/ext/openssl/ossl_cipher.c
+@@ -31,6 +31,10 @@
+     GetCipher((obj), (ctx)); \
+ } while (0)
+ 
++# if OPENSSL_VERSION_NUMBER >= 0x10100000L
++#  define EVP_CIPHER_CTX_flags(c)       EVP_CIPHER_flags(EVP_CIPHER_CTX_cipher(c))
++# endif
++
+ /*
+  * Classes
+  */
+diff --git a/ext/openssl/ossl_engine.c b/ext/openssl/ossl_engine.c
+index e840bfd..d9069b1 100644
+--- a/ext/openssl/ossl_engine.c
++++ b/ext/openssl/ossl_engine.c
+@@ -147,7 +147,9 @@ ossl_engine_s_load(int argc, VALUE *argv, VALUE klass)
+ #ifdef HAVE_ENGINE_LOAD_OPENBSD_DEV_CRYPTO
+     OSSL_ENGINE_LOAD_IF_MATCH(openbsd_dev_crypto);
+ #endif
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     OSSL_ENGINE_LOAD_IF_MATCH(openssl);
++#endif
+     rb_warning("no such builtin loader for `%"PRIsVALUE"'", name);
+     return Qnil;
+ #endif /* HAVE_ENGINE_LOAD_BUILTIN_ENGINES */
+@@ -165,7 +167,9 @@ ossl_engine_s_load(int argc, VALUE *argv, VALUE klass)
+ static VALUE
+ ossl_engine_s_cleanup(VALUE self)
+ {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     ENGINE_cleanup();
++#endif
+     return Qnil;
+ }
+ 
+diff --git a/ext/openssl/ossl_x509cert.c b/ext/openssl/ossl_x509cert.c
+index 87086a7..4b6253e 100644
+--- a/ext/openssl/ossl_x509cert.c
++++ b/ext/openssl/ossl_x509cert.c
+@@ -478,7 +478,11 @@ ossl_x509_set_not_before(VALUE self, VALUE time)
+ 
+     GetX509(self, x509);
+     asn1time = ossl_x509_time_adjust(NULL, time);
++#ifdef HAVE_X509_SET1_NOTBEFORE
++    if (!X509_set1_notBefore(x509, asn1time)) {
++#else
+     if (!X509_set_notBefore(x509, asn1time)) {
++#endif
+ 	ASN1_TIME_free(asn1time);
+ 	ossl_raise(eX509CertError, "X509_set_notBefore");
+     }
+@@ -517,7 +521,11 @@ ossl_x509_set_not_after(VALUE self, VALUE time)
+ 
+     GetX509(self, x509);
+     asn1time = ossl_x509_time_adjust(NULL, time);
++#ifdef HAVE_X509_SET1_NOTAFTER
++    if (!X509_set1_notAfter(x509, asn1time)) {
++#else
+     if (!X509_set_notAfter(x509, asn1time)) {
++#endif
+ 	ASN1_TIME_free(asn1time);
+ 	ossl_raise(eX509CertError, "X509_set_notAfter");
+     }
+diff --git a/ext/openssl/ossl_x509crl.c b/ext/openssl/ossl_x509crl.c
+index 035025a..ee0c930 100644
+--- a/ext/openssl/ossl_x509crl.c
++++ b/ext/openssl/ossl_x509crl.c
+@@ -237,7 +237,11 @@ ossl_x509crl_set_last_update(VALUE self, VALUE time)
+ 
+     GetX509CRL(self, crl);
+     asn1time = ossl_x509_time_adjust(NULL, time);
++#ifdef HAVE_X509_CRL_SET1_LASTUPDATE
++    if (!X509_CRL_set1_lastUpdate(crl, asn1time)) {
++#else
+     if (!X509_CRL_set_lastUpdate(crl, asn1time)) {
++#endif
+ 	ASN1_TIME_free(asn1time);
+ 	ossl_raise(eX509CRLError, "X509_CRL_set_lastUpdate");
+     }
+@@ -264,7 +268,11 @@ ossl_x509crl_set_next_update(VALUE self, VALUE time)
+ 
+     GetX509CRL(self, crl);
+     asn1time = ossl_x509_time_adjust(NULL, time);
++#ifdef HAVE_X509_CRL_SET1_NEXTUPDATE
++    if (!X509_CRL_set1_nextUpdate(crl, asn1time)) {
++#else
+     if (!X509_CRL_set_nextUpdate(crl, asn1time)) {
++#endif
+ 	ASN1_TIME_free(asn1time);
+ 	ossl_raise(eX509CRLError, "X509_CRL_set_nextUpdate");
+     }
