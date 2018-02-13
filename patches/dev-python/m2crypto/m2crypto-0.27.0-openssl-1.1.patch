@@ -1,0 +1,255 @@
+--- M2Crypto-0.27.0-orig/SWIG/_m2crypto.i	2017-10-06 07:43:17.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_m2crypto.i	2017-12-02 21:46:45.498064231 +1100
+@@ -26,6 +26,7 @@
+ #pragma GCC diagnostic warning "-Wstrict-prototypes"
+ #endif
+ 
++#include <openssl/dsa.h>
+ #include <openssl/err.h>
+ #include <openssl/rand.h>
+ #include <_lib.h>
+--- M2Crypto-0.27.0-orig/SWIG/_engine.i	2017-10-06 01:48:44.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_engine.i	2017-12-02 23:05:36.668415706 +1100
+@@ -23,15 +23,6 @@
+ %rename(engine_load_builtin_engines) ENGINE_load_builtin_engines;
+ extern void ENGINE_load_builtin_engines(void);
+ 
+-%rename(engine_load_dynamic) ENGINE_load_dynamic;
+-extern void ENGINE_load_dynamic(void);
+-
+-%rename(engine_load_openssl) ENGINE_load_openssl;
+-extern void ENGINE_load_openssl(void);
+-
+-%rename(engine_cleanup) ENGINE_cleanup;
+-extern void ENGINE_cleanup(void);
+-
+ /*
+  * Engine allocation functions
+  */
+@@ -111,6 +102,28 @@
+  * optional password set.
+  */
+ 
++void engine_load_dynamic(void) {
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_DYNAMIC, NULL);
++#else
++    ENGINE_load_dynamic();
++#endif
++}
++
++void engine_load_openssl(void) {
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_OPENSSL, NULL);
++#else
++    ENGINE_load_openssl();
++#endif
++}
++
++void engine_cleanup(void) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++    ENGINE_cleanup();
++#endif
++}
++
+ typedef struct {
+     char * password;
+     char * prompt;
+--- M2Crypto-0.27.0-orig/SWIG/_rand.i	2017-10-06 07:43:17.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_rand.i	2017-12-02 22:59:01.418272556 +1100
+@@ -16,13 +16,17 @@
+ extern int RAND_poll(void);
+ %rename(rand_status) RAND_status;
+ extern int RAND_status(void);
+-%rename(rand_cleanup) RAND_cleanup;
+-extern void RAND_cleanup(void);
+ 
+ %warnfilter(454) _rand_err;
+ %inline %{
+ static PyObject *_rand_err;
+ 
++void rand_cleanup(void) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++    RAND_cleanup();
++#endif
++}
++
+ void rand_init(PyObject *rand_err) {
+     Py_INCREF(rand_err);
+     _rand_err = rand_err;
+@@ -86,7 +90,11 @@
+         PyMem_Free(blob);
+         return NULL;
+     }
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    ret = (_PyOS_URandom(blob, n) == 0 ? 1 : 0);
++#else
+     ret = RAND_pseudo_bytes(blob, n);
++#endif
+     if (ret == -1) {
+         PyMem_Free(blob);
+         Py_DECREF(tuple);
+--- M2Crypto-0.27.0-orig/SWIG/_ssl.i	2017-10-06 07:43:17.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_ssl.i	2017-12-02 22:50:38.178916898 +1100
+@@ -19,6 +19,7 @@
+ #include <pythread.h>
+ #include <limits.h>
+ #include <openssl/bio.h>
++#include <openssl/crypto.h>
+ #include <openssl/dh.h>
+ #include <openssl/ssl.h>
+ #include <openssl/tls1.h>
+@@ -258,21 +259,39 @@
+ static PyObject *_ssl_timeout_err;
+ 
+ void ssl_init(PyObject *ssl_err, PyObject *ssl_timeout_err) {
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    OPENSSL_init_ssl(0, NULL);
++    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS \
++                     | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL);
++#else
+     SSL_library_init();
+     SSL_load_error_strings();
++#endif
+     Py_INCREF(ssl_err);
+     Py_INCREF(ssl_timeout_err);
+     _ssl_err = ssl_err;
+     _ssl_timeout_err = ssl_timeout_err;
+ }
+ 
++static void _set_protocol_version(const SSL_METHOD *m, int version)
++{
++    SSL_CTX *ctx = SSL_CTX_new(m);
++    SSL_CTX_set_min_proto_version(ctx, version);
++    SSL_CTX_set_max_proto_version(ctx, version);
++    SSL_CTX_free(ctx);
++}
++
+ #ifndef OPENSSL_NO_SSL3
+ const SSL_METHOD *sslv3_method(void) {
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L
+     PyErr_WarnEx(PyExc_DeprecationWarning,
+                  "Function SSLv3_method has been deprecated.", 1);
+-#endif
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, SSL3_VERSION);
++    return m;
++#else
+     return SSLv3_method();
++#endif
+ }
+ #endif
+ 
+@@ -280,8 +299,12 @@
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L
+     PyErr_WarnEx(PyExc_DeprecationWarning,
+                  "Function TLSv1_method has been deprecated.", 1);
+-#endif
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, TLS1_VERSION);
++    return m;
++#else
+     return TLSv1_method();
++#endif
+ }
+ 
+ void ssl_ctx_passphrase_callback(SSL_CTX *ctx, PyObject *pyfunc) {
+@@ -407,14 +430,23 @@
+ }
+ 
+ long ssl_ctx_set_tmp_rsa(SSL_CTX *ctx, RSA* rsa) {
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    return 1;
++#else
+     return SSL_CTX_set_tmp_rsa(ctx, rsa);
++#endif
+ }
+ 
+ void ssl_ctx_set_tmp_rsa_callback(SSL_CTX *ctx,  PyObject *pyfunc) {
+     Py_XDECREF(ssl_set_tmp_rsa_cb_func);
+     Py_INCREF(pyfunc);
+     ssl_set_tmp_rsa_cb_func = pyfunc;
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++    (void)ctx;
++    (void)ssl_set_tmp_rsa_cb_func;
++#else
+     SSL_CTX_set_tmp_rsa_callback(ctx, ssl_set_tmp_rsa_callback);
++#endif
+ }
+ 
+ int ssl_ctx_load_verify_locations(SSL_CTX *ctx, const char *cafile, const char *capath) {
+--- M2Crypto-0.27.0-orig/SWIG/_util.i	2017-10-06 07:43:17.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_util.i	2017-12-02 22:50:32.973903169 +1100
+@@ -11,6 +11,11 @@
+ %inline %{
+ static PyObject *_util_err;
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++#define OPENSSL_buf2hexstr hex_to_string
++#define OPENSSL_hexstr2buf string_to_hex
++#endif
++
+ void util_init(PyObject *util_err) {
+     Py_INCREF(util_err);
+     _util_err = util_err;
+@@ -25,7 +30,7 @@
+     if (PyObject_AsReadBuffer(blob, &buf, &len) == -1)
+         return NULL;
+ 
+-    ret = hex_to_string((unsigned char *)buf, len);
++    ret = OPENSSL_buf2hexstr((unsigned char *)buf, len);
+     if (!ret) {
+         m2_PyErr_Msg(_util_err);
+         return NULL;
+@@ -52,7 +57,7 @@
+         return NULL;
+ 
+     len = len0;
+-    ret = string_to_hex((char *)buf, &len);
++    ret = OPENSSL_hexstr2buf((char *)buf, &len);
+     if (ret == NULL) {
+         m2_PyErr_Msg(_util_err);
+         return NULL;
+--- M2Crypto-0.27.0-orig/SWIG/_x509.i	2017-10-06 07:43:17.000000000 +1100
++++ M2Crypto-0.27.0/SWIG/_x509.i	2017-12-02 22:50:23.148877258 +1100
+@@ -38,6 +38,13 @@
+ extern int X509_check_ca(X509 *);
+ #endif
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++#define X509_getm_notBefore X509_get_notBefore
++#define X509_getm_notAfter X509_get_notAfter
++#define X509_set1_notBefore X509_set_notBefore
++#define X509_set1_notAfter X509_set_notAfter
++#endif
++
+ %rename(x509_new) X509_new;
+ extern X509 *X509_new( void );
+ %rename(x509_dup) X509_dup;
+@@ -425,22 +432,22 @@
+ 
+ /* X509_set_notBefore() is a macro. */
+ int x509_set_not_before(X509 *x, ASN1_TIME *tm) {
+-    return X509_set_notBefore(x, tm);
++    return X509_set1_notBefore(x, tm);
+ }
+ 
+ /* X509_get_notBefore() is a macro. */
+ ASN1_TIME *x509_get_not_before(X509 *x) {
+-    return X509_get_notBefore(x);
++    return X509_getm_notBefore(x);
+ }
+ 
+ /* X509_set_notAfter() is a macro. */
+ int x509_set_not_after(X509 *x, ASN1_TIME *tm) {
+-    return X509_set_notAfter(x, tm);
++    return X509_set1_notAfter(x, tm);
+ }
+ 
+ /* X509_get_notAfter() is a macro. */
+ ASN1_TIME *x509_get_not_after(X509 *x) {
+-    return X509_get_notAfter(x);
++    return X509_getm_notAfter(x);
+ }
+ 
+ int x509_sign(X509 *x, EVP_PKEY *pkey, EVP_MD *md) {
