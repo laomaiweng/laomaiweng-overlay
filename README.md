@@ -76,6 +76,7 @@ In _patches/_ are the patches currently applied to my packages.
   <tr><td rowspan=2>python:3.6</td><td><tt>python-3.6.3-p1-emulate-TLS-methods.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
   <tr><td><tt>python-3.6.3-p2-openssl-1.1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
   <tr><td>ruby:2.4</td><td><tt>ruby-2.4.3-openssl11-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646950">#646950</a>)</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=1>dev-python</td><td>cryptography</td><td><tt>cryptography-2.1.1-openssl-1.1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/614770">#614770</a></td></tr>
   <tr><td rowspan=3>net-misc</td><td rowspan=3>openssh</td><td><tt>github-PR-#48.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>openssh/openssh-portable#48</td></tr>
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-pthreads-collision.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>

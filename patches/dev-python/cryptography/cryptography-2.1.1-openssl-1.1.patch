@@ -1,0 +1,363 @@
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/asn1.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/asn1.py	2017-10-17 14:37:39.779336199 +1100
+@@ -155,4 +155,7 @@
+ """
+ 
+ CUSTOMIZATIONS = """
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define ASN1_STRING_data ASN1_STRING_get0_data
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/callbacks.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/callbacks.py	2017-10-16 22:35:16.810888339 +1100
+@@ -118,6 +118,7 @@
+ 
+ 
+ int _setup_ssl_threads(void) {
++#if OPENSSL_API_COMPAT < 0x10100000L
+     if (_ssl_locks == NULL) {
+         _ssl_locks_count = CRYPTO_num_locks();
+         _ssl_locks = calloc(_ssl_locks_count, sizeof(Cryptography_mutex));
+@@ -130,6 +131,7 @@
+         pthread_atfork(NULL, NULL, &init_mutexes);
+ #endif
+     }
++#endif
+     return 1;
+ }
+ 
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/bignum.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/bignum.py	2017-10-17 10:31:30.783244734 +1100
+@@ -83,4 +83,8 @@
+ """
+ 
+ CUSTOMIZATIONS = """
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#undef BN_zero
++#define BN_zero(x) (0)
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/conf.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/conf.py	2017-10-17 13:01:16.712691952 +1100
+@@ -18,4 +18,9 @@
+ """
+ 
+ CUSTOMIZATIONS = """
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define OPENSSL_config(n) CONF_modules_load(NULL,n,0)
++#define OPENSSL_no_config() \
++    OPENSSL_init_crypto(OPENSSL_INIT_NO_LOAD_CONFIG, NULL)
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/crypto.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/crypto.py	2017-10-16 22:56:24.289810368 +1100
+@@ -133,6 +133,16 @@
+ }
+ #endif
+ 
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define ASN1_STRING_data ASN1_STRING_get0_data
++#define CRYPTO_cleanup_all_ex_data() while(0) continue
++#define CRYPTO_num_locks()            (1)
++#define CRYPTO_set_locking_callback(func)
++#define CRYPTO_get_locking_callback()         (NULL)
++#define CRYPTO_set_add_lock_callback(func)
++#define CRYPTO_get_add_lock_callback()        (NULL)
++#endif
++
+ void *Cryptography_malloc_wrapper(size_t size, const char *path, int line) {
+     return malloc(size);
+ }
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/engine.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/engine.py	2017-10-17 12:29:24.648809575 +1100
+@@ -130,4 +130,30 @@
+ """
+ 
+ CUSTOMIZATIONS = """
++#if OPENSSL_API_COMPAT >= 0x10100000L
++/*
++ * This function previously cleaned up anything that needs it. Auto-deinit will
++ * now take care of it so it is no longer required to call this function.
++ */
++# define ENGINE_cleanup() while(0) continue
++#endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define ENGINE_load_openssl() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_OPENSSL, NULL)
++#define ENGINE_load_dynamic() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_DYNAMIC, NULL)
++#ifndef OPENSSL_NO_STATIC_ENGINE
++#define ENGINE_load_padlock() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_PADLOCK, NULL)
++#define ENGINE_load_capi() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_CAPI, NULL)
++#define ENGINE_load_afalg() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_AFALG, NULL)
++#endif
++#define ENGINE_load_cryptodev() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_CRYPTODEV, NULL)
++#define ENGINE_load_rdrand() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_RDRAND, NULL)
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/err.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/err.py	2017-10-17 12:31:43.794801016 +1100
+@@ -274,4 +274,10 @@
+ static const long Cryptography_HAS_RSA_R_PKCS_DECODING_ERROR = 0;
+ static const long RSA_R_PKCS_DECODING_ERROR = 0;
+ #endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define ERR_load_crypto_strings() \
++    OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL)
++#define ERR_free_strings() while(0) continue
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/evp.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/evp.py	2017-10-17 12:40:17.357769423 +1100
+@@ -241,4 +241,37 @@
+ #if !defined(EVP_CTRL_AEAD_SET_TAG)
+ # define EVP_CTRL_AEAD_SET_TAG EVP_CTRL_GCM_SET_TAG
+ #endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define EVP_CIPHER_CTX_init(c)      EVP_CIPHER_CTX_reset(c)
++#define EVP_CIPHER_CTX_cleanup(c)   EVP_CIPHER_CTX_reset(c)
++#endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define OPENSSL_add_all_algorithms_conf() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS \
++                        | OPENSSL_INIT_ADD_ALL_DIGESTS \
++                        | OPENSSL_INIT_LOAD_CONFIG, NULL)
++#define OPENSSL_add_all_algorithms_noconf() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS \
++                        | OPENSSL_INIT_ADD_ALL_DIGESTS, NULL)
++
++#ifdef OPENSSL_LOAD_CONF
++#define OpenSSL_add_all_algorithms() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS \
++                        | OPENSSL_INIT_ADD_ALL_DIGESTS \
++                        | OPENSSL_INIT_LOAD_CONFIG, NULL)
++#else
++#define OpenSSL_add_all_algorithms() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS \
++                        | OPENSSL_INIT_ADD_ALL_DIGESTS, NULL)
++#endif
++
++#define OpenSSL_add_all_ciphers() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS, NULL)
++#define OpenSSL_add_all_digests() \
++    OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_DIGESTS, NULL)
++
++#define EVP_cleanup() while(0) continue
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/objects.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/objects.py	2017-10-17 12:31:34.772801571 +1100
+@@ -38,4 +38,7 @@
+ """
+ 
+ CUSTOMIZATIONS = """
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define OBJ_cleanup() while(0) continue
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/rand.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/rand.py	2017-10-17 13:05:09.738677617 +1100
+@@ -32,4 +32,8 @@
+ 
+ CUSTOMIZATIONS = """
+ static const long Cryptography_HAS_EGD = 0;
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define RAND_cleanup() while(0) continue
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/ssl.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/ssl.py	2017-10-17 14:51:22.518285587 +1100
+@@ -623,4 +623,151 @@
+ 
+     return r;
+ }
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define SSL_library_init() OPENSSL_init_ssl(0, NULL)
++#define SSL_load_error_strings() \
++    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS \
++                     | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL)
++
++static void _set_protocol_version(const SSL_METHOD *m, int version)
++{
++    SSL_CTX *ctx = SSL_CTX_new(m);
++    SSL_CTX_set_min_proto_version(ctx, version);
++    SSL_CTX_set_max_proto_version(ctx, version);
++    SSL_CTX_free(ctx);
++}
++
++/*
++ * TLSv1_1 and TLSv1_2 are recent additions.  Only sufficiently new versions of
++ * OpenSSL support them.
++ */
++const SSL_METHOD *Cryptography_TLSv1_1_method(void)
++{
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, TLS1_1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_1_server_method(void)
++{
++    const SSL_METHOD *m = TLS_server_method();
++    _set_protocol_version(m, TLS1_1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_1_client_method(void)
++{
++    const SSL_METHOD *m = TLS_client_method();
++    _set_protocol_version(m, TLS1_1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_2_method(void)
++{
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, TLS1_2_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_2_server_method(void)
++{
++    const SSL_METHOD *m = TLS_server_method();
++    _set_protocol_version(m, TLS1_2_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_2_client_method(void)
++{
++    const SSL_METHOD *m = TLS_client_method();
++    _set_protocol_version(m, TLS1_2_VERSION);
++    return m;
++}
++
++#define TLSv1_1_method Cryptography_TLSv1_1_method
++#define TLSv1_1_server_method Cryptography_TLSv1_1_server_method
++#define TLSv1_1_client_method Cryptography_TLSv1_1_client_method
++#define TLSv1_2_method Cryptography_TLSv1_2_method
++#define TLSv1_2_server_method Cryptography_TLSv1_2_server_method
++#define TLSv1_2_client_method Cryptography_TLSv1_2_client_method
++
++#ifndef OPENSSL_NO_SSL3_METHOD
++const SSL_METHOD *Cryptography_SSLv3_method(void)
++{
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, SSL3_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_SSLv3_server_method(void)
++{
++    const SSL_METHOD *m = TLS_server_method();
++    _set_protocol_version(m, SSL3_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_SSLv3_client_method(void)
++{
++    const SSL_METHOD *m = TLS_client_method();
++    _set_protocol_version(m, SSL3_VERSION);
++    return m;
++}
++
++#define SSLv3_method Cryptography_SSLv3_method
++#define SSLv3_server_method Cryptography_SSLv3_server_method
++#define SSLv3_client_method Cryptography_SSLv3_client_method
++#endif
++
++const SSL_METHOD *Cryptography_TLSv1_method(void)
++{
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, TLS1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_server_method(void)
++{
++    const SSL_METHOD *m = TLS_server_method();
++    _set_protocol_version(m, TLS1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_TLSv1_client_method(void)
++{
++    const SSL_METHOD *m = TLS_client_method();
++    _set_protocol_version(m, TLS1_VERSION);
++    return m;
++}
++
++#define TLSv1_method Cryptography_TLSv1_method
++#define TLSv1_server_method Cryptography_TLSv1_server_method
++#define TLSv1_client_method Cryptography_TLSv1_client_method
++
++#if !defined(OPENSSL_NO_DTLS) && !CRYPTOGRAPHY_OPENSSL_LESS_THAN_102
++const SSL_METHOD *Cryptography_DTLSv1_method(void)
++{
++    const SSL_METHOD *m = TLS_method();
++    _set_protocol_version(m, DTLS1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_DTLSv1_server_method(void)
++{
++    const SSL_METHOD *m = TLS_server_method();
++    _set_protocol_version(m, DTLS1_VERSION);
++    return m;
++}
++
++const SSL_METHOD *Cryptography_DTLSv1_client_method(void)
++{
++    const SSL_METHOD *m = TLS_client_method();
++    _set_protocol_version(m, DTLS1_VERSION);
++    return m;
++}
++
++#define DTLSv1_method Cryptography_DTLSv1_method
++#define DTLSv1_server_method Cryptography_DTLSv1_server_method
++#define DTLSv1_client_method Cryptography_DTLSv1_client_method
++#endif
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/x509.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/x509.py	2017-10-17 12:52:17.731725108 +1100
+@@ -423,4 +423,15 @@
+     return x->serialNumber;
+ }
+ #endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define X509_get_notBefore X509_getm_notBefore
++#define X509_get_notAfter X509_getm_notAfter
++#define X509_set_notBefore X509_set1_notBefore
++#define X509_set_notAfter X509_set1_notAfter
++#define X509_CRL_get_lastUpdate X509_CRL_get0_lastUpdate
++#define X509_CRL_get_nextUpdate X509_CRL_get0_nextUpdate
++#define X509_CRL_set_lastUpdate X509_CRL_set1_lastUpdate
++#define X509_CRL_set_nextUpdate X509_CRL_set1_nextUpdate
++#endif
+ """
+--- cryptography-2.1.1-orig/src/_cffi_src/openssl/x509_vfy.py	2017-10-11 23:35:21.000000000 +1100
++++ cryptography-2.1.1/src/_cffi_src/openssl/x509_vfy.py	2017-10-17 12:47:51.571741482 +1100
+@@ -306,4 +306,11 @@
+ #else
+ static const long Cryptography_HAS_X509_STORE_CTX_GET_ISSUER = 1;
+ #endif
++
++#if OPENSSL_API_COMPAT >= 0x10100000L
++#define X509_V_FLAG_CB_ISSUER_CHECK             0x0   /* Deprecated */
++#define X509_STORE_CTX_get_chain X509_STORE_CTX_get0_chain
++#define X509_STORE_CTX_set_chain X509_STORE_CTX_set0_untrusted
++#define X509_STORE_CTX_trusted_stack X509_STORE_CTX_set0_trusted_stack
++#endif
+ """
