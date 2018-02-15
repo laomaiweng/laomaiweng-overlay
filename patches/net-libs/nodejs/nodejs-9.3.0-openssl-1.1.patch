@@ -1,0 +1,135 @@
+--- node-v9.3.0-orig/src/node_crypto.cc	2017-12-12 21:22:42.000000000 +1100
++++ node-v9.3.0/src/node_crypto.cc	2017-12-17 18:10:41.699238265 +1100
+@@ -42,6 +42,10 @@
+ // StartComAndWoSignData.inc
+ #include "StartComAndWoSignData.inc"
+ 
++#include <openssl/bn.h>
++#include <openssl/dh.h>
++#include <openssl/rsa.h>
++
+ #include <algorithm>
+ #include <errno.h>
+ #include <limits.h>  // INT_MAX
+@@ -569,6 +573,13 @@
+   new SecureContext(env, args.This());
+ }
+ 
++static void set_protocol_version(const SSL_METHOD *m, int version)
++{
++    SSL_CTX *ctx = SSL_CTX_new(m);
++    SSL_CTX_set_min_proto_version(ctx, version);
++    SSL_CTX_set_max_proto_version(ctx, version);
++    SSL_CTX_free(ctx);
++}
+ 
+ void SecureContext::Init(const FunctionCallbackInfo<Value>& args) {
+   SecureContext* sc;
+@@ -603,23 +614,32 @@
+     } else if (strcmp(*sslmethod, "SSLv23_client_method") == 0) {
+       method = SSLv23_client_method();
+     } else if (strcmp(*sslmethod, "TLSv1_method") == 0) {
+-      method = TLSv1_method();
++      method = TLS_method();
++      set_protocol_version(method, TLS1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_server_method") == 0) {
+-      method = TLSv1_server_method();
++      method = TLS_server_method();
++      set_protocol_version(method, TLS1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_client_method") == 0) {
+-      method = TLSv1_client_method();
++      method = TLS_client_method();
++      set_protocol_version(method, TLS1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_1_method") == 0) {
+-      method = TLSv1_1_method();
++      method = TLS_method();
++      set_protocol_version(method, TLS1_1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_1_server_method") == 0) {
+-      method = TLSv1_1_server_method();
++      method = TLS_server_method();
++      set_protocol_version(method, TLS1_1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_1_client_method") == 0) {
+-      method = TLSv1_1_client_method();
++      method = TLS_client_method();
++      set_protocol_version(method, TLS1_1_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_2_method") == 0) {
+-      method = TLSv1_2_method();
++      method = TLS_method();
++      set_protocol_version(method, TLS1_2_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_2_server_method") == 0) {
+-      method = TLSv1_2_server_method();
++      method = TLS_server_method();
++      set_protocol_version(method, TLS1_2_VERSION);
+     } else if (strcmp(*sslmethod, "TLSv1_2_client_method") == 0) {
+-      method = TLSv1_2_client_method();
++      method = TLS_client_method();
++      set_protocol_version(method, TLS1_2_VERSION);
+     } else {
+       return env->ThrowError("Unknown method");
+     }
+@@ -1892,14 +1912,14 @@
+     rsa = nullptr;
+   }
+ 
+-  ASN1_TIME_print(bio, X509_get_notBefore(cert));
++  ASN1_TIME_print(bio, X509_get0_notBefore(cert));
+   BIO_get_mem_ptr(bio, &mem);
+   info->Set(env->valid_from_string(),
+             String::NewFromUtf8(env->isolate(), mem->data,
+                                 String::kNormalString, mem->length));
+   USE(BIO_reset(bio));
+ 
+-  ASN1_TIME_print(bio, X509_get_notAfter(cert));
++  ASN1_TIME_print(bio, X509_get0_notAfter(cert));
+   BIO_get_mem_ptr(bio, &mem);
+   info->Set(env->valid_to_string(),
+             String::NewFromUtf8(env->isolate(), mem->data,
+@@ -3077,7 +3097,7 @@
+     return true;
+ 
+   time_t october_21_2016 = static_cast<time_t>(1477008000);
+-  if (X509_cmp_time(X509_get_notBefore(cert), &october_21_2016) < 0)
++  if (X509_cmp_time(X509_get0_notBefore(cert), &october_21_2016) < 0)
+     return true;
+ 
+   return false;
+@@ -5139,7 +5159,7 @@
+     OPENSSL_VERSION_NUMBER < 0x10100070L
+ // Older versions of OpenSSL 1.1.0 have a DH_set0_key which does not work for
+ // Node. See https://github.com/openssl/openssl/pull/4384.
+-#error "OpenSSL 1.1.0 revisions before 1.1.0g are not supported"
++#warning "OpenSSL 1.1.0 revisions before 1.1.0g are not supported"
+ #endif
+   SetKey(args,
+          [](DH* dh, BIGNUM* num) { return DH_set0_key(dh, nullptr, num); },
+@@ -6095,8 +6115,8 @@
+ }
+ 
+ void InitCryptoOnce() {
+-  SSL_load_error_strings();
+-  OPENSSL_no_config();
++  OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
++  OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CRYPTO_STRINGS | OPENSSL_INIT_NO_LOAD_CONFIG, NULL);
+ 
+   // --openssl-config=...
+   if (!openssl_config.empty()) {
+@@ -6118,8 +6138,7 @@
+     }
+   }
+ 
+-  SSL_library_init();
+-  OpenSSL_add_all_algorithms();
++  OPENSSL_init_ssl(0, NULL);
+ 
+ #if OPENSSL_VERSION_NUMBER < 0x10100000L
+   crypto_lock_init();
+--- node-v9.3.0-orig/src/node_crypto.h	2017-12-12 21:22:42.000000000 +1100
++++ node-v9.3.0/src/node_crypto.h	2017-12-17 18:09:34.581080055 +1100
+@@ -50,6 +50,7 @@
+ #include <openssl/hmac.h>
+ #include <openssl/rand.h>
+ #include <openssl/pkcs12.h>
++#include <openssl/dh.h>
+ 
+ #if !defined(OPENSSL_NO_TLSEXT) && defined(SSL_CTX_set_tlsext_status_cb)
+ # define NODE__HAVE_TLSEXT_STATUS_CB
