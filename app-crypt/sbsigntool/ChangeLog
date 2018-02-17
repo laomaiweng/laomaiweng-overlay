@@ -1,0 +1,7 @@
+*sbsigntool-0.9.1 (17 Feb 2018)
+
+  17 Feb 2018; Quentin Minster <quentin@minster.io>
+  +files/sbsigntools-0.9.1-openssl-1.1.0-compat.patch, +metadata.xml,
+  +sbsigntool-0.9.1.ebuild:
+  app-crypt/sbsigntool: add ebuild sbsigntool-0.9.1.ebuild  OpenSSL 1.1.0
+  compatibility version bump + patch.
