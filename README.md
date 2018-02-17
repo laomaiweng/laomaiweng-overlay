@@ -67,7 +67,7 @@ In _patches/_ are the patches currently applied to my packages.
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
   <tr><td rowspan=1>app-admin</td><td>syslog-ng</td><td><tt>syslog-ng-3.13.2-openssl-1.1-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646952">#646952</a>)</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=1>app-crypt</td><td rowspan=2>mit-krb5</td><td><tt>mit-krb5-1.15.2-openssl-1.1-p1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
+  <tr><td rowspan=2>app-crypt</td><td rowspan=2>mit-krb5</td><td><tt>mit-krb5-1.15.2-openssl-1.1-p1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
   <tr><td><tt>mit-krb5-1.15.2-openssl-1.1-p2.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
   <tr><td rowspan=7>dev-lang</td><td rowspan=2>python:2.7</td><td><tt>python-2.7.14-p1-emulate-TLS-methods.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
   <tr><td><tt>python-2.7.14-p2-openssl-1.1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
@@ -85,7 +85,7 @@ In _patches/_ are the patches currently applied to my packages.
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-pthreads-collision.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>sys-kernel</td><td>grsecurity-sources</td><td><tt>random_timestamp.diff</tt></td><td>randomize TCP timestamp</td><td><a href="https://grsecurity.net/~spender/random_timestamp.diff">grsecurity.net</a></td></tr>
-  <tr><td rowspan=2>www-client</td><td>chromium</td><td><tt>crc32c-gnu++17fix.patch</tt></td><td>`gnu++17` build failure</td><td>Gentoo bug <a href="https://bugs.gentoo.org/631452">#631452</a></td></tr>
+  <tr><td rowspan=3>www-client</td><td>chromium</td><td><tt>crc32c-gnu++17fix.patch</tt></td><td>`gnu++17` build failure</td><td>Gentoo bug <a href="https://bugs.gentoo.org/631452">#631452</a></td></tr>
   <tr><td>elinks</td><td><tt>elinks-0.12_pre6-r3-openssl-1.1.0.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/605026">#605026</a></td></tr>
   <tr><td>lynx</td><td><tt>lynx-2.8.9_pre16-openssl-1.1-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647832">#647832</a>)</td><td>laomaiweng-overlay</td></tr>
 </table>
