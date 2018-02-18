@@ -1,0 +1,76 @@
+diff --git a/cert-to-efi-hash-list.c b/cert-to-efi-hash-list.c
+index 8a5468a..cca2c48 100644
+--- a/cert-to-efi-hash-list.c
++++ b/cert-to-efi-hash-list.c
+@@ -122,6 +122,7 @@ main(int argc, char *argv[])
+ 	       timestamp.Month, timestamp.Day, timestamp.Hour, timestamp.Minute,
+ 	       timestamp.Second);
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+         ERR_load_crypto_strings();
+         OpenSSL_add_all_digests();
+         OpenSSL_add_all_ciphers();
+@@ -130,6 +131,7 @@ main(int argc, char *argv[])
+ 	 * module isn't present).  In either case ignore the errors
+ 	 * (malloc will cause other failures out lower down */
+ 	ERR_clear_error();
++#endif
+ 
+         BIO *cert_bio = BIO_new_file(certfile, "r");
+         X509 *cert = PEM_read_bio_X509(cert_bio, NULL, NULL, NULL);
+diff --git a/cert-to-efi-sig-list.c b/cert-to-efi-sig-list.c
+index fe65e15..43e178d 100644
+--- a/cert-to-efi-sig-list.c
++++ b/cert-to-efi-sig-list.c
+@@ -78,6 +78,7 @@ main(int argc, char *argv[])
+ 	certfile = argv[1];
+ 	efifile = argv[2];
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+         ERR_load_crypto_strings();
+         OpenSSL_add_all_digests();
+         OpenSSL_add_all_ciphers();
+@@ -86,6 +87,7 @@ main(int argc, char *argv[])
+ 	 * module isn't present).  In either case ignore the errors
+ 	 * (malloc will cause other failures out lower down */
+ 	ERR_clear_error();
++#endif
+ 
+         BIO *cert_bio = BIO_new_file(certfile, "r");
+         X509 *cert = PEM_read_bio_X509(cert_bio, NULL, NULL, NULL);
+diff --git a/efi-updatevar.c b/efi-updatevar.c
+index bc92cb8..72f395f 100644
+--- a/efi-updatevar.c
++++ b/efi-updatevar.c
+@@ -146,9 +146,11 @@ main(int argc, char *argv[])
+ 	}
+ 			
+ 	kernel_variable_init();
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	ERR_load_crypto_strings();
+ 	OpenSSL_add_all_digests();
+ 	OpenSSL_add_all_ciphers();
++#endif
+ 
+ 	name = file ? file : hash_mode;
+ 	if (delsig != -1) {
+diff --git a/sign-efi-sig-list.c b/sign-efi-sig-list.c
+index e19ef97..81fa8e2 100644
+--- a/sign-efi-sig-list.c
++++ b/sign-efi-sig-list.c
+@@ -248,6 +248,7 @@ main(int argc, char *argv[])
+ 			exit(1);
+ 		}
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 		ERR_load_crypto_strings();
+ 		OpenSSL_add_all_digests();
+ 		OpenSSL_add_all_ciphers();
+@@ -256,6 +257,7 @@ main(int argc, char *argv[])
+ 		 * module isn't present).  In either case ignore the errors
+ 		 * (malloc will cause other failures out lower down */
+ 		ERR_clear_error();
++#endif
+ 
+ 		BIO *cert_bio = BIO_new_file(certfile, "r");
+ 		X509 *cert = PEM_read_bio_X509(cert_bio, NULL, NULL, NULL);

@@ -1,13 +1,13 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI="6"
 
 inherit eutils
 
 DESCRIPTION="Tools for manipulating UEFI secure boot platforms"
 HOMEPAGE="https://git.kernel.org/cgit/linux/kernel/git/jejb/efitools.git"
-SRC_URI="https://git.kernel.org/cgit/linux/kernel/git/jejb/efitools.git/snapshot/v${PV}.tar.bz2 -> ${P}.tar.bz2"
+SRC_URI="https://git.kernel.org/cgit/linux/kernel/git/jejb/efitools.git/snapshot/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,10 +25,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	dev-perl/File-Slurp"
 
-S=${WORKDIR}/v${PV}
-
-src_prepare() {
-	epatch "${FILESDIR}/${P}-lto-friendly.patch"
-
-	default
-}
+PATCHES=(
+	"${FILESDIR}/${P}-openssl-1.1.0-compat.patch"
+)
