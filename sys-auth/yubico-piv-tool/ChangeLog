@@ -1,0 +1,7 @@
+*yubico-piv-tool-1.5.0 (26 Feb 2018)
+
+  26 Feb 2018; Quentin Minster <quentin@minster.io>
+  +files/yubico-piv-tool-1.5.0-openssl-1.1.0-compat.patch, +metadata.xml,
+  +yubico-piv-tool-1.5.0.ebuild:
+  sys-auth/yubico-piv-tool: add yubico-piv-tool-1.5.0.ebuild  OpenSSL 1.1.0
+  compatibility version bump + patch.
