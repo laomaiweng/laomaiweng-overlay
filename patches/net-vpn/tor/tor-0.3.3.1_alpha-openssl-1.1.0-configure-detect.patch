@@ -1,0 +1,56 @@
+diff --git a/configure b/configure
+index bc87dfc..c980d36 100755
+--- a/configure
++++ b/configure
+@@ -9390,11 +9390,11 @@ else
+     # the binary?
+     cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-struct ssl_method_st; const struct ssl_method_st *TLSv1_1_method(void);
++struct ssl_method_st; const struct ssl_method_st *TLS_method(void);
+ int
+ main ()
+ {
+-TLSv1_1_method();
++TLS_method();
+   ;
+   return 0;
+ }
+@@ -9416,7 +9416,7 @@ rm -f core conftest.err conftest.$ac_objext \
+ int
+ main ()
+ {
+-TLSv1_1_method();
++TLS_method();
+   ;
+   return 0;
+ }
+@@ -9598,11 +9598,11 @@ rm -f core conftest.err conftest.$ac_objext \
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+-struct ssl_method_st; const struct ssl_method_st *TLSv1_1_method(void);
++struct ssl_method_st; const struct ssl_method_st *TLS_method(void);
+ int
+ main ()
+ {
+-TLSv1_1_method();
++TLS_method();
+   ;
+   return 0;
+ }
+diff --git a/configure.ac b/configure.ac
+index 8af14fd..16dccbe 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -766,8 +766,8 @@ AC_ARG_WITH(ssl-dir,
+ AC_MSG_NOTICE([Now, we'll look for OpenSSL >= 1.0.1])
+ TOR_SEARCH_LIBRARY(openssl, $tryssldir, [-lssl -lcrypto $TOR_LIB_GDI $TOR_LIB_WS32],
+     [#include <openssl/ssl.h>],
+-    [struct ssl_method_st; const struct ssl_method_st *TLSv1_1_method(void);],
+-    [TLSv1_1_method();], [],
++    [struct ssl_method_st; const struct ssl_method_st *TLS_method(void);],
++    [TLS_method();], [],
+     [/usr/local/opt/openssl /usr/local/openssl /usr/lib/openssl /usr/local/ssl /usr/lib/ssl /usr/local /opt/openssl])
+ 
+ dnl XXXX check for OPENSSL_VERSION_NUMBER == SSLeay()
