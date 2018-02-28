@@ -28,7 +28,7 @@ Package status
   <tr><td rowspan=2>app-crypt</td><td>efitools</td><td>version bump + compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/648016">#648016</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>sbsigntool</td><td>version bump + compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647914">#647914</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=1>app-forensics</td><td>afl</td><td>version bump + bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/595106">#595106</a>)</td><td>Portage</td></tr>
+  <tr><td rowspan=1>app-forensics</td><td>afl</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/595106">#595106</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=3>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>rig</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
