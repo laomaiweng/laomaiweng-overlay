@@ -1,3 +1,10 @@
+*unbound-1.6.8-r3 (04 Mar 2018)
+
+  04 Mar 2018; Quentin Minster <quentin@minster.io> +unbound-1.6.8-r3.ebuild,
+  -unbound-1.6.8-r1.ebuild:
+  net-dns/unbound: add ebuild unbound-1.6.8-r3.ebuild, drop old  Revision bump
+  from the Portage tree.
+
 *unbound-1.6.8-r1 (01 Feb 2018)
 
   01 Feb 2018; Quentin Minster <quentin@minster.io>
