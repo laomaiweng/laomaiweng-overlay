@@ -1,0 +1,169 @@
+diff --git a/src/node_crypto.cc b/src/node_crypto.cc
+index a398f74..c3566d7 100644
+--- a/src/node_crypto.cc
++++ b/src/node_crypto.cc
+@@ -43,6 +43,10 @@
+ // StartComAndWoSignData.inc
+ #include "StartComAndWoSignData.inc"
+ 
++#include <openssl/bn.h>
++#include <openssl/dh.h>
++#include <openssl/rsa.h>
++
+ #include <algorithm>
+ #include <errno.h>
+ #include <limits.h>  // INT_MAX
+@@ -187,7 +191,10 @@ static int DH_set0_key(DH* dh, BIGNUM* pub_key, BIGNUM* priv_key) {
+   return 1;
+ }
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++// In OpenSSL 1.1.0, SSLv23_method() is #defined as TLS_method() anyway
+ static const SSL_METHOD* TLS_method() { return SSLv23_method(); }
++#endif
+ 
+ static void SSL_SESSION_get0_ticket(const SSL_SESSION* s,
+                                     const unsigned char** tick, size_t* len) {
+@@ -580,6 +587,9 @@ void SecureContext::Init(const FunctionCallbackInfo<Value>& args) {
+   Environment* env = sc->env();
+ 
+   const SSL_METHOD* method = TLS_method();
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++  int tls_version = TLS1_VERSION;
++#endif
+ 
+   if (args.Length() == 1 && args[0]->IsString()) {
+     const node::Utf8Value sslmethod(env->isolate(), args[0]);
+@@ -606,6 +616,7 @@ void SecureContext::Init(const FunctionCallbackInfo<Value>& args) {
+       method = SSLv23_server_method();
+     } else if (strcmp(*sslmethod, "SSLv23_client_method") == 0) {
+       method = SSLv23_client_method();
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     } else if (strcmp(*sslmethod, "TLSv1_method") == 0) {
+       method = TLSv1_method();
+     } else if (strcmp(*sslmethod, "TLSv1_server_method") == 0) {
+@@ -624,6 +635,32 @@ void SecureContext::Init(const FunctionCallbackInfo<Value>& args) {
+       method = TLSv1_2_server_method();
+     } else if (strcmp(*sslmethod, "TLSv1_2_client_method") == 0) {
+       method = TLSv1_2_client_method();
++#else
++    } else if (strcmp(*sslmethod, "TLSv1_method") == 0) {
++      method = TLS_method();
++    } else if (strcmp(*sslmethod, "TLSv1_server_method") == 0) {
++      method = TLS_server_method();
++    } else if (strcmp(*sslmethod, "TLSv1_client_method") == 0) {
++      method = TLS_client_method();
++    } else if (strcmp(*sslmethod, "TLSv1_1_method") == 0) {
++      method = TLS_method();
++      tls_version = TLS1_1_VERSION;
++    } else if (strcmp(*sslmethod, "TLSv1_1_server_method") == 0) {
++      method = TLS_server_method();
++      tls_version = TLS1_1_VERSION;
++    } else if (strcmp(*sslmethod, "TLSv1_1_client_method") == 0) {
++      method = TLS_client_method();
++      tls_version = TLS1_1_VERSION;
++    } else if (strcmp(*sslmethod, "TLSv1_2_method") == 0) {
++      method = TLS_method();
++      tls_version = TLS1_2_VERSION;
++    } else if (strcmp(*sslmethod, "TLSv1_2_server_method") == 0) {
++      method = TLS_server_method();
++      tls_version = TLS1_2_VERSION;
++    } else if (strcmp(*sslmethod, "TLSv1_2_client_method") == 0) {
++      method = TLS_client_method();
++      tls_version = TLS1_2_VERSION;
++#endif
+     } else {
+       return env->ThrowError("Unknown method");
+     }
+@@ -632,12 +669,16 @@ void SecureContext::Init(const FunctionCallbackInfo<Value>& args) {
+   sc->ctx_ = SSL_CTX_new(method);
+   SSL_CTX_set_app_data(sc->ctx_, sc);
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   // Disable SSLv2 in the case when method == TLS_method() and the
+   // cipher list contains SSLv2 ciphers (not the default, should be rare.)
+   // The bundled OpenSSL doesn't have SSLv2 support but the system OpenSSL may.
+   // SSLv3 is disabled because it's susceptible to downgrade attacks (POODLE.)
+   SSL_CTX_set_options(sc->ctx_, SSL_OP_NO_SSLv2);
+   SSL_CTX_set_options(sc->ctx_, SSL_OP_NO_SSLv3);
++#else
++  SSL_CTX_set_min_proto_version(sc->ctx_, tls_version);
++#endif
+ 
+   // SSL session cache configuration
+   SSL_CTX_set_session_cache_mode(sc->ctx_,
+@@ -1912,7 +1953,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
+     rsa = nullptr;
+   }
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   ASN1_TIME_print(bio, X509_get_notBefore(cert));
++#else
++  ASN1_TIME_print(bio, X509_get0_notBefore(cert));
++#endif
+   BIO_get_mem_ptr(bio, &mem);
+   info->Set(context, env->valid_from_string(),
+             String::NewFromUtf8(env->isolate(), mem->data,
+@@ -1920,7 +1965,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
+                                 mem->length)).FromJust();
+   USE(BIO_reset(bio));
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   ASN1_TIME_print(bio, X509_get_notAfter(cert));
++#else
++  ASN1_TIME_print(bio, X509_get0_notAfter(cert));
++#endif
+   BIO_get_mem_ptr(bio, &mem);
+   info->Set(context, env->valid_to_string(),
+             String::NewFromUtf8(env->isolate(), mem->data,
+@@ -3129,7 +3178,11 @@ inline bool CheckStartComOrWoSign(X509_NAME* root_name, X509* cert) {
+     return true;
+ 
+   time_t october_21_2016 = static_cast<time_t>(1477008000);
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   if (X509_cmp_time(X509_get_notBefore(cert), &october_21_2016) < 0)
++#else
++  if (X509_cmp_time(X509_get0_notBefore(cert), &october_21_2016) < 0)
++#endif
+     return true;
+ 
+   return false;
+@@ -6169,8 +6222,14 @@ void TimingSafeEqual(const FunctionCallbackInfo<Value>& args) {
+ }
+ 
+ void InitCryptoOnce() {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   SSL_load_error_strings();
+   OPENSSL_no_config();
++#else
++  OPENSSL_init_ssl(OPENSSL_INIT_LOAD_CRYPTO_STRINGS | OPENSSL_INIT_LOAD_SSL_STRINGS
++                   | OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS
++                   | OPENSSL_INIT_NO_LOAD_CONFIG, NULL);
++#endif
+ 
+   // --openssl-config=...
+   if (!openssl_config.empty()) {
+@@ -6192,10 +6251,10 @@ void InitCryptoOnce() {
+     }
+   }
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   SSL_library_init();
+   OpenSSL_add_all_algorithms();
+ 
+-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+   crypto_lock_init();
+   CRYPTO_set_locking_callback(crypto_lock_cb);
+   CRYPTO_THREADID_set_callback(crypto_threadid_cb);
+diff --git a/src/node_crypto.h b/src/node_crypto.h
+index b866117..a252ae2 100644
+--- a/src/node_crypto.h
++++ b/src/node_crypto.h
+@@ -50,6 +50,7 @@
+ #include <openssl/hmac.h>
+ #include <openssl/rand.h>
+ #include <openssl/pkcs12.h>
++#include <openssl/dh.h>
+ 
+ #if !defined(OPENSSL_NO_TLSEXT) && defined(SSL_CTX_set_tlsext_status_cb)
+ # define NODE__HAVE_TLSEXT_STATUS_CB
