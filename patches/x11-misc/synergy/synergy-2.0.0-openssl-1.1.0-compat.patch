@@ -1,0 +1,78 @@
+diff --git a/src/lib/net/SecureSocket.cpp b/src/lib/net/SecureSocket.cpp
+index 9dd3a81..c5caa7f 100644
+--- a/src/lib/net/SecureSocket.cpp
++++ b/src/lib/net/SecureSocket.cpp
+@@ -363,6 +363,7 @@ SecureSocket::loadCertificates(String& filename)
+ void
+ SecureSocket::initContext(bool server)
+ {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     SSL_library_init();
+ 
+     const SSL_METHOD* method;
+@@ -372,11 +373,19 @@ SecureSocket::initContext(bool server)
+ 
+     // load all error messages
+     SSL_load_error_strings();
++#else
++    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS |
++                     OPENSSL_INIT_ADD_ALL_CIPHERS |
++                     OPENSSL_INIT_ADD_ALL_DIGESTS, NULL);
++
++    const SSL_METHOD* method;
++#endif
+ 
+     if (CLOG->getFilter() >= kINFO) {
+         showSecureLibInfo();
+     }
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     // SSLv23_method uses TLSv1, with the ability to fall back to SSLv3
+     if (server) {
+         method = SSLv23_server_method();
+@@ -384,13 +393,25 @@ SecureSocket::initContext(bool server)
+     else {
+         method = SSLv23_client_method();
+     }
++#else
++    if (server) {
++        method = TLS_server_method();
++    }
++    else {
++        method = TLS_client_method();
++    }
++#endif
+     
+     // create new context from method
+     SSL_METHOD* m = const_cast<SSL_METHOD*>(method);
+     m_ssl->m_context = SSL_CTX_new(m);
+ 
+     // drop SSLv3 support
++#if OPENSL_VERSION_NUMBER < 0x10100000L
+     SSL_CTX_set_options(m_ssl->m_context, SSL_OP_NO_SSLv3);
++#else
++    SSL_CTX_set_min_proto_version(m_ssl->m_context, TLS1_VERSION);
++#endif
+ 
+     if (m_ssl->m_context == NULL) {
+         showError();
+@@ -828,11 +849,19 @@ SecureSocket::showSecureCipherInfo()
+ void
+ SecureSocket::showSecureLibInfo()
+ {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     LOG((CLOG_INFO "%s",SSLeay_version(SSLEAY_VERSION)));
+     LOG((CLOG_DEBUG1 "openSSL : %s",SSLeay_version(SSLEAY_CFLAGS)));
+     LOG((CLOG_DEBUG1 "openSSL : %s",SSLeay_version(SSLEAY_BUILT_ON)));
+     LOG((CLOG_DEBUG1 "openSSL : %s",SSLeay_version(SSLEAY_PLATFORM)));
+     LOG((CLOG_DEBUG1 "%s",SSLeay_version(SSLEAY_DIR)));
++#else
++    LOG((CLOG_INFO "%s",OpenSSL_version(OPENSSL_VERSION)));
++    LOG((CLOG_DEBUG1 "openSSL : %s",OpenSSL_version(OPENSSL_CFLAGS)));
++    LOG((CLOG_DEBUG1 "openSSL : %s",OpenSSL_version(OPENSSL_BUILT_ON)));
++    LOG((CLOG_DEBUG1 "openSSL : %s",OpenSSL_version(OPENSSL_PLATFORM)));
++    LOG((CLOG_DEBUG1 "%s",OpenSSL_version(OPENSSL_DIR)));
++#endif
+     return;
+ }
+ 
