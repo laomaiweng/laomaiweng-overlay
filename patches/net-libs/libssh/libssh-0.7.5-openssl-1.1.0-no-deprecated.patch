@@ -1,0 +1,146 @@
+diff --git a/src/dh.c b/src/dh.c
+index d27b66e..664c02a 100644
+--- a/src/dh.c
++++ b/src/dh.c
+@@ -131,11 +131,17 @@ int ssh_get_random(void *where, int len, int strong){
+ 
+   return 1;
+ #elif defined HAVE_LIBCRYPTO
++# if OPENSSL_VERSION_NUMBER < 0x10100000L
+   if (strong) {
+     return RAND_bytes(where,len);
+   } else {
+     return RAND_pseudo_bytes(where,len);
+   }
++# else
++  /* OpenSSL >= 1.1.0 deprecate RAND_pseudo_bytes() */
++  (void) strong;
++  return RAND_bytes(where,len);
++# endif
+ #endif
+ 
+   /* never reached */
+@@ -198,7 +204,9 @@ int ssh_crypto_init(void) {
+     }
+     bignum_bin2bn(p_group14_value, P_GROUP14_LEN, p_group14);
+ 
++# if OPENSSL_VERSION_NUMBER < 0x10100000L
+     OpenSSL_add_all_algorithms();
++# endif
+ 
+ #endif
+ 
+@@ -218,7 +226,7 @@ void ssh_crypto_finalize(void) {
+     p_group14 = NULL;
+ #ifdef HAVE_LIBGCRYPT
+     gcry_control(GCRYCTL_TERM_SECMEM);
+-#elif defined HAVE_LIBCRYPTO
++#elif defined HAVE_LIBCRYPTO && OPENSSL_VERSION_NUMBER < 0x10100000L
+     EVP_cleanup();
+     CRYPTO_cleanup_all_ex_data();
+ #endif
+diff --git a/src/libcrypto.c b/src/libcrypto.c
+index 00f107f..cf16043 100644
+--- a/src/libcrypto.c
++++ b/src/libcrypto.c
+@@ -57,6 +57,10 @@
+ #include <openssl/des.h>
+ #endif
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++#include <openssl/modes.h>
++#endif
++
+ #if (OPENSSL_VERSION_NUMBER<0x00907000L)
+ #define OLD_CRYPTO
+ #endif
+diff --git a/src/pki_crypto.c b/src/pki_crypto.c
+index b53bba2..9568b48 100644
+--- a/src/pki_crypto.c
++++ b/src/pki_crypto.c
+@@ -409,11 +409,24 @@ int pki_key_generate_rsa(ssh_key key, int parameter){
+ 
+ int pki_key_generate_dss(ssh_key key, int parameter){
+     int rc;
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     key->dsa = DSA_generate_parameters(parameter, NULL, 0, NULL, NULL,
+             NULL, NULL);
+     if(key->dsa == NULL){
+         return SSH_ERROR;
+     }
++#else
++    key->dsa = DSA_new();
++    if(key->dsa == NULL){
++        return SSH_ERROR;
++    }
++    rc = DSA_generate_parameters_ex(key->dsa, parameter, NULL, 0, NULL, NULL, NULL);
++    if (rc != 1){
++        DSA_free(key->dsa);
++        key->dsa=NULL;
++        return SSH_ERROR;
++    }
++#endif
+     rc = DSA_generate_key(key->dsa);
+     if (rc != 1){
+         DSA_free(key->dsa);
+diff --git a/src/threads.c b/src/threads.c
+index 7f3a304..ec59fff 100644
+--- a/src/threads.c
++++ b/src/threads.c
+@@ -104,19 +104,28 @@ static int libgcrypt_thread_init(void){
+ 
+ /* Libcrypto specific stuff */
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ static void **libcrypto_mutexes;
++#endif
+ 
+ static void libcrypto_lock_callback(int mode, int i, const char *file, int line){
+ 	(void)file;
+ 	(void)line;
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	if(mode & CRYPTO_LOCK){
+ 		user_callbacks->mutex_lock(&libcrypto_mutexes[i]);
+ 	} else {
+ 		user_callbacks->mutex_unlock(&libcrypto_mutexes[i]);
+ 	}
++#else
++    // OpenSSL >= 1.1.0 handles locking by itself
++    (void)mode;
++    (void)i;
++#endif
+ }
+ 
+ static int libcrypto_thread_init(void){
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	int n=CRYPTO_num_locks();
+ 	int i;
+ 	if(user_callbacks == &ssh_threads_noop)
+@@ -129,11 +138,16 @@ static int libcrypto_thread_init(void){
+ 	}
+   CRYPTO_set_id_callback(user_callbacks->thread_id);
+ 	CRYPTO_set_locking_callback(libcrypto_lock_callback);
++#else
++    // OpenSSL >= 1.1.0 handles locking by itself
++#endif
+ 
+ 	return SSH_OK;
+ }
+ 
+ static void libcrypto_thread_finalize(void){
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++	int n=CRYPTO_num_locks();
+ 	int n=CRYPTO_num_locks();
+ 	int i;
+ 	if (libcrypto_mutexes==NULL)
+@@ -142,7 +156,9 @@ static void libcrypto_thread_finalize(void){
+ 			user_callbacks->mutex_destroy(&libcrypto_mutexes[i]);
+ 	}
+ 	SAFE_FREE(libcrypto_mutexes);
+-
++#else
++    // OpenSSL >= 1.1.0 handles locking by itself
++#endif
+ }
+ 
+ #endif
