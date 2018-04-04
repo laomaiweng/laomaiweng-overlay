@@ -1,0 +1,512 @@
+diff --git a/SSLeay.xs b/SSLeay.xs
+index bf148c0..57a2ed9 100644
+--- a/SSLeay.xs
++++ b/SSLeay.xs
+@@ -195,6 +195,11 @@ which conflicts with perls
+ #if OPENSSL_VERSION_NUMBER >= 0x10000000L
+ #include <openssl/ocsp.h>
+ #endif
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++#include <openssl/bn.h>
++#include <openssl/dh.h>
++#include <openssl/rsa.h>
++#endif
+ #undef BLOCK
+ 
+ /* Debugging output - to enable use:
+@@ -1743,21 +1748,27 @@ hello()
+ 
+ #define REM0 "============= version related functions =============="
+ 
+-unsigned long
+-SSLeay()
+-
+-const char *
+-SSLeay_version(type=SSLEAY_VERSION)
+-        int type
+-
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+ 
+ unsigned long
+ OpenSSL_version_num()
++	ALIAS:
++		SSLeay = 1
+ 
+ const char *
+ OpenSSL_version(t=OPENSSL_VERSION)
+         int t
++	ALIAS:
++		SSLeay_version = 1
++
++#else
++
++unsigned long
++SSLeay()
++
++const char *
++SSLeay_version(type=SSLEAY_VERSION)
++        int type
+ 
+ #endif /* OpenSSL 1.1.0 */
+ 
+@@ -1788,8 +1799,16 @@ SSL_CTX_v2_new()
+ 
+ SSL_CTX *
+ SSL_CTX_v3_new()
++     PREINIT:
++     SSL_CTX *ctx;
+      CODE:
+-     RETVAL = SSL_CTX_new (SSLv3_method());
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++     ctx = SSL_CTX_new (SSLv3_method());
++#else
++     ctx = SSL_CTX_new (TLS_method());
++     SSL_CTX_set_min_proto_version(ctx, SSL3_VERSION);
++#endif
++     RETVAL = ctx;
+      OUTPUT:
+      RETVAL
+ 
+@@ -1804,8 +1823,16 @@ SSL_CTX_v23_new()
+ 
+ SSL_CTX *
+ SSL_CTX_tlsv1_new()
++     PREINIT:
++     SSL_CTX *ctx;
+      CODE:
+-     RETVAL = SSL_CTX_new (TLSv1_method());
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++     ctx = SSL_CTX_new (TLSv1_method());
++#else
++     ctx = SSL_CTX_new (TLS_method());
++     SSL_CTX_set_min_proto_version(ctx, TLS1_VERSION);
++#endif
++     RETVAL = ctx;
+      OUTPUT:
+      RETVAL
+ 
+@@ -1813,8 +1840,16 @@ SSL_CTX_tlsv1_new()
+ 
+ SSL_CTX *
+ SSL_CTX_tlsv1_1_new()
++     PREINIT:
++     SSL_CTX *ctx;
+      CODE:
+-     RETVAL = SSL_CTX_new (TLSv1_1_method());
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++     ctx = SSL_CTX_new (TLSv1_1_method());
++#else
++     ctx = SSL_CTX_new (TLS_method());
++     SSL_CTX_set_min_proto_version(ctx, TLS1_1_VERSION);
++#endif
++     RETVAL = ctx;
+      OUTPUT:
+      RETVAL
+ 
+@@ -1824,8 +1859,16 @@ SSL_CTX_tlsv1_1_new()
+ 
+ SSL_CTX *
+ SSL_CTX_tlsv1_2_new()
++     PREINIT:
++     SSL_CTX *ctx;
+      CODE:
+-     RETVAL = SSL_CTX_new (TLSv1_2_method());
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++     ctx = SSL_CTX_new (TLSv1_2_method());
++#else
++     ctx = SSL_CTX_new (TLS_method());
++     SSL_CTX_set_min_proto_version(ctx, TLS1_2_VERSION);
++#endif
++     RETVAL = ctx;
+      OUTPUT:
+      RETVAL
+ 
+@@ -2602,12 +2645,28 @@ ERR_error_string(error,buf=NULL)
+      OUTPUT:
+      RETVAL
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ void
+ SSL_load_error_strings()
+ 
+ void
+ ERR_load_crypto_strings()
+ 
++#else
++
++void
++SSL_load_error_strings()
++    CODE:
++        OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
++
++void
++ERR_load_crypto_strings()
++    CODE:
++        OPENSSL_init_crypto(OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL);
++
++#endif
++
+ int
+ SSL_FIPS_mode_set(int onoff)
+        CODE:
+@@ -2644,7 +2703,11 @@ SSL_library_init()
+ #endif
+ 		RETVAL = 0;
+ 		if (!LIB_initialized) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 			RETVAL = SSL_library_init();
++#else
++			RETVAL = OPENSSL_init_crypto(0, NULL);
++#endif
+ 			LIB_initialized = 1;
+ 		}
+ #ifdef USE_ITHREADS
+@@ -2704,7 +2767,11 @@ RAND_pseudo_bytes(buf, num)
+         unsigned char *random;
+     CODE:
+         New(0, random, num, unsigned char);
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+         rc = RAND_pseudo_bytes(random, num);
++#else
++        rc = RAND_bytes(random, num); /* RAND_pseudo_bytes() is deprecated and may not be available */
++#endif
+         sv_setpvn(buf, (const char*)random, num);
+         Safefree(random);
+         RETVAL = rc;
+@@ -2752,8 +2819,19 @@ RAND_seed(buf)
+      CODE:
+      RAND_seed (buf, (int)len);
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
++void
++RAND_cleanup()
++
++#else
++
+ void
+ RAND_cleanup()
++    CODE:
++        ; /* no-op */
++
++#endif
+ 
+ int
+ RAND_load_file(file_name, how_much)
+@@ -3029,12 +3107,28 @@ X509_CRL_set_version(X509_CRL *x, long version)
+ int
+ X509_CRL_set_issuer_name(X509_CRL *x, X509_NAME *name)
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ int
+ X509_CRL_set_lastUpdate(X509_CRL *x, ASN1_TIME *tm)
+ 
+ int
+ X509_CRL_set_nextUpdate(X509_CRL *x, ASN1_TIME *tm)
+ 
++#else
++
++int
++X509_CRL_set1_lastUpdate(X509_CRL *x, ASN1_TIME *tm)
++    ALIAS:
++        X509_CRL_set_lastUpdate = 1
++
++int
++X509_CRL_set1_nextUpdate(X509_CRL *x, ASN1_TIME *tm)
++    ALIAS:
++        X509_CRL_set_nextUpdate = 1
++
++#endif
++
+ int
+ X509_CRL_sort(X509_CRL *x)
+ 
+@@ -3046,12 +3140,28 @@ X509_CRL_get_version(X509_CRL *x)
+ X509_NAME *
+ X509_CRL_get_issuer(X509_CRL *x)
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ ASN1_TIME *
+ X509_CRL_get_lastUpdate(X509_CRL *x)
+ 
+ ASN1_TIME *
+ X509_CRL_get_nextUpdate(X509_CRL *x)
+ 
++#else
++
++const ASN1_TIME *
++X509_CRL_get0_lastUpdate(X509_CRL *x)
++    ALIAS:
++        X509_CRL_get_lastUpdate = 1
++
++const ASN1_TIME *
++X509_CRL_get0_nextUpdate(X509_CRL *x)
++    ALIAS:
++        X509_CRL_get_nextUpdate = 1
++
++#endif
++
+ int
+ X509_CRL_verify(X509_CRL *a, EVP_PKEY *r)
+ 
+@@ -3407,7 +3517,11 @@ X509_get_subjectAltNames(cert)
+                          EXTEND(SP, 2);
+                          count++;
+                          PUSHs(sv_2mortal(newSViv(subjAltNameDN->type)));
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+                          PUSHs(sv_2mortal(newSVpv((const char*)ASN1_STRING_data(subjAltNameDN->d.otherName->value->value.utf8string), ASN1_STRING_length(subjAltNameDN->d.otherName->value->value.utf8string))));
++#else
++                         PUSHs(sv_2mortal(newSVpv((const char*)ASN1_STRING_get0_data(subjAltNameDN->d.otherName->value->value.utf8string), ASN1_STRING_length(subjAltNameDN->d.otherName->value->value.utf8string))));
++#endif
+                          break;
+ 
+                      case GEN_EMAIL:
+@@ -3416,7 +3530,11 @@ X509_get_subjectAltNames(cert)
+                          EXTEND(SP, 2);
+                          count++;
+                          PUSHs(sv_2mortal(newSViv(subjAltNameDN->type)));
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+                          PUSHs(sv_2mortal(newSVpv((const char*)ASN1_STRING_data(subjAltNameDN->d.ia5), ASN1_STRING_length(subjAltNameDN->d.ia5))));
++#else
++                         PUSHs(sv_2mortal(newSVpv((const char*)ASN1_STRING_get0_data(subjAltNameDN->d.ia5), ASN1_STRING_length(subjAltNameDN->d.ia5))));
++#endif
+                          break;
+ 
+                      case GEN_DIRNAME:
+@@ -3467,7 +3585,11 @@ P_X509_get_crl_distribution_points(cert)
+                     gn = sk_GENERAL_NAME_value(gnames, j);
+ 
+                     if (gn->type == GEN_URI) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+                         XPUSHs(sv_2mortal(newSVpv((char*)ASN1_STRING_data(gn->d.ia5),ASN1_STRING_length(gn->d.ia5))));
++#else
++                        XPUSHs(sv_2mortal(newSVpv((char*)ASN1_STRING_get0_data(gn->d.ia5),ASN1_STRING_length(gn->d.ia5))));
++#endif
+                     }
+                 }
+             }
+@@ -3509,7 +3631,11 @@ P_X509_get_ocsp_uri(cert)
+ 	    if (OBJ_obj2nid(ad->method) == NID_ad_OCSP
+ 		&& ad->location->type == GEN_URI) {
+ 		XPUSHs(sv_2mortal(newSVpv(
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 		    (char*)ASN1_STRING_data(ad->location->d.uniformResourceIdentifier),
++#else
++		    (char*)ASN1_STRING_get0_data(ad->location->d.uniformResourceIdentifier),
++#endif
+ 		    ASN1_STRING_length(ad->location->d.uniformResourceIdentifier)
+ 		)));
+ 		if (GIMME == G_SCALAR) break; /* get only first */
+@@ -3826,10 +3952,16 @@ P_ASN1_STRING_get(s,utf8_decode=0)
+     PREINIT:
+         SV * u8;
+     PPCODE:
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+         u8 = newSVpv((const char*)ASN1_STRING_data(s), ASN1_STRING_length(s));
++#else
++        u8 = newSVpv((const char*)ASN1_STRING_get0_data(s), ASN1_STRING_length(s));
++#endif
+         if (utf8_decode) sv_utf8_decode(u8);
+         XPUSHs(sv_2mortal(u8));
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ ASN1_TIME *
+ X509_get_notBefore(cert)
+      X509 *	cert
+@@ -3838,6 +3970,22 @@ ASN1_TIME *
+ X509_get_notAfter(cert)
+      X509 *	cert
+ 
++#else
++
++const ASN1_TIME *
++X509_get0_notBefore(cert)
++     X509 *	cert
++    ALIAS:
++        X509_get_notBefore = 1
++
++const ASN1_TIME *
++X509_get0_notAfter(cert)
++     X509 *	cert
++    ALIAS:
++        X509_get_notAfter = 1
++
++#endif
++
+ ASN1_TIME *
+ X509_gmtime_adj(s, adj)
+      ASN1_TIME * s
+@@ -4107,7 +4255,11 @@ CTX_use_PKCS12_file(ctx, file, password=NULL)
+         RETVAL = 0;
+         if ((fp = fopen (file, "rb"))) {
+ #if OPENSSL_VERSION_NUMBER >= 0x0090700fL
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++            OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS | OPENSSL_INIT_NO_LOAD_CONFIG, NULL);
++#else
+             OPENSSL_add_all_algorithms_noconf();
++#endif
+ #else
+             OpenSSL_add_all_algorithms();
+ #endif
+@@ -4146,7 +4298,11 @@ P_PKCS12_load_file(file, load_chain=0, password=NULL)
+     PPCODE:
+         if ((fp = fopen (file, "rb"))) {
+ #if OPENSSL_VERSION_NUMBER >= 0x0090700fL
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++            OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS | OPENSSL_INIT_NO_LOAD_CONFIG, NULL);
++#else
+             OPENSSL_add_all_algorithms_noconf();
++#endif
+ #else
+             OpenSSL_add_all_algorithms();
+ #endif
+@@ -4321,6 +4477,8 @@ SSLv3_method()
+ #endif
+ #endif
+ 
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ const SSL_METHOD *
+ SSLv23_method()
+ 
+@@ -4365,17 +4523,34 @@ TLSv1_2_client_method()
+ 
+ #endif
+ 
++#endif /* OpenSSL 1.1.0 */
++
+ 
+ #if (OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)) || (LIBRESSL_VERSION_NUMBER >= 0x20020002L)
+ 
+ const SSL_METHOD *
+ TLS_method()
++    ALIAS:
++        SSLv23_method = 1
++        TLSv1_method = 2
++        TLSv1_1_method = 3
++        TLSv1_2_method = 4
+ 
+ const SSL_METHOD *
+ TLS_server_method()
++    ALIAS:
++        SSLv23_server_method = 1
++        TLSv1_server_method = 2
++        TLSv1_1_server_method = 3
++        TLSv1_2_server_method = 4
+ 
+ const SSL_METHOD *
+ TLS_client_method()
++    ALIAS:
++        SSLv23_client_method = 1
++        TLSv1_client_method = 2
++        TLSv1_1_client_method = 3
++        TLSv1_2_client_method = 4
+ 
+ #endif /* OpenSSL 1.1.0 or LibreSSL 2.2.2 */
+ 
+@@ -5394,7 +5569,7 @@ SSL_set_tmp_rsa(ssl,rsa)
+ 
+ #endif
+ 
+-#ifdef __ANDROID__
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L || defined(__ANDROID__)
+ 
+ RSA *
+ RSA_generate_key(bits,ee,perl_cb=&PL_sv_undef,perl_data=&PL_sv_undef)
+@@ -5413,14 +5588,23 @@ RSA_generate_key(bits,ee,perl_cb=&PL_sv_undef,perl_data=&PL_sv_undef)
+        e = BN_new();
+        BN_set_word(e, ee);
+        cb_data = simple_cb_data_new(perl_cb, perl_data);
+-       BN_GENCB new_cb;
+-       BN_GENCB_set_old(&new_cb, ssleay_RSA_generate_key_cb_invoke, cb_data);
++       BN_GENCB *new_cb;
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++       new_cb = BN_GENCB_new();
++#else
++       BN_GENCB _new_cb;
++       new_cb = &_new_cb;   /* trick so that the code below can use new_cb just like when it must be allocated with BN_GENCB_new() */
++#endif
++       BN_GENCB_set_old(new_cb, ssleay_RSA_generate_key_cb_invoke, cb_data);
+ 
+        ret = RSA_new();
+-       rc = RSA_generate_key_ex(ret, bits, e, &new_cb);
++       rc = RSA_generate_key_ex(ret, bits, e, new_cb);
+        
+        if (rc == -1 || ret == NULL)
+            croak("Couldn't generate RSA key");
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++       BN_GENCB_free(new_cb);
++#endif
+        simple_cb_data_free(cb_data);
+        BN_free(e);
+        e = NULL;
+@@ -5821,8 +6005,18 @@ const EVP_MD *EVP_sha256()
+ const EVP_MD *EVP_sha512()
+ 
+ #endif
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
++
+ void OpenSSL_add_all_digests()
+ 
++#else
++
++void OpenSSL_add_all_digests()
++    CODE:
++        OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_DIGESTS, NULL);
++
++#endif
++
+ const EVP_MD * EVP_get_digestbyname(const char *name)
+ 
+ int EVP_MD_type(const EVP_MD *md)
+@@ -5912,6 +6106,25 @@ EVP_Digest(...)
+ const EVP_CIPHER *
+ EVP_get_cipherbyname(const char *name)
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100000L
++
++void
++OpenSSL_add_all_algorithms()
++    CODE:
++        OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS, NULL);
++
++void
++OPENSSL_add_all_algorithms_noconf()
++    CODE:
++        OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS | OPENSSL_INIT_NO_LOAD_CONFIG, NULL);
++
++void
++OPENSSL_add_all_algorithms_conf()
++    CODE:
++        OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS | OPENSSL_INIT_LOAD_CONFIG, NULL);
++
++#else
++
+ void
+ OpenSSL_add_all_algorithms()
+ 
+@@ -5925,6 +6138,8 @@ OPENSSL_add_all_algorithms_conf()
+ 
+ #endif
+ 
++#endif
++
+ #if OPENSSL_VERSION_NUMBER >= 0x10000000L
+ 
+ int
+diff --git a/typemap b/typemap
+index d794aab..6cb4ca9 100644
+--- a/typemap
++++ b/typemap
+@@ -37,6 +37,7 @@ struct lhash_st_SSL_SESSION *	T_PTR
+ struct cert_st * T_PTR
+ X509_STORE_CTX * T_PTR
+ ASN1_TIME *      T_PTR
++const ASN1_TIME *      T_PTR
+ ASN1_OCTET_STRING *   T_PTR
+ const ASN1_INTEGER *   T_PTR
+ ASN1_INTEGER *   T_PTR
