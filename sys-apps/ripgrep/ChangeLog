@@ -1,3 +1,10 @@
+*ripgrep-0.8.1-r3 (05 Apr 2018)
+
+  05 Apr 2018; Quentin Minster <quentin@minster.io> +ripgrep-0.8.1-r3.ebuild,
+  -files/ripgrep-0.8.1-bundled-deps.patch, -ripgrep-0.8.1-r1.ebuild:
+  sys-apps/ripgrep: add ripgrep-0.8.1-r3.ebuild, drop old  Revision bump from
+  the Portage tree.
+
 *ripgrep-0.8.1-r1 (04 Mar 2018)
 
   04 Mar 2018; Quentin Minster <quentin@minster.io>
