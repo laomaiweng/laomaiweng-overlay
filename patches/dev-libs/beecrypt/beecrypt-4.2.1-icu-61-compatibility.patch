@@ -1,0 +1,83 @@
+diff --git a/c++/beeyond/DHIESParameterSpec.cxx b/c++/beeyond/DHIESParameterSpec.cxx
+index 30d17f0..5e4b94a 100644
+--- a/c++/beeyond/DHIESParameterSpec.cxx
++++ b/c++/beeyond/DHIESParameterSpec.cxx
+@@ -35,6 +35,9 @@ using std::auto_ptr;
+ #include <unicode/regex.h>
+ #include <unicode/numfmt.h>
+ 
++using icu::RegexMatcher;
++using icu::RegexPattern;
++
+ using namespace beecrypt::beeyond;
+ 
+ DHIESParameterSpec::DHIESParameterSpec(const DHIESParameterSpec& copy)
+diff --git a/c++/crypto/Cipher.cxx b/c++/crypto/Cipher.cxx
+index 447cb01..a7d18eb 100644
+--- a/c++/crypto/Cipher.cxx
++++ b/c++/crypto/Cipher.cxx
+@@ -29,6 +29,9 @@ using beecrypt::security::Security;
+ #include <unicode/regex.h>
+ #include <unicode/ustream.h>
+ 
++using icu::RegexMatcher;
++using icu::RegexPattern;
++
+ using namespace beecrypt::crypto;
+ 
+ namespace {
+diff --git a/c++/lang/Integer.cxx b/c++/lang/Integer.cxx
+index f46a277..4b4587d 100644
+--- a/c++/lang/Integer.cxx
++++ b/c++/lang/Integer.cxx
+@@ -28,6 +28,9 @@ using beecrypt::lang::String;
+ 
+ #include <unicode/numfmt.h>
+ 
++using icu::Formattable;
++using icu::NumberFormat;
++
+ using namespace beecrypt::lang;
+ 
+ const jint Integer::MIN_VALUE = (((jint) 1) << 31);
+diff --git a/c++/lang/Long.cxx b/c++/lang/Long.cxx
+index d76ce92..45eaa28 100644
+--- a/c++/lang/Long.cxx
++++ b/c++/lang/Long.cxx
+@@ -28,6 +28,9 @@ using beecrypt::lang::String;
+ 
+ #include <unicode/numfmt.h>
+ 
++using icu::Formattable;
++using icu::NumberFormat;
++
+ using namespace beecrypt::lang;
+ 
+ const jlong Long::MIN_VALUE = (((jlong) 1) << 63);
+diff --git a/c++/util/Date.cxx b/c++/util/Date.cxx
+index 5b219ab..7e76eae 100644
+--- a/c++/util/Date.cxx
++++ b/c++/util/Date.cxx
+@@ -27,6 +27,9 @@
+ 
+ #include <unicode/datefmt.h>
+ 
++using icu::DateFormat;
++using icu::UnicodeString;
++
+ namespace {
+ 	#if WIN32
+ 	__declspec(thread) DateFormat* format = 0;
+diff --git a/include/beecrypt/c++/lang/String.h b/include/beecrypt/c++/lang/String.h
+index 68b9377..a06bfee 100644
+--- a/include/beecrypt/c++/lang/String.h
++++ b/include/beecrypt/c++/lang/String.h
+@@ -40,6 +40,8 @@ using beecrypt::bytearray;
+ #include <iostream>
+ #include <unicode/unistr.h>
+ 
++using icu::UnicodeString;
++
+ namespace beecrypt {
+ 	namespace lang {
+ 		/*!\ingroup CXX_LANG_m
