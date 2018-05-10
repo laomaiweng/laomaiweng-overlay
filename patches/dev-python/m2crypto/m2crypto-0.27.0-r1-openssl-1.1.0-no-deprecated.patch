@@ -1,15 +1,7 @@
---- M2Crypto-0.27.0-orig/SWIG/_m2crypto.i	2017-10-06 07:43:17.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_m2crypto.i	2017-12-02 21:46:45.498064231 +1100
-@@ -26,6 +26,7 @@
- #pragma GCC diagnostic warning "-Wstrict-prototypes"
- #endif
- 
-+#include <openssl/dsa.h>
- #include <openssl/err.h>
- #include <openssl/rand.h>
- #include <_lib.h>
---- M2Crypto-0.27.0-orig/SWIG/_engine.i	2017-10-06 01:48:44.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_engine.i	2017-12-02 23:05:36.668415706 +1100
+diff --git a/SWIG/_engine.i b/SWIG/_engine.i
+index 4ba93f3..835424f 100644
+--- a/SWIG/_engine.i
++++ b/SWIG/_engine.i
 @@ -23,15 +23,6 @@
  %rename(engine_load_builtin_engines) ENGINE_load_builtin_engines;
  extern void ENGINE_load_builtin_engines(void);
@@ -26,7 +18,7 @@
  /*
   * Engine allocation functions
   */
-@@ -111,6 +102,28 @@
+@@ -111,6 +102,28 @@ extern void UI_destroy_method(UI_METHOD *ui_method);
   * optional password set.
   */
  
@@ -55,9 +47,23 @@
  typedef struct {
      char * password;
      char * prompt;
---- M2Crypto-0.27.0-orig/SWIG/_rand.i	2017-10-06 07:43:17.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_rand.i	2017-12-02 22:59:01.418272556 +1100
-@@ -16,13 +16,17 @@
+diff --git a/SWIG/_m2crypto.i b/SWIG/_m2crypto.i
+index 73f07b8..24a7882 100644
+--- a/SWIG/_m2crypto.i
++++ b/SWIG/_m2crypto.i
+@@ -26,6 +26,7 @@
+ #pragma GCC diagnostic warning "-Wstrict-prototypes"
+ #endif
+ 
++#include <openssl/dsa.h>
+ #include <openssl/err.h>
+ #include <openssl/rand.h>
+ #include <_lib.h>
+diff --git a/SWIG/_rand.i b/SWIG/_rand.i
+index 20e8d6e..7a0cdf3 100644
+--- a/SWIG/_rand.i
++++ b/SWIG/_rand.i
+@@ -16,13 +16,17 @@ extern int RAND_write_file(const char *);
  extern int RAND_poll(void);
  %rename(rand_status) RAND_status;
  extern int RAND_status(void);
@@ -77,21 +83,23 @@
  void rand_init(PyObject *rand_err) {
      Py_INCREF(rand_err);
      _rand_err = rand_err;
-@@ -86,7 +90,11 @@
+@@ -86,7 +90,11 @@ PyObject *rand_pseudo_bytes(int n) {
          PyMem_Free(blob);
          return NULL;
      }
 +#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-+    ret = (_PyOS_URandom(blob, n) == 0 ? 1 : 0);
++    ret = RAND_bytes(blob, n);
 +#else
      ret = RAND_pseudo_bytes(blob, n);
 +#endif
      if (ret == -1) {
          PyMem_Free(blob);
          Py_DECREF(tuple);
---- M2Crypto-0.27.0-orig/SWIG/_ssl.i	2017-10-06 07:43:17.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_ssl.i	2017-12-02 22:50:38.178916898 +1100
-@@ -19,6 +19,7 @@
+diff --git a/SWIG/_ssl.i b/SWIG/_ssl.i
+index 210462f..8bed573 100644
+--- a/SWIG/_ssl.i
++++ b/SWIG/_ssl.i
+@@ -19,6 +19,7 @@ typedef unsigned __int64 uint64_t;
  #include <pythread.h>
  #include <limits.h>
  #include <openssl/bio.h>
@@ -99,14 +107,12 @@
  #include <openssl/dh.h>
  #include <openssl/ssl.h>
  #include <openssl/tls1.h>
-@@ -258,21 +259,39 @@
+@@ -258,8 +259,12 @@ static PyObject *_ssl_err;
  static PyObject *_ssl_timeout_err;
  
  void ssl_init(PyObject *ssl_err, PyObject *ssl_timeout_err) {
 +#if OPENSSL_VERSION_NUMBER >= 0x10100000L
-+    OPENSSL_init_ssl(0, NULL);
-+    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS \
-+                     | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL);
++    OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, NULL);
 +#else
      SSL_library_init();
      SSL_load_error_strings();
@@ -114,47 +120,31 @@
      Py_INCREF(ssl_err);
      Py_INCREF(ssl_timeout_err);
      _ssl_err = ssl_err;
-     _ssl_timeout_err = ssl_timeout_err;
- }
- 
-+static void _set_protocol_version(const SSL_METHOD *m, int version)
-+{
-+    SSL_CTX *ctx = SSL_CTX_new(m);
-+    SSL_CTX_set_min_proto_version(ctx, version);
-+    SSL_CTX_set_max_proto_version(ctx, version);
-+    SSL_CTX_free(ctx);
-+}
-+
- #ifndef OPENSSL_NO_SSL3
- const SSL_METHOD *sslv3_method(void) {
- #if OPENSSL_VERSION_NUMBER >= 0x10100000L
+@@ -271,8 +276,10 @@ const SSL_METHOD *sslv3_method(void) {
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
      PyErr_WarnEx(PyExc_DeprecationWarning,
                   "Function SSLv3_method has been deprecated.", 1);
 -#endif
-+    const SSL_METHOD *m = TLS_method();
-+    _set_protocol_version(m, SSL3_VERSION);
-+    return m;
++    return TLS_method();
 +#else
      return SSLv3_method();
 +#endif
  }
  #endif
  
-@@ -280,8 +299,12 @@
- #if OPENSSL_VERSION_NUMBER >= 0x10100000L
+@@ -280,8 +287,10 @@ const SSL_METHOD *tlsv1_method(void) {
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
      PyErr_WarnEx(PyExc_DeprecationWarning,
                   "Function TLSv1_method has been deprecated.", 1);
 -#endif
-+    const SSL_METHOD *m = TLS_method();
-+    _set_protocol_version(m, TLS1_VERSION);
-+    return m;
++    return TLS_method();
 +#else
      return TLSv1_method();
 +#endif
  }
  
  void ssl_ctx_passphrase_callback(SSL_CTX *ctx, PyObject *pyfunc) {
-@@ -407,14 +430,23 @@
+@@ -407,14 +416,23 @@ void ssl_ctx_set_tmp_dh_callback(SSL_CTX *ctx,  PyObject *pyfunc) {
  }
  
  long ssl_ctx_set_tmp_rsa(SSL_CTX *ctx, RSA* rsa) {
@@ -178,8 +168,10 @@
  }
  
  int ssl_ctx_load_verify_locations(SSL_CTX *ctx, const char *cafile, const char *capath) {
---- M2Crypto-0.27.0-orig/SWIG/_util.i	2017-10-06 07:43:17.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_util.i	2017-12-02 22:50:32.973903169 +1100
+diff --git a/SWIG/_util.i b/SWIG/_util.i
+index 34d7dd2..21cd9e1 100644
+--- a/SWIG/_util.i
++++ b/SWIG/_util.i
 @@ -11,6 +11,11 @@
  %inline %{
  static PyObject *_util_err;
@@ -192,7 +184,7 @@
  void util_init(PyObject *util_err) {
      Py_INCREF(util_err);
      _util_err = util_err;
-@@ -25,7 +30,7 @@
+@@ -25,7 +30,7 @@ PyObject *util_hex_to_string(PyObject *blob) {
      if (PyObject_AsReadBuffer(blob, &buf, &len) == -1)
          return NULL;
  
@@ -201,7 +193,7 @@
      if (!ret) {
          m2_PyErr_Msg(_util_err);
          return NULL;
-@@ -52,7 +57,7 @@
+@@ -52,7 +57,7 @@ PyObject *util_string_to_hex(PyObject *blob) {
          return NULL;
  
      len = len0;
@@ -210,9 +202,11 @@
      if (ret == NULL) {
          m2_PyErr_Msg(_util_err);
          return NULL;
---- M2Crypto-0.27.0-orig/SWIG/_x509.i	2017-10-06 07:43:17.000000000 +1100
-+++ M2Crypto-0.27.0/SWIG/_x509.i	2017-12-02 22:50:23.148877258 +1100
-@@ -38,6 +38,13 @@
+diff --git a/SWIG/_x509.i b/SWIG/_x509.i
+index 70b3339..e137ac8 100644
+--- a/SWIG/_x509.i
++++ b/SWIG/_x509.i
+@@ -38,6 +38,13 @@ IMPLEMENT_ASN1_FUNCTIONS(SEQ_CERT)
  extern int X509_check_ca(X509 *);
  #endif
  
@@ -226,7 +220,7 @@
  %rename(x509_new) X509_new;
  extern X509 *X509_new( void );
  %rename(x509_dup) X509_dup;
-@@ -425,22 +432,22 @@
+@@ -425,22 +432,22 @@ long x509_get_version(X509 *x) {
  
  /* X509_set_notBefore() is a macro. */
  int x509_set_not_before(X509 *x, ASN1_TIME *tm) {
