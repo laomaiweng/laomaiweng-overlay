@@ -1,0 +1,7 @@
+*cargo-ebuild-0.1.5-r1 (11 May 2018)
+
+  11 May 2018; Quentin Minster <quentin@minster.io>
+  +cargo-ebuild-0.1.5-r1.ebuild,
+  +files/cargo-ebuild-0.1.5-openssl-1.1.0-no-deprecated.patch, +metadata.xml:
+  app-portage/cargo-ebuild: add cargo-ebuild-0.1.5-r1.ebuild  OpenSSL 1.1.0 `no-
+  deprecated' compatibility patch.
