@@ -1,6 +1,0 @@
-*typed_ast-1.0.3 (17 May 2017)
-
-  17 May 2017; Quentin Minster <quentin@minster.io> +metadata.xml,
-  +typed_ast-1.0.3.ebuild:
-  dev-python/typed_ast: add typed_ast-1.0.3.ebuild  Required by =dev-
-  python/mypy-0.511.
