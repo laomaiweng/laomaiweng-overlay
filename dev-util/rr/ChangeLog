@@ -1,3 +1,10 @@
+*rr-5.1.0-r1 (12 May 2018)
+
+  12 May 2018; Quentin Minster <quentin@minster.io> +rr-5.1.0-r1.ebuild,
+  -rr-4.5.0-r1.ebuild:
+  dev-util/rr: add rr-5.1.0-r1.ebuild, drop old  Version bump from the Portage
+  tree.
+
 *rr-4.5.0-r1 (01 Jun 2017)
 
   01 Jun 2017; Quentin Minster <quentin@minster.io>

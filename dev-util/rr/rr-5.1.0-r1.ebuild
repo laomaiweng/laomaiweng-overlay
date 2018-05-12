@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -14,12 +14,13 @@ SRC_URI="https://github.com/mozilla/${PN}/archive/${PV}.tar.gz -> mozilla-${P}.t
 
 LICENSE="MIT BSD-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="
 	sys-libs/zlib
+	dev-libs/capnproto
 	${PYTHON_DEPS}"
 RDEPEND="${DEPEND}
 	sys-devel/gdb[xml]"
@@ -30,9 +31,9 @@ DEPEND+="
 		sys-devel/gdb[xml]
 	)"
 
-PATCHES=(
-	"${FILESDIR}"/${P}-sysmacros.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${P}-sysmacros.patch
+#)
 
 pkg_setup() {
 	if use kernel_linux; then
