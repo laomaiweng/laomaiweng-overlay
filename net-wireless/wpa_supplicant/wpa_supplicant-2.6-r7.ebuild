@@ -13,7 +13,7 @@ LICENSE="|| ( GPL-2 BSD )"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 IUSE="ap dbus eap-sim eapol_test fasteap gnutls +hs2-0 libressl p2p privsep ps3 qt5 readline selinux smartcard ssl tdls uncommon-eap-types wimax wps kernel_linux kernel_FreeBSD"
-REQUIRED_USE="fasteap? ( !ssl ) smartcard? ( ssl )"
+REQUIRED_USE="smartcard? ( ssl )"
 
 CDEPEND="dbus? ( sys-apps/dbus )
 	kernel_linux? (
@@ -38,7 +38,7 @@ CDEPEND="dbus? ( sys-apps/dbus )
 			net-libs/gnutls:=
 		)
 		!gnutls? (
-			!libressl? ( dev-libs/openssl:0= )
+			!libressl? ( >=dev-libs/openssl-1.0.2k:0=[-bindist] )
 			libressl? ( dev-libs/libressl:0= )
 		)
 	)
@@ -130,8 +130,8 @@ src_prepare() {
 	# bug (320097)
 	eapply "${FILESDIR}/${P}-do-not-call-dbus-functions-with-NULL-path.patch"
 
-	# bug (596332)
-	eapply "${FILESDIR}/${P}-libressl.patch"
+	# bug (596332 & 651314)
+	eapply "${FILESDIR}/${P}-libressl-compatibility.patch"
 
 	# https://w1.fi/security/2017-1/wpa-packet-number-reuse-with-replayed-messages.txt
 	eapply "${FILESDIR}/2017-1/rebased-v2.6-0001-hostapd-Avoid-key-reinstallation-in-FT-handshake.patch"
@@ -142,6 +142,9 @@ src_prepare() {
 	eapply "${FILESDIR}/2017-1/rebased-v2.6-0006-TDLS-Reject-TPK-TK-reconfiguration.patch"
 	eapply "${FILESDIR}/2017-1/rebased-v2.6-0007-WNM-Ignore-WNM-Sleep-Mode-Response-without-pending-r.patch"
 	eapply "${FILESDIR}/2017-1/rebased-v2.6-0008-FT-Do-not-allow-multiple-Reassociation-Response-fram.patch"
+
+	# bug (640492)
+	sed -i 's#-Werror ##' wpa_supplicant/Makefile || die
 
 	# bug (649004)
 	eapply "${FILESDIR}/${P}-openssl-1.1.0-compat.patch" || die
