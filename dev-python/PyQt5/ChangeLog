@@ -1,0 +1,5 @@
+*PyQt5-5.10.1-r1 (19 May 2018)
+
+  19 May 2018; Quentin Minster <quentin@minster.io> +PyQt5-5.10.1-r1.ebuild,
+  +files/PyQt5-5.10.1-timeline.patch, +metadata.xml:
+  dev-python/PyQt5: add PyQt5-5.10.1-r1.ebuild  Fix for Gentoo bug #635502.

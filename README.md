@@ -37,14 +37,15 @@ Package status
   <tr><td>cyrus-sasl</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592528">#592528</a>)</td><td>Portage</td></tr>
   <tr><td>libclc</td><td>dependency version bump to sys-devel/clang:6</td><td>laomaiweng-overlay</td></tr>
   <tr><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td>libxslt</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/632214">#632214</a>)<td>Portage</td></tr>
+  <tr><td>libxslt</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/632214">#632214</a>)</td><td>Portage</td></tr>
   <tr><td>pkcs11-helper</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646378">#646378</a>)</td><td>Portage</td></tr>
-  <tr><td>weston</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/634572">#634572</a>)<td>Portage</td></tr>
+  <tr><td>weston</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/634572">#634572</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-perl</td><td>Net-SSLeay</td><td>compatibility with >=dev-libs/openssl-1.1.0, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=3>dev-python</td><td>capstone-python</td><td>bump Python targets to 3.6</td><td>Pentoo</td></tr>
+  <tr><td rowspan=4>dev-python</td><td>capstone-python</td><td>bump Python targets to 3.6</td><td>Pentoo</td></tr>
   <tr><td>mypy</td><td>version bump, bump Python targets to 3.6</td><td>Portage</td></tr>
   <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
+  <tr><td>PyQt5</td><td>bugfix for <a href="https://bugs.gentoo.org/635502">#635502</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=3>dev-util</td><td>bear</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>rr</td><td>fix build on amd64 <tt>no-multilib</tt>, due for submission to Portage tree</td><td>Portage</td></tr>
