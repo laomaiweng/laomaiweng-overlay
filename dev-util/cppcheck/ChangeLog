@@ -1,0 +1,6 @@
+*cppcheck-1.83 (20 May 2018)
+
+  20 May 2018; Quentin Minster <quentin@minster.io> +cppcheck-1.83.ebuild,
+  +files/cppcheck-1.75-tinyxml2.patch, +metadata.xml:
+  dev-util/cppcheck: add cppcheck-1.83.ebuild  Bump version to 1.83,
+  PYTHON_TARGETS to 3.6.

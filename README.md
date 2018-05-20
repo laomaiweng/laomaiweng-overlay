@@ -47,7 +47,8 @@ Package status
   <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>PyQt5</td><td>bugfix for <a href="https://bugs.gentoo.org/635502">#635502</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=3>dev-util</td><td>bear</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=4>dev-util</td><td>bear</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td>cppcheck</td><td>bump version to 1.83, PYTHON_TARGETS to 3.6</td><td>Portage</td></tr>
   <tr><td>rr</td><td>fix build on amd64 <tt>no-multilib</tt>, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
