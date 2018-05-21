@@ -1,3 +1,10 @@
+*wpa_supplicant-2.6-r9 (21 May 2018)
+
+  21 May 2018; Quentin Minster <quentin@minster.io>
+  +wpa_supplicant-2.6-r9.ebuild, -wpa_supplicant-2.6-r7.ebuild:
+  net-wireless/wpa_supplicant: add wpa_supplicant-2.6-r9.ebuild, drop old
+  Revision bump from the Portage tree.
+
 *wpa_supplicant-2.6-r7 (14 May 2018)
 
   14 May 2018; Quentin Minster <quentin@minster.io>
