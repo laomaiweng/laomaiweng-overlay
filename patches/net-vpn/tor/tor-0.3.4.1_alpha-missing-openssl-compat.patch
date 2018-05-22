@@ -1,0 +1,12 @@
+diff --git a/src/common/aes.c b/src/common/aes.c
+index f6b9333..f6a3ae9 100644
+--- a/src/common/aes.c
++++ b/src/common/aes.c
+@@ -36,6 +36,7 @@ DISABLE_GCC_WARNING(redundant-decls)
+ ENABLE_GCC_WARNING(redundant-decls)
+ 
+ #include "compat.h"
++#include "compat_openssl.h"
+ #include "aes.h"
+ #include "util.h"
+ #include "torlog.h"
