@@ -1,0 +1,296 @@
+diff --git a/xpra/codecs/dec_avcodec2/decoder.pyx b/xpra/codecs/dec_avcodec2/decoder.pyx
+index 9e1d37c..4b27de7 100644
+--- a/xpra/codecs/dec_avcodec2/decoder.pyx
++++ b/xpra/codecs/dec_avcodec2/decoder.pyx
+@@ -85,7 +85,6 @@ cdef extern from "libavcodec/avcodec.h":
+     AVCodecID AV_CODEC_ID_MPEG4
+ 
+     #init and free:
+-    void avcodec_register_all()
+     AVCodec *avcodec_find_decoder(AVCodecID id)
+     AVCodecContext *avcodec_alloc_context3(const AVCodec *codec)
+     int avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options)
+@@ -134,7 +133,6 @@ for pix_fmt, av_enum in FORMAT_TO_ENUM.items():
+ def get_version():
+     return (LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO)
+ 
+-avcodec_register_all()
+ CODECS = []
+ if avcodec_find_decoder(AV_CODEC_ID_H264)!=NULL:
+     CODECS.append("h264")
+@@ -323,8 +321,6 @@ cdef class Decoder:
+             return  False
+         self.actual_pix_fmt = self.pix_fmt
+ 
+-        avcodec_register_all()
+-
+         cdef AVCodecID CodecID
+         if self.encoding=="h264":
+             CodecID = AV_CODEC_ID_H264
+diff --git a/xpra/codecs/enc_ffmpeg/encoder.pyx b/xpra/codecs/enc_ffmpeg/encoder.pyx
+index 2200332..dc4afb2 100644
+--- a/xpra/codecs/enc_ffmpeg/encoder.pyx
++++ b/xpra/codecs/enc_ffmpeg/encoder.pyx
+@@ -134,44 +134,36 @@ cdef extern from "libavcodec/avcodec.h":
+     int FF_PROFILE_H264_HIGH_444_INTRA
+     int FF_PROFILE_H264_CAVLC_444
+ 
+-    int CODEC_FLAG_UNALIGNED
+-    int CODEC_FLAG_QSCALE
+-    int CODEC_FLAG_4MV
+-    int CODEC_FLAG_OUTPUT_CORRUPT
+-    int CODEC_FLAG_QPEL
+-    int CODEC_FLAG_GMC
+-    int CODEC_FLAG_MV0
+-    int CODEC_FLAG_INPUT_PRESERVED
+-    int CODEC_FLAG_PASS1
+-    int CODEC_FLAG_PASS2
+-    int CODEC_FLAG_GRAY
+-    int CODEC_FLAG_EMU_EDGE
+-    int CODEC_FLAG_PSNR
+-    int CODEC_FLAG_TRUNCATED
+-    int CODEC_FLAG_NORMALIZE_AQP
+-    int CODEC_FLAG_INTERLACED_DCT
+-    int CODEC_FLAG_GLOBAL_HEADER
+-
+-    int CODEC_FLAG2_FAST
+-
+-    int CODEC_CAP_DRAW_HORIZ_BAND
+-    int CODEC_CAP_DR1
+-    int CODEC_CAP_TRUNCATED
+-    int CODEC_CAP_HWACCEL
+-    int CODEC_CAP_DELAY
+-    int CODEC_CAP_SMALL_LAST_FRAME
+-    int CODEC_CAP_HWACCEL_VDPAU
+-    int CODEC_CAP_SUBFRAMES
+-    int CODEC_CAP_EXPERIMENTAL
+-    int CODEC_CAP_CHANNEL_CONF
+-    int CODEC_CAP_NEG_LINESIZES
+-    int CODEC_CAP_FRAME_THREADS
+-    int CODEC_CAP_SLICE_THREADS
+-    int CODEC_CAP_PARAM_CHANGE
+-    int CODEC_CAP_AUTO_THREADS
+-    int CODEC_CAP_VARIABLE_FRAME_SIZE
+-    int CODEC_CAP_INTRA_ONLY
+-    int CODEC_CAP_LOSSLESS
++    int AV_CODEC_FLAG_UNALIGNED
++    int AV_CODEC_FLAG_QSCALE
++    int AV_CODEC_FLAG_4MV
++    int AV_CODEC_FLAG_OUTPUT_CORRUPT
++    int AV_CODEC_FLAG_QPEL
++    int AV_CODEC_FLAG_PASS1
++    int AV_CODEC_FLAG_PASS2
++    int AV_CODEC_FLAG_GRAY
++    int AV_CODEC_FLAG_PSNR
++    int AV_CODEC_FLAG_TRUNCATED
++    int AV_CODEC_FLAG_INTERLACED_DCT
++    int AV_CODEC_FLAG_GLOBAL_HEADER
++
++    int AV_CODEC_FLAG2_FAST
++
++    int AV_CODEC_CAP_DRAW_HORIZ_BAND
++    int AV_CODEC_CAP_DR1
++    int AV_CODEC_CAP_TRUNCATED
++    int AV_CODEC_CAP_DELAY
++    int AV_CODEC_CAP_SMALL_LAST_FRAME
++    int AV_CODEC_CAP_SUBFRAMES
++    int AV_CODEC_CAP_EXPERIMENTAL
++    int AV_CODEC_CAP_CHANNEL_CONF
++    int AV_CODEC_CAP_FRAME_THREADS
++    int AV_CODEC_CAP_SLICE_THREADS
++    int AV_CODEC_CAP_PARAM_CHANGE
++    int AV_CODEC_CAP_AUTO_THREADS
++    int AV_CODEC_CAP_VARIABLE_FRAME_SIZE
++    int AV_CODEC_CAP_INTRA_ONLY
++    int AV_CODEC_CAP_LOSSLESS
+ 
+     ctypedef struct AVFrame:
+         uint8_t     **data
+@@ -294,7 +286,6 @@ cdef extern from "libavcodec/avcodec.h":
+     AVCodecID AV_CODEC_ID_AAC
+ 
+     #init and free:
+-    void avcodec_register_all()
+     AVCodec *avcodec_find_encoder(AVCodecID id)
+     AVCodecContext *avcodec_alloc_context3(const AVCodec *codec)
+     int avcodec_open2(AVCodecContext *avctx, const AVCodec *codec, AVDictionary **options)
+@@ -385,7 +376,6 @@ cdef extern from "libavformat/avformat.h":
+     int AVFMT_NOFILE                #Demuxer will use avio_open, no opened file should be provided by the caller
+     int AVFMT_NEEDNUMBER            #Needs '%d' in filename
+     int AVFMT_SHOW_IDS              #Show format stream IDs numbers
+-    int AVFMT_RAWPICTURE            #Format wants AVPicture structure for raw picture data. @deprecated Not used anymore
+     int AVFMT_GLOBALHEADER          #Format wants global header
+     int AVFMT_NOTIMESTAMPS          #Format does not need / have any timestamps
+     int AVFMT_GENERIC_INDEX         #Use generic index building code
+@@ -424,8 +414,7 @@ cdef extern from "libavformat/avformat.h":
+         int         flags       #AVFMT_NOFILE, AVFMT_NEEDNUMBER, AVFMT_GLOBALHEADER, AVFMT_NOTIMESTAMPS, AVFMT_VARIABLE_FPS, AVFMT_NODIMENSIONS, AVFMT_NOSTREAMS, AVFMT_ALLOW_FLUSH, AVFMT_TS_NONSTRICT, AVFMT_TS_NEGATIVE More...
+         int         (*query_codec)(AVCodecID id, int std_compliance)
+ 
+-    void av_register_all()
+-    AVOutputFormat *av_oformat_next(const AVOutputFormat *f)
++    const AVOutputFormat *av_muxer_iterate(void **opaque)
+     int avformat_alloc_output_context2(AVFormatContext **ctx, AVOutputFormat *oformat, const char *format_name, const char *filename)
+     void avformat_free_context(AVFormatContext *s)
+ 
+@@ -489,27 +478,22 @@ AVFMTCTX = {
+             }
+ 
+ CODEC_FLAGS = {
+-               CODEC_FLAG_UNALIGNED         : "UNALIGNED",
+-               CODEC_FLAG_QSCALE            : "QSCALE",
+-               CODEC_FLAG_4MV               : "4MV",
+-               CODEC_FLAG_OUTPUT_CORRUPT    : "OUTPUT_CORRUPT",
+-               CODEC_FLAG_QPEL              : "QPEL",
+-               CODEC_FLAG_GMC               : "GMC",
+-               CODEC_FLAG_MV0               : "MV0",
+-               CODEC_FLAG_INPUT_PRESERVED   : "INPUT_PRESERVED",
+-               CODEC_FLAG_PASS1             : "PASS1",
+-               CODEC_FLAG_PASS2             : "PASS2",
+-               CODEC_FLAG_GRAY              : "GRAY",
+-               CODEC_FLAG_EMU_EDGE          : "EMU_EDGE",
+-               CODEC_FLAG_PSNR              : "PSNR",
+-               CODEC_FLAG_TRUNCATED         : "TRUNCATED",
+-               CODEC_FLAG_NORMALIZE_AQP     : "NORMALIZE_AQP",
+-               CODEC_FLAG_INTERLACED_DCT    : "INTERLACED_DCT",
+-               CODEC_FLAG_GLOBAL_HEADER     : "GLOBAL_HEADER",
++               AV_CODEC_FLAG_UNALIGNED         : "UNALIGNED",
++               AV_CODEC_FLAG_QSCALE            : "QSCALE",
++               AV_CODEC_FLAG_4MV               : "4MV",
++               AV_CODEC_FLAG_OUTPUT_CORRUPT    : "OUTPUT_CORRUPT",
++               AV_CODEC_FLAG_QPEL              : "QPEL",
++               AV_CODEC_FLAG_PASS1             : "PASS1",
++               AV_CODEC_FLAG_PASS2             : "PASS2",
++               AV_CODEC_FLAG_GRAY              : "GRAY",
++               AV_CODEC_FLAG_PSNR              : "PSNR",
++               AV_CODEC_FLAG_TRUNCATED         : "TRUNCATED",
++               AV_CODEC_FLAG_INTERLACED_DCT    : "INTERLACED_DCT",
++               AV_CODEC_FLAG_GLOBAL_HEADER     : "GLOBAL_HEADER",
+                }
+ 
+ CODEC_FLAGS2 = {
+-                CODEC_FLAG2_FAST : "FAST",
++                AV_CODEC_FLAG2_FAST : "FAST",
+                 }
+ 
+ FMT_FLAGS = {
+@@ -535,7 +519,6 @@ AVFMT = {
+          AVFMT_NOFILE           : "NOFILE",
+          AVFMT_NEEDNUMBER       : "NEEDNUMBER",
+          AVFMT_SHOW_IDS         : "SHOW_IDS",
+-         AVFMT_RAWPICTURE       : "RAWPICTURE",
+          AVFMT_GLOBALHEADER     : "GLOBALHEADER",
+          AVFMT_NOTIMESTAMPS     : "NOTIMESTAMPS",
+          AVFMT_GENERIC_INDEX    : "GENERIC_INDEX",
+@@ -554,24 +537,21 @@ AVFMT = {
+ 
+ 
+ CAPS = {
+-        CODEC_CAP_DRAW_HORIZ_BAND       : "DRAW_HORIZ_BAND",
+-        CODEC_CAP_DR1                   : "DR1",
+-        CODEC_CAP_TRUNCATED             : "TRUNCATED",
+-        CODEC_CAP_HWACCEL               : "HWACCEL",
+-        CODEC_CAP_DELAY                 : "DELAY",
+-        CODEC_CAP_SMALL_LAST_FRAME      : "SMALL_LAST_FRAME",
+-        CODEC_CAP_HWACCEL_VDPAU         : "HWACCEL_VDPAU",
+-        CODEC_CAP_SUBFRAMES             : "SUBFRAMES",
+-        CODEC_CAP_EXPERIMENTAL          : "EXPERIMENTAL",
+-        CODEC_CAP_CHANNEL_CONF          : "CHANNEL_CONF",
+-        CODEC_CAP_NEG_LINESIZES         : "NEG_LINESIZES",
+-        CODEC_CAP_FRAME_THREADS         : "FRAME_THREADS",
+-        CODEC_CAP_SLICE_THREADS         : "SLICE_THREADS",
+-        CODEC_CAP_PARAM_CHANGE          : "PARAM_CHANGE",
+-        CODEC_CAP_AUTO_THREADS          : "AUTO_THREADS",
+-        CODEC_CAP_VARIABLE_FRAME_SIZE   : "VARIABLE_FRAME_SIZE",
+-        CODEC_CAP_INTRA_ONLY            : "INTRA_ONLY",
+-        CODEC_CAP_LOSSLESS              : "LOSSLESS",
++        AV_CODEC_CAP_DRAW_HORIZ_BAND       : "DRAW_HORIZ_BAND",
++        AV_CODEC_CAP_DR1                   : "DR1",
++        AV_CODEC_CAP_TRUNCATED             : "TRUNCATED",
++        AV_CODEC_CAP_DELAY                 : "DELAY",
++        AV_CODEC_CAP_SMALL_LAST_FRAME      : "SMALL_LAST_FRAME",
++        AV_CODEC_CAP_SUBFRAMES             : "SUBFRAMES",
++        AV_CODEC_CAP_EXPERIMENTAL          : "EXPERIMENTAL",
++        AV_CODEC_CAP_CHANNEL_CONF          : "CHANNEL_CONF",
++        AV_CODEC_CAP_FRAME_THREADS         : "FRAME_THREADS",
++        AV_CODEC_CAP_SLICE_THREADS         : "SLICE_THREADS",
++        AV_CODEC_CAP_PARAM_CHANGE          : "PARAM_CHANGE",
++        AV_CODEC_CAP_AUTO_THREADS          : "AUTO_THREADS",
++        AV_CODEC_CAP_VARIABLE_FRAME_SIZE   : "VARIABLE_FRAME_SIZE",
++        AV_CODEC_CAP_INTRA_ONLY            : "INTRA_ONLY",
++        AV_CODEC_CAP_LOSSLESS              : "LOSSLESS",
+         }
+ log("CODEC_CAP:")
+ print_nested_dict(dict((hex(abs(k)),v) for k,v in CAPS.items()), print_fn=log.debug)
+@@ -613,11 +593,11 @@ def flagscsv(flag_dict, value=0):
+ 
+ 
+ def get_muxer_formats():
+-    av_register_all()
+-    cdef AVOutputFormat *fmt = NULL
++    cdef const AVOutputFormat *fmt = NULL
++    cdef void *iterator = NULL
+     formats = {}
+     while True:
+-        fmt = av_oformat_next(fmt)
++        fmt = av_muxer_iterate(&iterator)
+         if fmt==NULL:
+             break
+         name = fmt.name
+@@ -627,10 +607,11 @@ def get_muxer_formats():
+ log("AV Output Formats:")
+ print_nested_dict(get_muxer_formats(), print_fn=log.debug)
+ 
+-cdef AVOutputFormat* get_av_output_format(name):
+-    cdef AVOutputFormat *fmt = NULL
++cdef const AVOutputFormat* get_av_output_format(name):
++    cdef const AVOutputFormat *fmt = NULL
++    cdef void *iterator = NULL
+     while True:
+-        fmt = av_oformat_next(fmt)
++        fmt = av_muxer_iterate(&iterator)
+         if fmt==NULL:
+             break
+         if name==fmt.name:
+@@ -641,7 +622,6 @@ cdef AVOutputFormat* get_av_output_format(name):
+ def get_version():
+     return (LIBAVCODEC_VERSION_MAJOR, LIBAVCODEC_VERSION_MINOR, LIBAVCODEC_VERSION_MICRO)
+ 
+-avcodec_register_all()
+ CODECS = []
+ if avcodec_find_encoder(AV_CODEC_ID_H264)!=NULL:
+     CODECS.append("h264+mp4")
+@@ -785,7 +765,6 @@ cdef class Encoder(object):
+         self.buffers = []
+ 
+         codec = self.encoding.split("+")[0]
+-        avcodec_register_all()
+         cdef AVCodecID video_codec_id
+         if codec=="h264":
+             video_codec_id = AV_CODEC_ID_H264
+@@ -819,13 +798,13 @@ cdef class Encoder(object):
+         cdef AVDictionary *opts = NULL
+         cdef AVDictionary *muxer_opts = NULL
+         global GEN_TO_ENCODER
+-        cdef AVOutputFormat *oformat = get_av_output_format(strtobytes(self.muxer_format))
++        cdef const AVOutputFormat *oformat = get_av_output_format(strtobytes(self.muxer_format))
+         if oformat==NULL:
+             raise Exception("libavformat does not support %s" % self.muxer_format)
+         log("init_encoder() AVOutputFormat(%s)=%#x, flags=%s", self.muxer_format, <uintptr_t> oformat, flagscsv(AVFMT, oformat.flags))
+         if oformat.flags & AVFMT_ALLOW_FLUSH==0:
+             raise Exception("AVOutputFormat(%s) does not support flushing!" % self.muxer_format)
+-        r = avformat_alloc_output_context2(&self.muxer_ctx, oformat, strtobytes(self.muxer_format), NULL)
++        r = avformat_alloc_output_context2(&self.muxer_ctx, <AVOutputFormat*>oformat, strtobytes(self.muxer_format), NULL)
+         if r!=0:
+             msg = av_error_str(r)
+             raise Exception("libavformat cannot allocate context: %s" % msg)
+@@ -890,8 +869,8 @@ cdef class Encoder(object):
+         self.video_ctx.thread_type = THREAD_TYPE
+         self.video_ctx.thread_count = THREAD_COUNT     #0=auto
+         #if oformat.flags & AVFMT_GLOBALHEADER:
+-        self.video_ctx.flags |= CODEC_FLAG_GLOBAL_HEADER
+-        self.video_ctx.flags2 |= CODEC_FLAG2_FAST   #may cause "no deblock across slices" - which should be fine
++        self.video_ctx.flags |= AV_CODEC_FLAG_GLOBAL_HEADER
++        self.video_ctx.flags2 |= AV_CODEC_FLAG2_FAST   #may cause "no deblock across slices" - which should be fine
+         if self.encoding.startswith("h264") and profile:
+             r = av_dict_set(&opts, b"vprofile", strtobytes(profile), 0)
+             log("av_dict_set vprofile=%s returned %i", profile, r)
