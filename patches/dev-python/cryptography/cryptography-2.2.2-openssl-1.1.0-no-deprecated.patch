@@ -1,6 +1,8 @@
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/asn1.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/asn1.py	2017-10-17 14:37:39.779336199 +1100
-@@ -155,4 +155,7 @@
+diff --git a/src/_cffi_src/openssl/asn1.py b/src/_cffi_src/openssl/asn1.py
+index 51acf10..9f63574 100644
+--- a/src/_cffi_src/openssl/asn1.py
++++ b/src/_cffi_src/openssl/asn1.py
+@@ -100,4 +100,7 @@ ASN1_TYPE *d2i_ASN1_TYPE(ASN1_TYPE **, const unsigned char **, long);
  """
  
  CUSTOMIZATIONS = """
@@ -8,27 +10,11 @@
 +#define ASN1_STRING_data ASN1_STRING_get0_data
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/callbacks.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/callbacks.py	2017-10-16 22:35:16.810888339 +1100
-@@ -118,6 +118,7 @@
- 
- 
- int _setup_ssl_threads(void) {
-+#if OPENSSL_API_COMPAT < 0x10100000L
-     if (_ssl_locks == NULL) {
-         _ssl_locks_count = CRYPTO_num_locks();
-         _ssl_locks = calloc(_ssl_locks_count, sizeof(Cryptography_mutex));
-@@ -130,6 +131,7 @@
-         pthread_atfork(NULL, NULL, &init_mutexes);
- #endif
-     }
-+#endif
-     return 1;
- }
- 
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/bignum.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/bignum.py	2017-10-17 10:31:30.783244734 +1100
-@@ -83,4 +83,8 @@
+diff --git a/src/_cffi_src/openssl/bignum.py b/src/_cffi_src/openssl/bignum.py
+index 2c140c9..487b768 100644
+--- a/src/_cffi_src/openssl/bignum.py
++++ b/src/_cffi_src/openssl/bignum.py
+@@ -87,4 +87,8 @@ int BN_rshift1(BIGNUM *, BIGNUM *);
  """
  
  CUSTOMIZATIONS = """
@@ -37,9 +23,31 @@
 +#define BN_zero(x) (0)
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/conf.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/conf.py	2017-10-17 13:01:16.712691952 +1100
-@@ -18,4 +18,9 @@
+diff --git a/src/_cffi_src/openssl/callbacks.py b/src/_cffi_src/openssl/callbacks.py
+index cf2b2da..834d9ba 100644
+--- a/src/_cffi_src/openssl/callbacks.py
++++ b/src/_cffi_src/openssl/callbacks.py
+@@ -118,6 +118,7 @@ static void init_mutexes(void) {
+ 
+ 
+ int _setup_ssl_threads(void) {
++#if OPENSSL_API_COMPAT < 0x10100000L
+     if (_ssl_locks == NULL) {
+         _ssl_locks_count = CRYPTO_num_locks();
+         _ssl_locks = calloc(_ssl_locks_count, sizeof(Cryptography_mutex));
+@@ -130,6 +131,7 @@ int _setup_ssl_threads(void) {
+         pthread_atfork(NULL, NULL, &init_mutexes);
+ #endif
+     }
++#endif
+     return 1;
+ }
+ 
+diff --git a/src/_cffi_src/openssl/conf.py b/src/_cffi_src/openssl/conf.py
+index 9db0162..4eae213 100644
+--- a/src/_cffi_src/openssl/conf.py
++++ b/src/_cffi_src/openssl/conf.py
+@@ -18,4 +18,9 @@ void OPENSSL_no_config(void);
  """
  
  CUSTOMIZATIONS = """
@@ -49,9 +57,11 @@
 +    OPENSSL_init_crypto(OPENSSL_INIT_NO_LOAD_CONFIG, NULL)
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/crypto.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/crypto.py	2017-10-16 22:56:24.289810368 +1100
-@@ -133,6 +133,16 @@
+diff --git a/src/_cffi_src/openssl/crypto.py b/src/_cffi_src/openssl/crypto.py
+index dfff21b..2fb28b2 100644
+--- a/src/_cffi_src/openssl/crypto.py
++++ b/src/_cffi_src/openssl/crypto.py
+@@ -133,6 +133,16 @@ int Cryptography_CRYPTO_set_mem_functions(
  }
  #endif
  
@@ -68,9 +78,11 @@
  void *Cryptography_malloc_wrapper(size_t size, const char *path, int line) {
      return malloc(size);
  }
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/engine.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/engine.py	2017-10-17 12:29:24.648809575 +1100
-@@ -130,4 +130,30 @@
+diff --git a/src/_cffi_src/openssl/engine.py b/src/_cffi_src/openssl/engine.py
+index 45ce952..de1a549 100644
+--- a/src/_cffi_src/openssl/engine.py
++++ b/src/_cffi_src/openssl/engine.py
+@@ -130,4 +130,30 @@ void ENGINE_cleanup(void);
  """
  
  CUSTOMIZATIONS = """
@@ -101,9 +113,11 @@
 +    OPENSSL_init_crypto(OPENSSL_INIT_ENGINE_RDRAND, NULL)
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/err.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/err.py	2017-10-17 12:31:43.794801016 +1100
-@@ -274,4 +274,10 @@
+diff --git a/src/_cffi_src/openssl/err.py b/src/_cffi_src/openssl/err.py
+index 5770429..fe6fe4f 100644
+--- a/src/_cffi_src/openssl/err.py
++++ b/src/_cffi_src/openssl/err.py
+@@ -273,4 +273,10 @@ static const long Cryptography_HAS_RSA_R_PKCS_DECODING_ERROR = 1;
  static const long Cryptography_HAS_RSA_R_PKCS_DECODING_ERROR = 0;
  static const long RSA_R_PKCS_DECODING_ERROR = 0;
  #endif
@@ -114,11 +128,13 @@
 +#define ERR_free_strings() while(0) continue
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/evp.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/evp.py	2017-10-17 12:40:17.357769423 +1100
-@@ -241,4 +241,37 @@
- #if !defined(EVP_CTRL_AEAD_SET_TAG)
- # define EVP_CTRL_AEAD_SET_TAG EVP_CTRL_GCM_SET_TAG
+diff --git a/src/_cffi_src/openssl/evp.py b/src/_cffi_src/openssl/evp.py
+index 715bfe1..7bc7777 100644
+--- a/src/_cffi_src/openssl/evp.py
++++ b/src/_cffi_src/openssl/evp.py
+@@ -250,4 +250,37 @@ int (*EVP_PKEY_set1_tls_encodedpoint)(EVP_PKEY *, const unsigned char *,
+ #ifndef EVP_PKEY_X25519
+ #define EVP_PKEY_X25519 NID_X25519
  #endif
 +
 +#if OPENSSL_API_COMPAT >= 0x10100000L
@@ -154,9 +170,11 @@
 +#define EVP_cleanup() while(0) continue
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/objects.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/objects.py	2017-10-17 12:31:34.772801571 +1100
-@@ -38,4 +38,7 @@
+diff --git a/src/_cffi_src/openssl/objects.py b/src/_cffi_src/openssl/objects.py
+index 265ac75..7e9c82a 100644
+--- a/src/_cffi_src/openssl/objects.py
++++ b/src/_cffi_src/openssl/objects.py
+@@ -38,4 +38,7 @@ void OBJ_cleanup(void);
  """
  
  CUSTOMIZATIONS = """
@@ -164,9 +182,11 @@
 +#define OBJ_cleanup() while(0) continue
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/rand.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/rand.py	2017-10-17 13:05:09.738677617 +1100
-@@ -32,4 +32,8 @@
+diff --git a/src/_cffi_src/openssl/rand.py b/src/_cffi_src/openssl/rand.py
+index 089da8b..b635d1c 100644
+--- a/src/_cffi_src/openssl/rand.py
++++ b/src/_cffi_src/openssl/rand.py
+@@ -32,4 +32,8 @@ void RAND_cleanup(void);
  
  CUSTOMIZATIONS = """
  static const long Cryptography_HAS_EGD = 0;
@@ -175,12 +195,14 @@
 +#define RAND_cleanup() while(0) continue
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/ssl.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/ssl.py	2017-10-17 14:51:22.518285587 +1100
-@@ -623,4 +623,151 @@
- 
-     return r;
- }
+diff --git a/src/_cffi_src/openssl/ssl.py b/src/_cffi_src/openssl/ssl.py
+index 2933114..91fb9f9 100644
+--- a/src/_cffi_src/openssl/ssl.py
++++ b/src/_cffi_src/openssl/ssl.py
+@@ -708,4 +708,151 @@ void (*SSL_CTX_set_psk_client_callback)(SSL_CTX *,
+ #else
+ static const long Cryptography_HAS_PSK = 1;
+ #endif
 +
 +#if OPENSSL_API_COMPAT >= 0x10100000L
 +#define SSL_library_init() OPENSSL_init_ssl(0, NULL)
@@ -329,9 +351,11 @@
 +#endif
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/x509.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/x509.py	2017-10-17 12:52:17.731725108 +1100
-@@ -423,4 +423,15 @@
+diff --git a/src/_cffi_src/openssl/x509.py b/src/_cffi_src/openssl/x509.py
+index f4703c4..5c2e61f 100644
+--- a/src/_cffi_src/openssl/x509.py
++++ b/src/_cffi_src/openssl/x509.py
+@@ -433,4 +433,15 @@ const ASN1_INTEGER *X509_REVOKED_get0_serialNumber(const X509_REVOKED *x)
      return x->serialNumber;
  }
  #endif
@@ -347,9 +371,11 @@
 +#define X509_CRL_set_nextUpdate X509_CRL_set1_nextUpdate
 +#endif
  """
---- cryptography-2.1.1-orig/src/_cffi_src/openssl/x509_vfy.py	2017-10-11 23:35:21.000000000 +1100
-+++ cryptography-2.1.1/src/_cffi_src/openssl/x509_vfy.py	2017-10-17 12:47:51.571741482 +1100
-@@ -306,4 +306,11 @@
+diff --git a/src/_cffi_src/openssl/x509_vfy.py b/src/_cffi_src/openssl/x509_vfy.py
+index 2971f2c..0f66f34 100644
+--- a/src/_cffi_src/openssl/x509_vfy.py
++++ b/src/_cffi_src/openssl/x509_vfy.py
+@@ -310,4 +310,11 @@ void (*X509_STORE_set_get_issuer)(X509_STORE *,
  #else
  static const long Cryptography_HAS_X509_STORE_CTX_GET_ISSUER = 1;
  #endif
