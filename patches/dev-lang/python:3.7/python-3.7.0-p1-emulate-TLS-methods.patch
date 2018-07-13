@@ -1,9 +1,12 @@
---- Python-3.5.4-orig/Modules/_ssl.c	2017-08-07 17:59:11.000000000 +1000
-+++ Python-3.5.4/Modules/_ssl.c	2017-10-13 21:21:00.465671119 +1100
-@@ -2330,34 +2330,69 @@
-     PySSLContext *self;
+diff --git a/Modules/_ssl.c b/Modules/_ssl.c
+index bf379f0..500da0b 100644
+--- a/Modules/_ssl.c
++++ b/Modules/_ssl.c
+@@ -2895,39 +2895,75 @@ _ssl__SSLContext_impl(PyTypeObject *type, int proto_version)
      long options;
      SSL_CTX *ctx = NULL;
+     X509_VERIFY_PARAM *params;
+-    int result;
 +    int result = 0;
  #if defined(SSL_MODE_RELEASE_BUFFERS)
      unsigned long libver;
@@ -64,11 +67,19 @@
 +#if !defined(OPENSSL_NO_TLS1_2) && HAVE_TLSv1_2
 +    case PY_SSL_VERSION_TLS1_2: /* fallthrough */
  #endif
--    else if (proto_version == PY_SSL_VERSION_TLS)
+-    else if (proto_version == PY_SSL_VERSION_TLS) /* SSLv23 */
 +#endif /* OpenSSL >= 1.1 */
 +    case PY_SSL_VERSION_TLS:
 +        /* SSLv23 */
          ctx = SSL_CTX_new(TLS_method());
+-    else if (proto_version == PY_SSL_VERSION_TLS_CLIENT)
++        break;
++    case PY_SSL_VERSION_TLS_CLIENT:
+         ctx = SSL_CTX_new(TLS_client_method());
+-    else if (proto_version == PY_SSL_VERSION_TLS_SERVER)
++        break;
++    case PY_SSL_VERSION_TLS_SERVER:
+         ctx = SSL_CTX_new(TLS_server_method());
 -    else
 -        proto_version = -1;
 +        break;
@@ -83,7 +94,7 @@
          PyErr_SetString(PyExc_ValueError,
                          "invalid protocol version");
          return NULL;
-@@ -2368,6 +2403,45 @@
+@@ -2937,6 +2973,45 @@ _ssl__SSLContext_impl(PyTypeObject *type, int proto_version)
          return NULL;
      }
  
