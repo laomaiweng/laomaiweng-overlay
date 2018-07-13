@@ -1,5 +1,5 @@
 diff --git a/src/node_crypto.cc b/src/node_crypto.cc
-index 111227e..c7f1c56 100644
+index c6dc4c2..863064a 100644
 --- a/src/node_crypto.cc
 +++ b/src/node_crypto.cc
 @@ -42,6 +42,10 @@
@@ -13,31 +13,31 @@ index 111227e..c7f1c56 100644
  #include <algorithm>
  #include <memory>
  #include <vector>
-@@ -1678,7 +1682,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
-     rsa = nullptr;
-   }
+@@ -1648,7 +1652,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
+   pkey.reset();
+   rsa.reset();
  
 +#if OPENSSL_VERSION_NUMBER < 0x10100000L
-   ASN1_TIME_print(bio, X509_get_notBefore(cert));
+   ASN1_TIME_print(bio.get(), X509_get_notBefore(cert));
 +#else
-+  ASN1_TIME_print(bio, X509_get0_notBefore(cert));
++  ASN1_TIME_print(bio.get(), X509_get0_notBefore(cert));
 +#endif
-   BIO_get_mem_ptr(bio, &mem);
+   BIO_get_mem_ptr(bio.get(), &mem);
    info->Set(context, env->valid_from_string(),
              String::NewFromUtf8(env->isolate(), mem->data,
-@@ -1686,7 +1694,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
+@@ -1656,7 +1664,11 @@ static Local<Object> X509ToObject(Environment* env, X509* cert) {
                                  mem->length)).FromJust();
-   USE(BIO_reset(bio));
+   USE(BIO_reset(bio.get()));
  
 +#if OPENSSL_VERSION_NUMBER < 0x10100000L
-   ASN1_TIME_print(bio, X509_get_notAfter(cert));
+   ASN1_TIME_print(bio.get(), X509_get_notAfter(cert));
 +#else
-+  ASN1_TIME_print(bio, X509_get0_notAfter(cert));
++  ASN1_TIME_print(bio.get(), X509_get0_notAfter(cert));
 +#endif
-   BIO_get_mem_ptr(bio, &mem);
+   BIO_get_mem_ptr(bio.get(), &mem);
    info->Set(context, env->valid_to_string(),
              String::NewFromUtf8(env->isolate(), mem->data,
-@@ -5356,8 +5368,13 @@ void TimingSafeEqual(const FunctionCallbackInfo<Value>& args) {
+@@ -5062,8 +5074,13 @@ void TimingSafeEqual(const FunctionCallbackInfo<Value>& args) {
  }
  
  void InitCryptoOnce() {
@@ -51,7 +51,7 @@ index 111227e..c7f1c56 100644
  
    // --openssl-config=...
    if (!openssl_config.empty()) {
-@@ -5379,8 +5396,12 @@ void InitCryptoOnce() {
+@@ -5085,8 +5102,12 @@ void InitCryptoOnce() {
      }
    }
  
@@ -65,14 +65,16 @@ index 111227e..c7f1c56 100644
  #ifdef NODE_FIPS_MODE
    /* Override FIPS settings in cnf file, if needed. */
 diff --git a/src/node_crypto.h b/src/node_crypto.h
-index 2f7c904..5bf9448 100644
+index 4587a96..d0def53 100644
 --- a/src/node_crypto.h
 +++ b/src/node_crypto.h
-@@ -50,6 +50,7 @@
+@@ -52,6 +52,9 @@
  #include <openssl/hmac.h>
  #include <openssl/rand.h>
  #include <openssl/pkcs12.h>
 +#include <openssl/dh.h>
++#include <openssl/rsa.h>
++#include <openssl/bn.h>
  
- #if !defined(OPENSSL_NO_TLSEXT) && defined(SSL_CTX_set_tlsext_status_cb)
- # define NODE__HAVE_TLSEXT_STATUS_CB
+ namespace node {
+ namespace crypto {
