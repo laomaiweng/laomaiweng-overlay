@@ -51,6 +51,7 @@ Package status
   <tr><td>cppcheck</td><td>bump version to 1.83, PYTHON_TARGETS to 3.6</td><td>Portage</td></tr>
   <tr><td>rr</td><td>fix build on amd64 <tt>no-multilib</tt>, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
+  <tr><td rowspan=1>dev-vcs</td><td>git-crypt</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>Portage</td></tr>
   <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-libs</td><td>libid3tag</td><td>bugfix for <a href="https://bugs.gentoo.org/605158">#605158</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>net-dns</td><td>unbound</td><td>bugfix with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646276">#646276</a>)</td><td>Portage</td></tr>

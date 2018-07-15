@@ -1,0 +1,7 @@
+*git-crypt-0.6.0-r1 (15 Jul 2018)
+
+  15 Jul 2018; Quentin Minster <quentin@minster.io>
+  +files/git-crypt-0.6.0-openssl-1.1.0-no-deprecated.patch,
+  +git-crypt-0.6.0-r1.ebuild, +metadata.xml:
+  dev-vcs/git-crypt: add git-crypt-0.6.0-r1.ebuild  OpenSSL 1.1.0 `no-
+  deprecated' compatibility patch.
