@@ -1,3 +1,10 @@
+*chromium-72.0.3626.28-r2 (06 Feb 2019)
+
+  06 Feb 2019; Quentin Minster <quentin@minster.io>
+  +chromium-72.0.3626.28-r2.ebuild, -chromium-69.0.3464.0-r1.ebuild:
+  www-client/chromium: add chromium-72.0.3626.28-r2.ebuild  Apply patch from
+  #672778 comment 11 to drop build dependency on a JRE.
+
 *chromium-69.0.3464.0-r1 (17 Jul 2018)
 
   17 Jul 2018; Quentin Minster <quentin@minster.io>
