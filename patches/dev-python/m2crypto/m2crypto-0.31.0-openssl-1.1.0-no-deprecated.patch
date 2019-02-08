@@ -48,10 +48,10 @@ index 4ba93f3..835424f 100644
      char * password;
      char * prompt;
 diff --git a/SWIG/_m2crypto.i b/SWIG/_m2crypto.i
-index 73f07b8..24a7882 100644
+index 239249f..4ecab42 100644
 --- a/SWIG/_m2crypto.i
 +++ b/SWIG/_m2crypto.i
-@@ -26,6 +26,7 @@
+@@ -36,6 +36,7 @@ typedef unsigned __int64 uint64_t;
  #pragma GCC diagnostic warning "-Wstrict-prototypes"
  #endif
  
@@ -60,7 +60,7 @@ index 73f07b8..24a7882 100644
  #include <openssl/rand.h>
  #include <_lib.h>
 diff --git a/SWIG/_rand.i b/SWIG/_rand.i
-index 20e8d6e..7a0cdf3 100644
+index 01ab4ef..5106d1d 100644
 --- a/SWIG/_rand.i
 +++ b/SWIG/_rand.i
 @@ -16,13 +16,17 @@ extern int RAND_write_file(const char *);
@@ -83,7 +83,7 @@ index 20e8d6e..7a0cdf3 100644
  void rand_init(PyObject *rand_err) {
      Py_INCREF(rand_err);
      _rand_err = rand_err;
-@@ -86,7 +90,11 @@ PyObject *rand_pseudo_bytes(int n) {
+@@ -92,7 +96,11 @@ PyObject *rand_pseudo_bytes(int n) {
          PyMem_Free(blob);
          return NULL;
      }
@@ -96,10 +96,10 @@ index 20e8d6e..7a0cdf3 100644
          PyMem_Free(blob);
          Py_DECREF(tuple);
 diff --git a/SWIG/_ssl.i b/SWIG/_ssl.i
-index 210462f..8bed573 100644
+index 7257656..1b04e15 100644
 --- a/SWIG/_ssl.i
 +++ b/SWIG/_ssl.i
-@@ -19,6 +19,7 @@ typedef unsigned __int64 uint64_t;
+@@ -12,6 +12,7 @@
  #include <pythread.h>
  #include <limits.h>
  #include <openssl/bio.h>
@@ -107,7 +107,7 @@ index 210462f..8bed573 100644
  #include <openssl/dh.h>
  #include <openssl/ssl.h>
  #include <openssl/tls1.h>
-@@ -258,8 +259,12 @@ static PyObject *_ssl_err;
+@@ -252,8 +253,12 @@ static PyObject *_ssl_err;
  static PyObject *_ssl_timeout_err;
  
  void ssl_init(PyObject *ssl_err, PyObject *ssl_timeout_err) {
@@ -120,20 +120,8 @@ index 210462f..8bed573 100644
      Py_INCREF(ssl_err);
      Py_INCREF(ssl_timeout_err);
      _ssl_err = ssl_err;
-@@ -271,8 +276,10 @@ const SSL_METHOD *sslv3_method(void) {
- #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
-     PyErr_WarnEx(PyExc_DeprecationWarning,
-                  "Function SSLv3_method has been deprecated.", 1);
--#endif
-+    return TLS_method();
-+#else
-     return SSLv3_method();
-+#endif
- }
- #endif
- 
-@@ -280,8 +287,10 @@ const SSL_METHOD *tlsv1_method(void) {
- #if OPENSSL_VERSION_NUMBER >= 0x10100000L && !defined(LIBRESSL_VERSION_NUMBER)
+@@ -264,8 +269,10 @@ const SSL_METHOD *tlsv1_method(void) {
+ #if OPENSSL_VERSION_NUMBER >= 0x10100000L
      PyErr_WarnEx(PyExc_DeprecationWarning,
                   "Function TLSv1_method has been deprecated.", 1);
 -#endif
@@ -144,7 +132,7 @@ index 210462f..8bed573 100644
  }
  
  void ssl_ctx_passphrase_callback(SSL_CTX *ctx, PyObject *pyfunc) {
-@@ -407,14 +416,23 @@ void ssl_ctx_set_tmp_dh_callback(SSL_CTX *ctx,  PyObject *pyfunc) {
+@@ -391,14 +398,23 @@ void ssl_ctx_set_tmp_dh_callback(SSL_CTX *ctx,  PyObject *pyfunc) {
  }
  
  long ssl_ctx_set_tmp_rsa(SSL_CTX *ctx, RSA* rsa) {
@@ -169,7 +157,7 @@ index 210462f..8bed573 100644
  
  int ssl_ctx_load_verify_locations(SSL_CTX *ctx, const char *cafile, const char *capath) {
 diff --git a/SWIG/_util.i b/SWIG/_util.i
-index 34d7dd2..21cd9e1 100644
+index bc2ee61..fce4c40 100644
 --- a/SWIG/_util.i
 +++ b/SWIG/_util.i
 @@ -11,6 +11,11 @@
@@ -193,7 +181,7 @@ index 34d7dd2..21cd9e1 100644
      if (!ret) {
          m2_PyErr_Msg(_util_err);
          return NULL;
-@@ -52,7 +57,7 @@ PyObject *util_string_to_hex(PyObject *blob) {
+@@ -48,7 +53,7 @@ PyObject *util_string_to_hex(PyObject *blob) {
          return NULL;
  
      len = len0;
@@ -203,7 +191,7 @@ index 34d7dd2..21cd9e1 100644
          m2_PyErr_Msg(_util_err);
          return NULL;
 diff --git a/SWIG/_x509.i b/SWIG/_x509.i
-index 70b3339..e137ac8 100644
+index 3c3e83e..a6b2542 100644
 --- a/SWIG/_x509.i
 +++ b/SWIG/_x509.i
 @@ -38,6 +38,13 @@ IMPLEMENT_ASN1_FUNCTIONS(SEQ_CERT)
@@ -220,7 +208,7 @@ index 70b3339..e137ac8 100644
  %rename(x509_new) X509_new;
  extern X509 *X509_new( void );
  %rename(x509_dup) X509_dup;
-@@ -425,22 +432,22 @@ long x509_get_version(X509 *x) {
+@@ -462,22 +469,22 @@ long x509_get_version(X509 *x) {
  
  /* X509_set_notBefore() is a macro. */
  int x509_set_not_before(X509 *x, ASN1_TIME *tm) {
