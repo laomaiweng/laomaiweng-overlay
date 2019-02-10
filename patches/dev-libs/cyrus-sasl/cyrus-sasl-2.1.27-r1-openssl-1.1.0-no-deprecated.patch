@@ -1,0 +1,38 @@
+diff --git a/plugins/otp.c b/plugins/otp.c
+index 3adbff0..9f63ada 100644
+--- a/plugins/otp.c
++++ b/plugins/otp.c
+@@ -1488,7 +1488,9 @@ int otp_server_plug_init(const sasl_utils_t *utils,
+     *plugcount = 1;  
+     
+     /* Add all digests */
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     OpenSSL_add_all_digests();
++#endif
+     
+     return SASL_OK;
+ }
+@@ -1889,7 +1891,9 @@ int otp_client_plug_init(sasl_utils_t *utils,
+     *plugcount = 1;
+     
+     /* Add all digests */
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     OpenSSL_add_all_digests();
++#endif
+     
+     return SASL_OK;
+ }
+diff --git a/saslauthd/lak.c b/saslauthd/lak.c
+index 8eea8e3..9e4ff8e 100644
+--- a/saslauthd/lak.c
++++ b/saslauthd/lak.c
+@@ -736,7 +736,9 @@ int lak_init(
+ 	}
+ 
+ #ifdef HAVE_OPENSSL
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+ 	OpenSSL_add_all_digests();
++#endif
+ #endif
+ 
+ 	*ret=lak;
