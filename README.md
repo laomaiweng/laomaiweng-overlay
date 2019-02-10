@@ -102,7 +102,7 @@ In _patches/_ are the patches currently applied to my packages.
   <tr><td><tt>libssh-0.7.5-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-lib/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td>libssh2</td><td><tt>libssh2-1.8.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td>neon</td><td><tt>neon-0.30.2-openssl-1.1-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647680">#647680</a>)</td><td>laomaiweng-overlay</td></tr>
-  <tr><td>nodejs</td><td><tt>nodejs-10.5.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/604978">#604978</a>)</td><td>laomaiweng-overlay</td></tr>
+  <tr><td>nodejs</td><td><tt>nodejs-11.8.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/604978">#604978</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=3>net-misc</td><td rowspan=3>openssh</td><td><tt>github-PR-#48-updated-for-openssh-7.7.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>openssh/openssh-portable#48 + laomaiweng-overlay</td></tr>
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td><tt>openssh-7.6p1-openssl-1.1.0-pthreads-collision.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592578">#592578</a>)</td><td>laomaiweng-overlay</td></tr>
