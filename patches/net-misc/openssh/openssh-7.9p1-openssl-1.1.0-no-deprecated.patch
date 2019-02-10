@@ -1,8 +1,8 @@
 diff --git a/configure.ac b/configure.ac
-index 889f506..f6c53fb 100644
+index e50c3d7..12c772a 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -2481,6 +2481,7 @@ if test "x$openssl" = "xyes" ; then
+@@ -2547,6 +2547,7 @@ if test "x$openssl" = "xyes" ; then
  			)
  		]
  	)
@@ -10,7 +10,7 @@ index 889f506..f6c53fb 100644
  
  	# Determine OpenSSL header version
  	AC_MSG_CHECKING([OpenSSL header version])
-@@ -2536,8 +2537,15 @@ if test "x$openssl" = "xyes" ; then
+@@ -2602,8 +2603,15 @@ if test "x$openssl" = "xyes" ; then
  		if(fd == NULL)
  			exit(1);
  
@@ -26,19 +26,7 @@ index 889f506..f6c53fb 100644
  			exit(1);
  
  		exit(0);
-@@ -2550,9 +2558,10 @@ if test "x$openssl" = "xyes" ; then
- 					AC_MSG_ERROR([OpenSSL >= 1.0.1 required (have "$ssl_library_ver")])
- 			                ;;
- 				100*)   ;; # 1.0.x
-+				101*)   ;; # 1.1.x
- 				200*)   ;; # LibreSSL
- 			        *)
--					AC_MSG_ERROR([OpenSSL >= 1.1.0 is not yet supported (have "$ssl_library_ver")])
-+					AC_MSG_ERROR([OpenSSL version is not yet supported (have "$ssl_library_ver")])
- 			                ;;
- 			esac
- 			AC_MSG_RESULT([$ssl_library_ver])
-@@ -2574,7 +2583,13 @@ if test "x$openssl" = "xyes" ; then
+@@ -2645,7 +2653,13 @@ if test "x$openssl" = "xyes" ; then
  	#include <openssl/opensslv.h>
  	#include <openssl/crypto.h>
  		]], [[
@@ -52,7 +40,7 @@ index 889f506..f6c53fb 100644
  		]])],
  		[
  			AC_MSG_RESULT([yes])
-@@ -2602,7 +2617,15 @@ if test "x$openssl" = "xyes" ; then
+@@ -2673,7 +2687,15 @@ if test "x$openssl" = "xyes" ; then
  	AC_MSG_CHECKING([if programs using OpenSSL functions will link])
  	AC_LINK_IFELSE(
  		[AC_LANG_PROGRAM([[ #include <openssl/evp.h> ]],
@@ -69,7 +57,7 @@ index 889f506..f6c53fb 100644
  		[
  			AC_MSG_RESULT([yes])
  		],
-@@ -2613,7 +2636,15 @@ if test "x$openssl" = "xyes" ; then
+@@ -2684,7 +2706,15 @@ if test "x$openssl" = "xyes" ; then
  			AC_MSG_CHECKING([if programs using OpenSSL need -ldl])
  			AC_LINK_IFELSE(
  				[AC_LANG_PROGRAM([[ #include <openssl/evp.h> ]],
@@ -86,7 +74,7 @@ index 889f506..f6c53fb 100644
  				[
  					AC_MSG_RESULT([yes])
  				],
-@@ -2626,6 +2657,8 @@ if test "x$openssl" = "xyes" ; then
+@@ -2697,6 +2727,8 @@ if test "x$openssl" = "xyes" ; then
  	)
  
  	AC_CHECK_FUNCS([ \
@@ -96,10 +84,10 @@ index 889f506..f6c53fb 100644
  		DSA_generate_parameters_ex \
  		EVP_DigestInit_ex \
 diff --git a/entropy.c b/entropy.c
-index 9305f89..15bff1a 100644
+index c178c00..d03a7aa 100644
 --- a/entropy.c
 +++ b/entropy.c
-@@ -213,9 +213,17 @@ seed_rng(void)
+@@ -219,9 +219,17 @@ seed_rng(void)
  #ifndef OPENSSL_PRNG_ONLY
  	unsigned char buf[RANDOM_SEED_SIZE];
  #endif
@@ -118,10 +106,10 @@ index 9305f89..15bff1a 100644
  #ifndef OPENSSL_PRNG_ONLY
  	if (RAND_status() == 1) {
 diff --git a/ssh-keysign.c b/ssh-keysign.c
-index ac5034d..9986ec9 100644
+index 744ecb4..e921574 100644
 --- a/ssh-keysign.c
 +++ b/ssh-keysign.c
-@@ -229,7 +229,9 @@ main(int argc, char **argv)
+@@ -224,7 +224,9 @@ main(int argc, char **argv)
  		fatal("could not open any host key");
  
  #ifdef WITH_OPENSSL
@@ -132,10 +120,10 @@ index ac5034d..9986ec9 100644
  	RAND_seed(rnd, sizeof(rnd));
  #endif
 diff --git a/ssh.c b/ssh.c
-index ae37432..aa4cb06 100644
+index 0777c31..361d21d 100644
 --- a/ssh.c
 +++ b/ssh.c
-@@ -765,7 +765,13 @@ main(int ac, char **av)
+@@ -816,7 +816,13 @@ main(int ac, char **av)
  			fprintf(stderr, "%s, %s\n",
  			    SSH_RELEASE,
  #ifdef WITH_OPENSSL
@@ -149,7 +137,7 @@ index ae37432..aa4cb06 100644
  #else
  			    "without OpenSSL"
  #endif
-@@ -956,7 +962,7 @@ main(int ac, char **av)
+@@ -1036,7 +1042,7 @@ main(int ac, char **av)
  
  	host_arg = xstrdup(host);
  
@@ -158,7 +146,7 @@ index ae37432..aa4cb06 100644
  	OpenSSL_add_all_algorithms();
  	ERR_load_crypto_strings();
  #endif
-@@ -1003,7 +1009,13 @@ main(int ac, char **av)
+@@ -1085,7 +1091,13 @@ main(int ac, char **av)
  	if (debug_flag)
  		logit("%s, %s", SSH_RELEASE,
  #ifdef WITH_OPENSSL
@@ -189,10 +177,10 @@ index c84b4e7..e03ddfa 100644
  	}
  
 diff --git a/sshd.c b/sshd.c
-index 51a1aaf..0599b71 100644
+index ba26287..afd21ed 100644
 --- a/sshd.c
 +++ b/sshd.c
-@@ -902,7 +902,13 @@ usage(void)
+@@ -917,7 +917,13 @@ usage(void)
  	fprintf(stderr, "%s, %s\n",
  	    SSH_RELEASE,
  #ifdef WITH_OPENSSL
@@ -207,7 +195,7 @@ index 51a1aaf..0599b71 100644
  #else
  	    "without OpenSSL"
  #endif
-@@ -1629,7 +1635,13 @@ main(int ac, char **av)
+@@ -1723,7 +1729,13 @@ main(int ac, char **av)
  
  	debug("sshd version %s, %s", SSH_VERSION,
  #ifdef WITH_OPENSSL
@@ -221,3 +209,22 @@ index 51a1aaf..0599b71 100644
  #else
  	    "without OpenSSL"
  #endif
+diff --git a/openbsd-compat/openssl-compat.c b/openbsd-compat/openssl-compat.c
+index e9173a1..d717f9e 100644
+--- a/openbsd-compat/openssl-compat.c
++++ b/openbsd-compat/openssl-compat.c
+@@ -70,13 +70,13 @@ ssh_compatible_openssl(long headerver, long libver)
+ void
+ ssh_OpenSSL_add_all_algorithms(void)
+ {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+ 	OpenSSL_add_all_algorithms();
+ 
+ 	/* Enable use of crypto hardware */
+ 	ENGINE_load_builtin_engines();
+ 	ENGINE_register_all_complete();
+ 
+-#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+ 	OPENSSL_config(NULL);
+ #else
+ 	OPENSSL_init_crypto(OPENSSL_INIT_ADD_ALL_CIPHERS |
