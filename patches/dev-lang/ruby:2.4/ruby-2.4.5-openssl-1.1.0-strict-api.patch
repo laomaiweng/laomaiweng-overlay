@@ -1,0 +1,15 @@
+diff --git a/ext/openssl/ossl_cipher.c b/ext/openssl/ossl_cipher.c
+index 4977533..30b7171 100644
+--- a/ext/openssl/ossl_cipher.c
++++ b/ext/openssl/ossl_cipher.c
+@@ -9,6 +9,10 @@
+  */
+ #include "ossl.h"
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100000 && !defined(EVP_CIPHER_CTX_flags)
++# define EVP_CIPHER_CTX_flags(c)    EVP_CIPHER_flags(EVP_CIPHER_CTX_cipher(c))
++#endif
++
+ #define NewCipher(klass) \
+     TypedData_Wrap_Struct((klass), &ossl_cipher_type, 0)
+ #define AllocCipher(obj, ctx) do { \
