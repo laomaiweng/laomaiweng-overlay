@@ -1,0 +1,6 @@
+*construct-2.9.45-r1 (12 Feb 2019)
+
+  12 Feb 2019; Quentin Minster <quentin@minster.io> +construct-2.9.45-r1.ebuild,
+  +metadata.xml:
+  dev-python/construct: add construct-2.9.45-r1.ebuild  Bump PYTHON_TARGETS to
+  3.7.
