@@ -1,0 +1,15 @@
+diff --git a/src/lib/crypt_ops/crypto_rsa.c b/src/lib/crypt_ops/crypto_rsa.c
+index 8cc62bc..cd6a149 100644
+--- a/src/lib/crypt_ops/crypto_rsa.c
++++ b/src/lib/crypt_ops/crypto_rsa.c
+@@ -30,6 +30,10 @@
+ #include <sys/stat.h>
+ #endif
+ 
++#ifdef ENABLE_OPENSSL
++#include <openssl/rsa.h>
++#endif
++
+ /** Return the number of bytes added by padding method <b>padding</b>.
+  */
+ int
