@@ -41,7 +41,7 @@ Package status
   <tr><td>weston</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/634572">#634572</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-perl</td><td>Net-SSLeay</td><td>compatibility with >=dev-libs/openssl-1.1.0, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=6>dev-python</td><td>argcomplete</td><td>bump PYTHON_TARGETS to 3.6</td><td>Portage</td></tr>
+  <tr><td rowspan=6>dev-python</td><td>argcomplete</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
   <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
   <tr><td>cryptography</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
