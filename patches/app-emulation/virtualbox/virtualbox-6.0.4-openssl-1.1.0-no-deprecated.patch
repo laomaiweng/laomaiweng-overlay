@@ -1,8 +1,8 @@
 diff --git a/configure b/configure
-index 98d0c68f..499f6c81 100755
+index 4f4d8e96..59836248 100755
 --- a/configure
 +++ b/configure
-@@ -855,7 +855,11 @@ check_ssl()
+@@ -836,7 +836,11 @@ check_ssl()
  extern "C" int main(void)
  {
    printf("found version %s", OPENSSL_VERSION_TEXT);
@@ -11,13 +11,13 @@ index 98d0c68f..499f6c81 100755
 +#else
 +  OPENSSL_init_ssl(0, NULL);
 +#endif
- #if OPENSSL_VERSION_NUMBER >= 0x00908000
+ #if OPENSSL_VERSION_NUMBER >= 0x10001000
    printf(", OK.\n");
    return 0;
-diff --git a/src/VBox/RDP/client-1.8.3/ssl.h b/src/VBox/RDP/client-1.8.3/ssl.h
+diff --git a/src/VBox/RDP/client-1.8.4/ssl.h b/src/VBox/RDP/client-1.8.4/ssl.h
 index 1a034428..13b4d806 100644
---- a/src/VBox/RDP/client-1.8.3/ssl.h
-+++ b/src/VBox/RDP/client-1.8.3/ssl.h
+--- a/src/VBox/RDP/client-1.8.4/ssl.h
++++ b/src/VBox/RDP/client-1.8.4/ssl.h
 @@ -36,6 +36,7 @@
  #include <openssl/bn.h>
  #include <openssl/x509v3.h>
@@ -26,10 +26,10 @@ index 1a034428..13b4d806 100644
  
  #if defined(OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090800f)
  #define D2I_X509_CONST const
-diff --git a/src/VBox/RDP/client-1.8.3/tcp.c b/src/VBox/RDP/client-1.8.3/tcp.c
+diff --git a/src/VBox/RDP/client-1.8.4/tcp.c b/src/VBox/RDP/client-1.8.4/tcp.c
 index 326b6c46..7cbf631b 100644
---- a/src/VBox/RDP/client-1.8.3/tcp.c
-+++ b/src/VBox/RDP/client-1.8.3/tcp.c
+--- a/src/VBox/RDP/client-1.8.4/tcp.c
++++ b/src/VBox/RDP/client-1.8.4/tcp.c
 @@ -311,8 +311,12 @@ tcp_tls_connect(void)
  
  	if (!g_ssl_initialized)
@@ -56,7 +56,7 @@ index 326b6c46..7cbf631b 100644
  # if (__GNUC__ << 8) + __GNUC_MINOR__ >= 0x406
  #  pragma GCC diagnostic pop
 diff --git a/src/VBox/Runtime/VBox/VBoxRTDeps.cpp b/src/VBox/Runtime/VBox/VBoxRTDeps.cpp
-index cfe31674..b0ceb97e 100644
+index 396e0095..7f11bf5d 100644
 --- a/src/VBox/Runtime/VBox/VBoxRTDeps.cpp
 +++ b/src/VBox/Runtime/VBox/VBoxRTDeps.cpp
 @@ -49,6 +49,7 @@
@@ -68,7 +68,7 @@ index cfe31674..b0ceb97e 100644
  
  /*********************************************************************************************************************************
 diff --git a/src/VBox/Runtime/common/crypto/iprt-openssl.cpp b/src/VBox/Runtime/common/crypto/iprt-openssl.cpp
-index b7719ea9..7a5de77d 100644
+index 2a0f5297..c42edafd 100644
 --- a/src/VBox/Runtime/common/crypto/iprt-openssl.cpp
 +++ b/src/VBox/Runtime/common/crypto/iprt-openssl.cpp
 @@ -44,9 +44,13 @@ DECLHIDDEN(void) rtCrOpenSslInit(void)
@@ -85,3 +85,31 @@ index b7719ea9..7a5de77d 100644
  
          s_fOssInitalized = true;
      }
+diff --git a/src/VBox/Runtime/common/crypto/key-create-rsa-openssl.cpp b/src/VBox/Runtime/common/crypto/key-create-rsa-openssl.cpp
+index 0b42a76b..74c47b75 100644
+--- a/src/VBox/Runtime/common/crypto/key-create-rsa-openssl.cpp
++++ b/src/VBox/Runtime/common/crypto/key-create-rsa-openssl.cpp
+@@ -36,6 +36,7 @@
+ # include <iprt/string.h>
+ 
+ # include "internal/iprt-openssl.h"
++# include <openssl/bn.h>
+ # include <openssl/rsa.h>
+ # include <openssl/err.h>
+ 
+diff --git a/src/VBox/Runtime/common/crypto/ssl-openssl.cpp b/src/VBox/Runtime/common/crypto/ssl-openssl.cpp
+index 5326de4e..92f83655 100644
+--- a/src/VBox/Runtime/common/crypto/ssl-openssl.cpp
++++ b/src/VBox/Runtime/common/crypto/ssl-openssl.cpp
+@@ -87,7 +87,11 @@ RTDECL(int) RTCrSslCreate(PRTCRSSL phSsl, uint32_t fFlags)
+     *phSsl = NIL_RTCRSSL;
+     AssertReturn(!fFlags, VERR_INVALID_FLAGS);
+ 
++# if OPENSSL_VERSION_NUMBER >= 0x10100000
++    OPENSSL_init_ssl(OPENSSL_INIT_ADD_ALL_CIPHERS | OPENSSL_INIT_ADD_ALL_DIGESTS, NULL);
++# else
+     SSL_library_init();
++# endif
+ 
+     /*
+      * We aim at TLSv1 or higher here by default.
