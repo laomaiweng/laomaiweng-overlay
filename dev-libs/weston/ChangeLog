@@ -1,6 +1,0 @@
-*weston-3.0.0-r1 (17 Oct 2017)
-
-  17 Oct 2017; Quentin Minster <quentin@minster.io> +files/README.gentoo,
-  +files/weston-3.0.0-fix-lto-sections.patch, +metadata.xml,
-  +weston-3.0.0-r1.ebuild:
-  dev-libs/weston: add weston-3.0.0-r1.ebuild  Fix LTO build.
