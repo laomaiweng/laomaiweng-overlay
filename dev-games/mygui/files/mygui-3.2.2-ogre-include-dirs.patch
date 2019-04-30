@@ -1,0 +1,18 @@
+diff --git a/CMake/Packages/FindOGRE_Old.cmake b/CMake/Packages/FindOGRE_Old.cmake
+index 09b79e3..321b0df 100644
+--- a/CMake/Packages/FindOGRE_Old.cmake
++++ b/CMake/Packages/FindOGRE_Old.cmake
+@@ -54,11 +54,11 @@ if (NOT OGRE_FOUND)
+ 			FIND_PACKAGE(Boost)
+ 			
+ 			if (Boost_FOUND)
+-				set (OGRE_INCLUDE_DIR ${OGRE_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
++				set (OGRE_INCLUDE_DIR ${OGRE_INCLUDE_DIR} ${OGRE_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+ 				set (OGRE_LIB_DIR ${OGRE_LIB_DIR} ${Boost_LIBRARY_DIRS} ${BOOST_LIBRARYDIR})
+ 			else()
+ 				# trying to get boost from OGRE_SOURCE_DIR
+-				set (OGRE_INCLUDE_DIR ${OGRE_INCLUDE_DIR} ${OGRE_SOURCE_DIR}/boost)
++                set (OGRE_INCLUDE_DIR ${OGRE_INCLUDE_DIR} ${OGRE_INCLUDE_DIRS} ${OGRE_SOURCE_DIR}/boost)
+ 				set (OGRE_LIB_DIR ${OGRE_LIB_DIR} ${OGRE_SOURCE_DIR}/boost/lib)
+ 			endif()
+ 			

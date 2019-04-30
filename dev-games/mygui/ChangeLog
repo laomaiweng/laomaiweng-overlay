@@ -1,0 +1,8 @@
+*mygui-3.2.2 (30 Apr 2019)
+
+  30 Apr 2019; Quentin Minster <quentin@minster.io>
+  +files/mygui-3.2.2-FHS.patch, +files/mygui-3.2.2-build.patch,
+  +files/mygui-3.2.2-ogre-deprecated-api.patch,
+  +files/mygui-3.2.2-ogre-include-dirs.patch,
+  +files/mygui-3.2.2-underlinking.patch, +metadata.xml, +mygui-3.2.2.ebuild:
+  dev-games/mygui: add mygui-3.2.2.ebuild  Bugfix for #665804.
