@@ -1,3 +1,10 @@
+*boost-1.65.0 (04 May 2019)
+
+  04 May 2019; Quentin Minster <quentin@minster.io> +boost-1.65.0.ebuild,
+  +files/boost-1.65.0-fix-python-3.7.patch, -boost-1.65.0-r1.ebuild:
+  dev-libs/boost: move boost-1.65.0-r1.ebuild to boost-1.65.0.ebuild  Add fix
+  for build with Python 3.7.
+
   19 Sep 2017; Quentin Minster <quentin@minster.io> boost-1.65.0-r1.ebuild:
   dev-libs/boost: add missing dependency on dev-python/numpy
 

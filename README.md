@@ -33,7 +33,7 @@ Package status
   <tr><td rowspan=1>app-portage</td><td>cargo-ebuild</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix for <a href="https://bugs.gentoo.org/665804">#665804</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lang</td><td>python</td><td>version bump for InBetweenNames/gentooLTO's PGO-enabled Python</td><td>InBetweenNames/gentooLTO</td></tr>
-  <tr><td rowspan=6>dev-libs</td><td>boost</td><td>enable building of boost_numpy, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td rowspan=6>dev-libs</td><td>boost</td><td>enable building of boost_numpy, fix build for Python 3.7</td><td>Portage</td></tr>
   <tr><td>cyrus-sasl</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592528">#592528</a>)</td><td>Portage</td></tr>
   <tr><td>libclc</td><td>dependency version bump to sys-devel/clang:6</td><td>laomaiweng-overlay</td></tr>
   <tr><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>

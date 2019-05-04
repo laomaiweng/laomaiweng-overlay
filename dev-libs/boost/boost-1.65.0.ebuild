@@ -1,8 +1,8 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_{4,5,6}} )
+PYTHON_COMPAT=( python{2_7,3_{5,6,7}} )
 
 inherit eutils flag-o-matic multiprocessing python-r1 toolchain-funcs versionator multilib-minimal
 
@@ -10,7 +10,7 @@ MY_P="${PN}_$(replace_all_version_separators _)"
 MAJOR_V="$(get_version_component_range 1-2)"
 
 DESCRIPTION="Boost Libraries for C++"
-HOMEPAGE="http://www.boost.org/"
+HOMEPAGE="https://www.boost.org/"
 SRC_URI="https://downloads.sourceforge.net/project/boost/${PN}/${PV}/${MY_P}.tar.bz2"
 
 LICENSE="Boost-1.0"
@@ -48,6 +48,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-1.55.0-context-x32.patch"
 	"${FILESDIR}/${PN}-1.56.0-build-auto_index-tool.patch"
 	"${FILESDIR}/${PN}-1.65.0-fix-python.patch"
+	"${FILESDIR}/${PN}-1.65.0-fix-python-3.7.patch"
 )
 
 python_bindings_needed() {
