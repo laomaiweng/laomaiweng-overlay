@@ -1,15 +1,16 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
+MULTILIB_COMPAT=( abi_x86_{32,64} )
 PYTHON_COMPAT=( python2_7 )
 CMAKE_BUILD_TYPE=Release
 
-inherit cmake-utils linux-info multilib python-single-r1
+inherit cmake-utils linux-info multilib-build python-single-r1
 
 DESCRIPTION="Record and Replay Framework"
-HOMEPAGE="http://rr-project.org/"
+HOMEPAGE="https://rr-project.org/"
 SRC_URI="https://github.com/mozilla/${PN}/archive/${PV}.tar.gz -> mozilla-${P}.tar.gz"
 
 LICENSE="MIT BSD-2"
@@ -31,9 +32,10 @@ DEPEND+="
 		sys-devel/gdb[xml]
 	)"
 
-#PATCHES=(
-#	"${FILESDIR}"/${P}-sysmacros.patch
-#)
+PATCHES=(
+	"${FILESDIR}"/${P}-ucontext_t.patch
+	"${FILESDIR}"/${P}-c++14.patch
+)
 
 pkg_setup() {
 	if use kernel_linux; then
@@ -52,10 +54,8 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_TESTS=$(usex test)
+		-Ddisable32bit=$(usex abi_x86_32 no yes)
 	)
-	if use amd64 && ! has_multilib_profile; then
-		mycmakeargs+=(-Ddisable32bit=ON)
-	fi
 
 	cmake-utils_src_configure
 }
