@@ -1,0 +1,6 @@
+*dbus-1.12.12-r2 (09 May 2019)
+
+  09 May 2019; Quentin Minster <quentin@minster.io> +dbus-1.12.12-r2.ebuild,
+  +files/80-dbus, +files/dbus-daemon-optional.patch,
+  +files/dbus-enable-elogind.patch, +files/dbus.initd.in, +metadata.xml:
+  sys-apps/dbus: add dbus-1.12.12-r2.ebuild  Add AppArmor support.
