@@ -17,6 +17,7 @@ fi
 
 LICENSE="GPL-3"
 SLOT="0"
+IUSE=""
 
 COMMON_DEPEND="
 	net-libs/webkit-gtk:4

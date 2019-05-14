@@ -1,3 +1,8 @@
+  14 May 2019; Quentin Minster <quentin@minster.io> vimb-3.4.0.ebuild,
+  vimb-9999.ebuild:
+  www-client/vimb: update vimb-{3.4.0,9999}.ebuild  Remove 'savedconfig' USE
+  flag.
+
   14 May 2019; Quentin Minster <quentin@minster.io> vimb-9999.ebuild:
   www-client/vimb: update vimb-9999.ebuild  Fix keywords.
 

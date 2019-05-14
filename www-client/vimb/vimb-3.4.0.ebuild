@@ -11,6 +11,7 @@ SRC_URI="https://github.com/fanglingsu/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+IUSE=""
 
 COMMON_DEPEND="
 	net-libs/webkit-gtk:4
