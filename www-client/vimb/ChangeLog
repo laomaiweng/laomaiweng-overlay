@@ -1,0 +1,8 @@
+*vimb-3.4.0 (14 May 2019)
+*vimb-9999 (14 May 2019)
+
+  14 May 2019; Quentin Minster <quentin@minster.io>
+  +files/vimb-3.4.0-fix-version-header.patch, +metadata.xml, +vimb-3.4.0.ebuild,
+  +vimb-9999.ebuild:
+  www-client/vimb: add vimb-{3.4.0,9999}.ebuild  Version bumped from tharvik's
+  overlay.
