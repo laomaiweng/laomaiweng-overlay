@@ -2,16 +2,21 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit git-r3 savedconfig toolchain-funcs
+inherit savedconfig toolchain-funcs
 
 DESCRIPTION="the vim like browser"
 HOMEPAGE="https://fanglingsu.github.io/vimb/"
-SRC_URI=''
-EGIT_REPO_URI="https://github.com/fanglingsu/${PN}.git"
+
+if [ ${PV} == "9999" ] ; then
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/fanglingsu/${PN}.git"
+else
+	SRC_URI="https://github.com/fanglingsu/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="
 	net-libs/webkit-gtk:4
