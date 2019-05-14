@@ -37,7 +37,7 @@ src_prepare() {
 	sed -i "s,/lib/,/$(get_libdir)/," config.mk || die 'unable to fix lib install prefix'
 	tc-export CC PKG_CONFIG
 
-	restore_config src/config.def.h
+	use savedconfig && restore_config src/config.def.h
 }
 
 src_compile() {
@@ -47,5 +47,5 @@ src_compile() {
 src_install() {
 	emake PREFIX="${ROOT}/usr" DESTDIR="${D}" install
 
-	save_config src/config.def.h
+	use savedconfig && save_config src/config.def.h
 }
