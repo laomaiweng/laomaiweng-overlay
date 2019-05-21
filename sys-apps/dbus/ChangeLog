@@ -1,3 +1,9 @@
+*dbus-1.12.14 (21 May 2019)
+
+  21 May 2019; Quentin Minster <quentin@minster.io> +dbus-1.12.14.ebuild,
+  -dbus-1.12.12-r2.ebuild:
+  sys-apps/dbus: add dbus-1.12.14.ebuild, drop old  Version bump.
+
 *dbus-1.12.12-r2 (09 May 2019)
 
   09 May 2019; Quentin Minster <quentin@minster.io> +dbus-1.12.12-r2.ebuild,

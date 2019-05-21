@@ -17,12 +17,10 @@ IUSE="apparmor debug doc elogind kernel_linux selinux static-libs systemd test u
 
 REQUIRED_USE="?? ( elogind systemd )"
 
-# autoconf-archive-2019.01.06 blocker added for bug #674830
-# Please check on bumps if the blocker is still necessary.
 BDEPEND="
 	app-text/xmlto
 	app-text/docbook-xml-dtd:4.4
-	<sys-devel/autoconf-archive-2019.01.06
+	sys-devel/autoconf-archive
 	virtual/pkgconfig
 	doc? ( app-doc/doxygen )
 "
@@ -95,7 +93,8 @@ src_prepare() {
 
 src_configure() {
 	local rundir=$(usex kernel_linux /run /var/run)
-	sed -e "s;@rundir@;${EPREFIX}${rundir};g" "${FILESDIR}"/dbus.initd.in > "${WORKDIR}"/dbus.initd || die
+	sed -e "s;@rundir@;${EPREFIX}${rundir};g" "${FILESDIR}"/dbus.initd.in \
+		> "${T}"/dbus.initd || die
 	multilib-minimal_src_configure
 }
 
@@ -220,7 +219,7 @@ multilib_src_install() {
 }
 
 multilib_src_install_all() {
-	newinitd "${WORKDIR}"/dbus.initd dbus
+	newinitd "${T}"/dbus.initd dbus
 
 	if use X; then
 		# dbus X session script (#77504)

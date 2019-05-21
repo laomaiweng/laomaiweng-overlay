@@ -61,7 +61,7 @@ Package status
   <tr><td rowspan=2>net-wireless</td><td>crda</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/652428">#652428</a>)</td><td>Portage</td></tr>
   <tr><td>wpa_supplicant</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/649004">#649004</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=2>sys-apps</td><td>dbus</td><td>add AppArmor support, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td>ripgrep</td><td>add USE flags for optional features, due for submission to Portage tree</td><td>Portage</td></tr>
+  <tr><td>ripgrep</td><td>add USE flags for optional features, due for submission to Portage tree (once kernel support lands!)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sys-auth</td><td>yubico-piv-tool</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/648796">#648796</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sys-kernel</td><td>genkernel-next</td><td>bugfixes, submitted upstream (Sabayon/genkernel-next#46 and Sabayon/genkernel-next#49)</td><td>Portage</td></tr>
   <tr><td rowspan=1>www-client</td><td>vimb</td><td>version bump</td><td><a href="https://github.com/tharvik/overlay">tharvik/overlay</a></td></tr>
