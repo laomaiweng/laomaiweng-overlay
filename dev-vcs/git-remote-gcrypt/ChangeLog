@@ -1,3 +1,8 @@
+  22 May 2019; Quentin Minster <quentin@minster.io>
+  git-remote-gcrypt-1.2.ebuild:
+  dev-vcs/git-remote-gcrypt: update git-remote-gcrypt-1.2.ebuild  Drop unused
+  'doc' USE flag.
+
 *git-remote-gcrypt-1.2 (22 May 2019)
 
   22 May 2019; Quentin Minster <quentin@minster.io>

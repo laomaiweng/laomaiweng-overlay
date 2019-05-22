@@ -10,7 +10,7 @@ SRC_URI="https://git.spwhitton.name/${PN}/snapshot/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="curl doc rclone"
+IUSE="curl rclone"
 
 DEPEND=""
 RDEPEND="${DEPEND}
