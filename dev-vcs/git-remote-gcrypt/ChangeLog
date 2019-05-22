@@ -1,0 +1,5 @@
+*git-remote-gcrypt-1.2 (22 May 2019)
+
+  22 May 2019; Quentin Minster <quentin@minster.io>
+  +git-remote-gcrypt-1.2.ebuild, +metadata.xml:
+  dev-vcs/git-remote-gcrypt: add git-remote-gcrypt-1.2.ebuild  New package.
