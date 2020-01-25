@@ -1,0 +1,12 @@
+diff --git a/Platforms/Ogre/OgrePlatform/include/MyGUI_OgreRenderManager.h b/Platforms/Ogre/OgrePlatform/include/MyGUI_OgreRenderManager.h
+index cffc5cb..862f36a 100644
+--- a/Platforms/Ogre/OgrePlatform/include/MyGUI_OgreRenderManager.h
++++ b/Platforms/Ogre/OgrePlatform/include/MyGUI_OgreRenderManager.h
+@@ -13,6 +13,7 @@
+ #include "MyGUI_RenderManager.h"
+ 
+ #include <Ogre.h>
++#include <OgreWindowEventUtilities.h>
+ 
+ #include "MyGUI_LastHeader.h"
+ 

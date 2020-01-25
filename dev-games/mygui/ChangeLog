@@ -1,3 +1,7 @@
+  25 Jan 2020; Quentin Minster <quentin@minster.io>
+  +files/mygui-3.2.2-ogre-1.12-window-event-utilities.patch, mygui-3.2.2.ebuild:
+  dev-games/mygui: fix missing include with =dev-games/ogre-1.12.4
+
 *mygui-3.2.2 (30 Apr 2019)
 
   30 Apr 2019; Quentin Minster <quentin@minster.io>

@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
@@ -42,6 +42,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-FHS.patch
 	"${FILESDIR}"/${P}-ogre-deprecated-api.patch
 	"${FILESDIR}"/${P}-ogre-include-dirs.patch
+	"${FILESDIR}"/${P}-ogre-1.12-window-event-utilities.patch
 )
 
 pkg_setup() {
