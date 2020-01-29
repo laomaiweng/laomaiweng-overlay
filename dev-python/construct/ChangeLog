@@ -1,3 +1,6 @@
+  29 Jan 2020; Quentin Minster <quentin@minster.io> construct-2.9.45-r1.ebuild:
+  dev-python/construct: bump PYTHON_TARGETS to 3.8, drop 2.7
+
 *construct-2.9.45-r1 (12 Feb 2019)
 
   12 Feb 2019; Quentin Minster <quentin@minster.io> +construct-2.9.45-r1.ebuild,

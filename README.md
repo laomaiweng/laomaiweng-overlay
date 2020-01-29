@@ -31,7 +31,7 @@ Package status
   <tr><td rowspan=11>dev-python</td><td>argh</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>blessings</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>bpython</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
-  <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
+  <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.{7,8}, drop 2.7</td><td>Portage</td></tr>
   <tr><td>cryptography</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>curtsies</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
   <tr><td>iocapture</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
