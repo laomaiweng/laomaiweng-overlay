@@ -1,3 +1,9 @@
+*make-doc-9999 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +make-doc-9999.ebuild,
+  -make-doc-4.2_p20171108.ebuild:
+  app-doc/make-doc: add make-doc-9999.ebuild, drop old
+
 *make-doc-4.2_p20171108 (08 Nov 2017)
 
   08 Nov 2017; Quentin Minster <quentin@minster.io>
