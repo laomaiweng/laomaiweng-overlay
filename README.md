@@ -27,8 +27,7 @@ Package status
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
   <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>HTML documentation for GNU make</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix for <a href="https://bugs.gentoo.org/665804">#665804</a>, bugfix for missing include with =dev-games/ogre-1.12.4</td><td>Portage</td></tr>
-  <tr><td rowspan=6>dev-libs</td><td>boost</td><td>enable building of boost_numpy, fix build for Python 3.7</td><td>Portage</td></tr>
-  <tr><td>cyrus-sasl</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592528">#592528</a>)</td><td>Portage</td></tr>
+  <tr><td rowspan=5>dev-libs</td><td>cyrus-sasl</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592528">#592528</a>)</td><td>Portage</td></tr>
   <tr><td>libclc</td><td>dependency version bump to sys-devel/clang:6</td><td>laomaiweng-overlay</td></tr>
   <tr><td>libsigsegv</td><td>bugfix, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td>libxslt</td><td>bugfix, submitted to Portage tree (bug <a href="https://bugs.gentoo.org/632214">#632214</a>)</td><td>Portage</td></tr>
