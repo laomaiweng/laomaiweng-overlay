@@ -57,8 +57,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=3>dev-libs</td><td>beecrypt</td><td><tt>beecrypt-4.2.1-icu-61-compatibility.patch</tt></td><td>compatibility with >=dev-libs/icu-61.1, due for submission upstream/to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td>cyrus-sasl</td><td><tt>cyrus-sasl-2.1.27-r1-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt>, due for submission upstream</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>dev-libs</td><td>cyrus-sasl</td><td><tt>cyrus-sasl-2.1.27-r1-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt>, due for submission upstream</td><td>laomaiweng-overlay</td></tr>
   <tr><td>libgit2</td><td><tt>libgit2-0.27.0-openssl-1.1.0-no-deprecated-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>dev-python</td><td>cryptography</td><td><tt>cryptography-2.5.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt> (bug <a href="https://bugs.gentoo.org/614770">#614770</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>m2crypto</td><td><tt>m2crypto-0.31.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (adapted from bug <a href="https://bugs.gentoo.org/604842">#604842</a>)</td><td>laomaiweng-overlay</td></tr>
