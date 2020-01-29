@@ -28,11 +28,10 @@ Package status
   <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>HTML documentation for GNU make</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix for <a href="https://bugs.gentoo.org/665804">#665804</a>, bugfix for missing include with =dev-games/ogre-1.12.4</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=11>dev-python</td><td>argh</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
+  <tr><td rowspan=10>dev-python</td><td>argh</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>blessings</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>bpython</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
   <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.{7,8}, drop 2.7</td><td>Portage</td></tr>
-  <tr><td>cryptography</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>curtsies</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
   <tr><td>iocapture</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>

@@ -1,5 +1,0 @@
-*cryptography-2.5.0 (08 Feb 2019)
-
-  08 Feb 2019; Quentin Minster <quentin@minster.io> +cryptography-2.5.0.ebuild,
-  +metadata.xml:
-  dev-python/cryptography: add cryptography-2.5.0.ebuild  Version bump.
