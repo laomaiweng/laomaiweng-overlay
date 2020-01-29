@@ -1,3 +1,9 @@
+*dbus-1.12.16-r1 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +dbus-1.12.16-r1.ebuild,
+  +files/dbus.initd-r1, -dbus-1.12.14.ebuild:
+  sys-apps/dbus: add dbus-1.12.16-r1.ebuild, drop old
+
 *dbus-1.12.14 (21 May 2019)
 
   21 May 2019; Quentin Minster <quentin@minster.io> +dbus-1.12.14.ebuild,
