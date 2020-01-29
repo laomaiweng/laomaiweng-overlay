@@ -1,9 +1,0 @@
-*Net-SSLeay-1.850.0 (04 Apr 2018)
-
-  04 Apr 2018; Quentin Minster <quentin@minster.io> +Net-SSLeay-1.850.0.ebuild,
-  +files/Net-SSLeay-1.82-fix-libdir.patch,
-  +files/Net-SSLeay-1.82-fix-network-tests.patch,
-  +files/Net-SSLeay-1.82-respect-cflags.patch,
-  +files/Net-SSLeay-1.85-openssl-1.1.0-no-deprecated.patch, +metadata.xml:
-  dev-perl/Net-SSLeay: add Net-SSLeay-1.850.0.ebuild  OpenSSL 1.1.0
-  compatibility version bump + patch.
