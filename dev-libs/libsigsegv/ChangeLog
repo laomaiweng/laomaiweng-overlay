@@ -1,8 +1,0 @@
-*libsigsegv-2.11-r1 (29 Apr 2017)
-
-  29 Apr 2017; Quentin Minster <quentin@minster.io>
-  +files/libsigsegv-2.11-double-sigcontext-include.patch,
-  +libsigsegv-2.11-r1.ebuild, +metadata.xml:
-  dev-libs/libsigsegv: add ebuild libsigsegv-2.11-r1.ebuild  Fix build failure
-  due to double include of <asm/sigcontext.h> and <bits/sigcontext.h>, from
-  <signal.h> and "fault-linux-x86_64-old.h".
