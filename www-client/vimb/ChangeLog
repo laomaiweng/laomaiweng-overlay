@@ -1,3 +1,9 @@
+*vimb-3.6.0 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +vimb-3.6.0.ebuild,
+  -files/vimb-3.4.0-fix-version-header.patch, -vimb-3.4.0.ebuild:
+  www-client/vimb: add vimb-3.6.0.ebuild, drop old
+
   14 May 2019; Quentin Minster <quentin@minster.io> vimb-3.4.0.ebuild,
   vimb-9999.ebuild:
   www-client/vimb: update vimb-{3.4.0,9999}.ebuild  Actually, honor the
