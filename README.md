@@ -57,7 +57,6 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=1>dev-python</td><td>m2crypto</td><td><tt>m2crypto-0.31.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (adapted from bug <a href="https://bugs.gentoo.org/604842">#604842</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-vcs</td><td>git</td><td><tt>git-2.16.1-openssl-1.1.0-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (improved version of bug <a href="https://bugs.gentoo.org/592466">#592466</a>'s patch)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-libs</td><td>opencv</td><td><tt>opencv-3.4.1-ffmpeg-4.0-compatibility.patch</tt></td><td>compatibility with >=media-video/ffmpeg-4.0 (bug <a href="https://bugs.gentoo.org/655024">#655024</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=4>net-libs</td><td rowspan=2>libssh</td><td><tt>libssh-0.7.5-openssl-1.1.0-support.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>upstream <tt>master</tt></td></tr>
