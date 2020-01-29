@@ -1,7 +1,0 @@
-*pkcs11-helper-1.21-r2 (02 Feb 2018)
-
-  02 Feb 2018; Quentin Minster <quentin@minster.io>
-  +files/pkcs11-helper-1.21-openssl-1.1.0-compatibility.patch, +metadata.xml,
-  +pkcs11-helper-1.21-r2.ebuild:
-  dev-libs/pkcs11-helper: add ebuild pkcs11-helper-1.21-r2.ebuild  Fix build
-  failure with OpenSSL 1.1 (Gentoo bug #646378).
