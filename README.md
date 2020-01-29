@@ -57,7 +57,6 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=1>net-vpn</td><td>tor</td><td><tt>tor-0.4.0.1-alpha-missing-openssl-rsa-include.patch</tt></td><td>missing compatibility header for >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=3>sys-kernel</td><td>gentoo-sources</td><td><tt>gentoo-sources-4.17.6-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>grsecurity-sources</td><td><tt>grsecurity-sources-4.9.56-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td><tt>random_timestamp.diff</tt></td><td>randomize TCP timestamp</td><td><a href="https://grsecurity.net/~spender/random_timestamp.diff">grsecurity.net</a></td></tr>
