@@ -57,13 +57,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=8>dev-lang</td><td rowspan=2>python:2.7</td><td><tt>python-2.7.14-p1-emulate-TLS-methods.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
-  <tr><td><tt>python-2.7.15-openssl-1.1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592480">#592480</a>)</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=2>python:3.6</td><td><tt>python-3.6.3-p1-emulate-TLS-methods.patch</tt></td><td rowspan=2>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
-  <tr><td><tt>python-3.6.3-p2-openssl-1.1.patch</tt></td><td>Gentoo bug <a href="https://bugs.gentoo.org/592480">#592480</a></td></tr>
-  <tr><td rowspan=2>python:3.7</td><td><tt>python-3.7.0-p1-emulate-TLS-methods.patch</tt></td><td rowspan=2>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
-  <tr><td><tt>python-3.7.0-p2-openssl-1.1.patch</tt></td><td>laomaiweng-overlay</td></tr>
-  <tr><td>ruby:2.4</td><td><tt>ruby-2.4.5-openssl-1.1.0-strict-api.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>dev-lang</td><td>ruby:2.4</td><td><tt>ruby-2.4.5-openssl-1.1.0-strict-api.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td>rust</td><td><tt>rust-1.26.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=4>dev-libs</td><td>apr-util</td><td><tt>apr-util-1.6.1-openssl-1.1.0-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647976">#647976</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>beecrypt</td><td><tt>beecrypt-4.2.1-icu-61-compatibility.patch</tt></td><td>compatibility with >=dev-libs/icu-61.1, due for submission upstream/to Portage tree</td><td>laomaiweng-overlay</td></tr>
