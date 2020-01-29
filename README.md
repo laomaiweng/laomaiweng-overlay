@@ -57,7 +57,6 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=1>dev-libs</td><td>libgit2</td><td><tt>libgit2-0.27.0-openssl-1.1.0-no-deprecated-compatibility.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>dev-python</td><td>cryptography</td><td><tt>cryptography-2.5.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt> (bug <a href="https://bugs.gentoo.org/614770">#614770</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>m2crypto</td><td><tt>m2crypto-0.31.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (adapted from bug <a href="https://bugs.gentoo.org/604842">#604842</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-vcs</td><td>git</td><td><tt>git-2.16.1-openssl-1.1.0-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (improved version of bug <a href="https://bugs.gentoo.org/592466">#592466</a>'s patch)</td><td>laomaiweng-overlay</td></tr>
