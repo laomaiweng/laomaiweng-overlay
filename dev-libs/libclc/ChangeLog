@@ -1,6 +1,0 @@
-*libclc-0.2.0_pre20170929-r1 (21 Mar 2018)
-
-  21 Mar 2018; Quentin Minster <quentin@minster.io>
-  +libclc-0.2.0_pre20170929-r1.ebuild, +metadata.xml:
-  dev-libs/libclc: add libclc-0.2.0_pre20170929-r1.ebuild  Slot-bump
-  dependencies to sys-devel/clang:6 and sys-devel/llvm:6.
