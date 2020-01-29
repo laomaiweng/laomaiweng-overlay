@@ -1,7 +1,0 @@
-*pycurl-7.43.0-r1 (22 May 2018)
-
-  22 May 2018; Quentin Minster <quentin@minster.io>
-  +files/pycurl-7.43.0-openssl-1.1.0-no-deprecated.patch, +metadata.xml,
-  +pycurl-7.43.0-r1.ebuild:
-  dev-python/pycurl: add pycurl-7.43.0-r1.ebuild  OpenSSL 1.1.0 `no-deprecated'
-  compatibility patch.
