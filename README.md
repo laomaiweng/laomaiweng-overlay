@@ -26,8 +26,7 @@ Package status
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
   <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>HTML documentation for GNU make</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=3>app-misc</td><td>cheat</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
-  <tr><td>rig</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>app-misc</td><td>rig</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>tmux-mem-cpu-load</td><td>version bump, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>app-portage</td><td>cargo-ebuild</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix for <a href="https://bugs.gentoo.org/665804">#665804</a>, bugfix for missing include with =dev-games/ogre-1.12.4</td><td>Portage</td></tr>
