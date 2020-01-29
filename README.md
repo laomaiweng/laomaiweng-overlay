@@ -41,12 +41,18 @@ Package status
   <tr><td>pkcs11-helper</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646378">#646378</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-perl</td><td>Net-SSLeay</td><td>compatibility with >=dev-libs/openssl-1.1.0, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=6>dev-python</td><td>argcomplete</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
+  <tr><td rowspan=12>dev-python</td><td>argcomplete</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
+  <tr><td>argh</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
+  <tr><td>blessings</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
+  <tr><td>bpython</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
   <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.7</td><td>Portage</td></tr>
   <tr><td>cryptography</td><td>version bump</td><td>Portage</td></tr>
+  <tr><td>curtsies</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
+  <tr><td>iocapture</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
   <tr><td>pycurl</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>Portage</td></tr>
   <tr><td>PyQt5</td><td>bugfix for <a href="https://bugs.gentoo.org/635502">#635502</a></td><td>Portage</td></tr>
+  <tr><td>watchdog</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=4>dev-util</td><td>bear</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>cppcheck</td><td>bump version to 1.83, PYTHON_TARGETS to 3.6</td><td>Portage</td></tr>

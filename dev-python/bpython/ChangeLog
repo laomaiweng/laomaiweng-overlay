@@ -1,0 +1,6 @@
+*bpython-0.18-r1 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +bpython-0.18-r1.ebuild,
+  +metadata.xml:
+  dev-python/bpython: add bpython-0.18-r1.ebuild  Version bump to Python
+  3.{7,8}.
