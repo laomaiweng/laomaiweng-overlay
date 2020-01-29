@@ -1,3 +1,9 @@
+*pudb-2019.2 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +pudb-2019.2.ebuild,
+  -pudb-2017.1.4.ebuild:
+  dev-python/pudb: add pudb-2019.2.ebuild, drop old
+
 *pudb-2017.1.4 (16 Sep 2017)
 
   16 Sep 2017; Quentin Minster <quentin@minster.io> +metadata.xml,

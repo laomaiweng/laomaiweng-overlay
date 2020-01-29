@@ -34,7 +34,7 @@ Package status
   <tr><td>construct</td><td>bump PYTHON_TARGETS to 3.{7,8}, drop 2.7</td><td>Portage</td></tr>
   <tr><td>curtsies</td><td>bump PYTHON_TARGETS to 3.{7,8}</td><td>Portage</td></tr>
   <tr><td>iocapture</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
-  <tr><td>pudb</td><td>version bump</td><td>Portage</td></tr>
+  <tr><td>pudb</td><td>version bump, bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>pycurl</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>Portage</td></tr>
   <tr><td>PyQt5</td><td>bugfix for <a href="https://bugs.gentoo.org/635502">#635502</a></td><td>Portage</td></tr>
   <tr><td>watchdog</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
