@@ -40,7 +40,6 @@ Package status
   <tr><td>visual-regexp</td><td>proxy-maintained</td><td>Portage</td></tr>
   <tr><td rowspan=2>dev-vcs</td><td>git-crypt</td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>Portage</td></tr>
   <tr><td>git-remote-gcrypt</td><td>new ebuild</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=1>media-fonts</td><td>octicons</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>media-libs</td><td>libid3tag</td><td>bugfix for <a href="https://bugs.gentoo.org/605158">#605158</a></td><td>Portage</td></tr>
   <tr><td rowspan=1>net-dns</td><td>unbound</td><td>bugfix with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/646276">#646276</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=2>net-libs</td><td>libesmtp</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/624412">#624412</a>)</td><td>Portage</td></tr>
