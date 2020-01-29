@@ -57,8 +57,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=3>app-crypt</td><td>efitools</td><td><tt>efitools-1.8.0-openssl-1.1.0-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt> (bug <a href="https://bugs.gentoo.org/648016">#648016</a>)</td><td>laomaiweng-overlay</td></tr>
-  <tr><td rowspan=2>mit-krb5</td><td><tt>mit-krb5-1.15.2-openssl-1.1-p1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
+  <tr><td rowspan=2>app-crypt</td><td rowspan=2>mit-krb5</td><td><tt>mit-krb5-1.15.2-openssl-1.1-p1.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
   <tr><td><tt>mit-krb5-1.15.2-openssl-1.1-p2.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>Gentoo bug <a href="https://bugs.gentoo.org/592454">#592454</a></td></tr>
   <tr><td rowspan=1>app-emulation</td><td>virtualbox</td><td><tt>virtualbox-6.0.4-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>app-office</td><td>libreoffice</td><td><tt>libreoffice-6.0.3.2-icu-61-compatibility.patch</tt></td><td>compatibility with >=dev-libs/icu-61.1 (bug <a href="https://bugs.gentoo.org/651702">#651702</a>)</td><td>laomaiweng-overlay</td></tr>
