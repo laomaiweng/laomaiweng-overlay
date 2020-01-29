@@ -1,3 +1,9 @@
+*bear-2.4.3 (29 Jan 2020)
+
+  29 Jan 2020; Quentin Minster <quentin@minster.io> +bear-2.4.3.ebuild,
+  -bear-2.3.9.ebuild:
+  dev-util/bear: add bear-2.4.3.ebuild, drop old
+
 *bear-2.3.9 (31 Oct 2017)
 
   31 Oct 2017; Quentin Minster <quentin@minster.io> +bear-2.3.9.ebuild,
