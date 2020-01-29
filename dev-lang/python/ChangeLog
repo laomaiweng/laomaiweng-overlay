@@ -1,7 +1,0 @@
-*python-3.6.8 (27 Apr 2019)
-*python-3.7.3 (27 Apr 2019)
-
-  27 Apr 2019; Quentin Minster <quentin@minster.io> +files/pydoc.conf,
-  +files/pydoc.init, +metadata.xml, +python-3.6.8.ebuild, +python-3.7.3.ebuild:
-  dev-lang/python: add python-3.{6.8,7.3}.ebuild  Version bump for
-  InBetweenNames/gentooLTO's PGO-enabled Python ebuilds.
