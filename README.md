@@ -57,8 +57,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=2>dev-lang</td><td>ruby:2.4</td><td><tt>ruby-2.4.5-openssl-1.1.0-strict-api.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
-  <tr><td>rust</td><td><tt>rust-1.26.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=1>dev-lang</td><td>rust</td><td><tt>rust-1.26.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=4>dev-libs</td><td>apr-util</td><td><tt>apr-util-1.6.1-openssl-1.1.0-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647976">#647976</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>beecrypt</td><td><tt>beecrypt-4.2.1-icu-61-compatibility.patch</tt></td><td>compatibility with >=dev-libs/icu-61.1, due for submission upstream/to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>cyrus-sasl</td><td><tt>cyrus-sasl-2.1.27-r1-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt>, due for submission upstream</td><td>laomaiweng-overlay</td></tr>
