@@ -44,7 +44,6 @@ Package status
   <tr><td rowspan=2>net-libs</td><td>libesmtp</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/624412">#624412</a>)</td><td>Portage</td></tr>
   <tr><td>serf</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/592508">#592508</a>, reported upstream as <a href="https://issues.apache.org/jira/browse/SERF-188">#SERF-188</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sys-apps</td><td>dbus</td><td>add AppArmor support, due for submission to Portage tree</td><td>Portage</td></tr>
-  <tr><td rowspan=1>sys-auth</td><td>yubico-piv-tool</td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/648796">#648796</a>)</td><td>Portage</td></tr>
   <tr><td rowspan=1>sys-kernel</td><td>genkernel-next</td><td>bugfixes, submitted upstream (Sabayon/genkernel-next#46 and Sabayon/genkernel-next#49)</td><td>Portage</td></tr>
   <tr><td rowspan=1>www-client</td><td>vimb</td><td>version bump</td><td><a href="https://github.com/tharvik/overlay">tharvik/overlay</a></td></tr>
   <tr><td rowspan=1>x11-wm</td><td>unagi</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
