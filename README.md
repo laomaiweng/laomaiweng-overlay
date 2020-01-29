@@ -57,9 +57,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
-  <tr><td rowspan=4>net-libs</td><td rowspan=2>libssh</td><td><tt>libssh-0.7.5-openssl-1.1.0-support.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0</td><td>upstream <tt>master</tt></td></tr>
-  <tr><td><tt>libssh-0.7.5-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-lib/openssl-1.1.0</td><td>laomaiweng-overlay</td></tr>
-  <tr><td>neon</td><td><tt>neon-0.30.2-openssl-1.1-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647680">#647680</a>)</td><td>laomaiweng-overlay</td></tr>
+  <tr><td rowspan=2>net-libs</td><td>neon</td><td><tt>neon-0.30.2-openssl-1.1-compat.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/647680">#647680</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td>nodejs</td><td><tt>nodejs-11.8.0-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 (bug <a href="https://bugs.gentoo.org/604978">#604978</a>)</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=2>net-misc</td><td rowspan=2>openssh</td><td><tt>openssh-7.9p1-openssl-1.1.0-no-deprecated.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 <tt>no-deprecated</tt></td><td>laomaiweng-overlay</td></tr>
   <tr><td><tt>openssh-7.9p1-openssl-1.1.0-pthreads-collision.patch</tt></td><td>compatibility with >=dev-libs/openssl-1.1.0 which unconditionally includes <tt>pthreads</tt></td><td>laomaiweng-overlay</td></tr>
