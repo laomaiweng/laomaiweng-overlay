@@ -1,7 +1,0 @@
-*crda-3.18-r2 (04 Apr 2018)
-
-  04 Apr 2018; Quentin Minster <quentin@minster.io> +crda-3.18-r2.ebuild,
-  +files/crda-3.18-cflags.patch, +files/crda-3.18-libreg-link.patch,
-  +files/crda-3.18-no-ldconfig.patch, +files/crda-3.18-no-werror.patch,
-  +files/crda-3.18-openssl-1.1.0-compatibility.patch, +metadata.xml:
-  net-wireless/crda: add crda-3.18-r2.ebuild  OpenSSL 1.1.0 compatibility patch.
