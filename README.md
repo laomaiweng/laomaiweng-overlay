@@ -36,7 +36,6 @@ Package status
   <tr><td>iocapture</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>pudb</td><td>version bump, bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
   <tr><td>watchdog</td><td>bump PYTHON_TARGETS to 3.8</td><td>Portage</td></tr>
-  <tr><td rowspan=1>dev-tcltk</td><td>nagelfar</td><td>new ebuild, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=4>dev-util</td><td>bear</td><td>new package, due for submission to Portage tree</td><td>laomaiweng-overlay</td></tr>
   <tr><td>cppcheck</td><td>bump version to 1.83, PYTHON_TARGETS to 3.6</td><td>Portage</td></tr>
   <tr><td>rr</td><td>fix build on amd64 <tt>no-multilib</tt>, due for submission to Portage tree</td><td>Portage</td></tr>
