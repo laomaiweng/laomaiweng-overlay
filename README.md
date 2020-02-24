@@ -25,6 +25,7 @@ Package status
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Comment</th><th>Repo</th></tr>
+  <tr><td rowspan=1>app-crypt</td><td>age</td><td>new ebuild</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>app-doc</td><td>make-doc</td><td>HTML documentation for GNU make</td><td>laomaiweng-overlay</td></tr>
   <tr><td rowspan=1>dev-games</td><td>mygui</td><td>bugfix for <a href="https://bugs.gentoo.org/665804">#665804</a>, bugfix for missing include with =dev-games/ogre-1.12.4</td><td>Portage</td></tr>
   <tr><td rowspan=1>dev-lua</td><td>ldoc</td><td>backport PR #266, due for submission to Portage tree</td><td>Portage</td></tr>
