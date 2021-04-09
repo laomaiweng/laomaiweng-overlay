@@ -1,0 +1,11 @@
+--- /clang/utils/TableGen/CMakeLists.txt
++++ /clang/utils/TableGen/CMakeLists.txt
+@@ -20,4 +20,8 @@
+   SveEmitter.cpp
+   TableGen.cpp
+   )
++set_target_properties(clang-tblgen PROPERTIES LINK_FLAGS
++  # Workaround for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55394
++  "-Wl,--push-state,--no-as-needed -lpthread -Wl,--pop-state"
++  )
+ set_target_properties(clang-tblgen PROPERTIES FOLDER "Clang tablegenning")

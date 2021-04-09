@@ -1,0 +1,12 @@
+--- /llvm/utils/TableGen/CMakeLists.txt
++++ /llvm/utils/TableGen/CMakeLists.txt
+@@ -56,5 +56,8 @@
+   WebAssemblyDisassemblerEmitter.cpp
+   CTagsEmitter.cpp
+   )
+-target_link_libraries(llvm-tblgen PRIVATE LLVMTableGenGlobalISel)
++target_link_libraries(llvm-tblgen PRIVATE LLVMTableGenGlobalISel
++  # Workaround for https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55394
++  -Wl,--push-state,--no-as-needed -lpthread -Wl,--pop-state
++  )
+ set_target_properties(llvm-tblgen PROPERTIES FOLDER "Tablegenning")

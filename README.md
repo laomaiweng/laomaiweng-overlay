@@ -58,5 +58,7 @@ In _patches/_ are the patches currently applied to my packages.
 
 <table>
   <tr><th>Category</th><th>Package</th><th>Patch</th><th>Comment</th><th>Origin</th></tr>
+  <tr><td rowspan=2>sys-devel</td><td>clang</td><td><tt>clang-tblgen_linking.patch</tt></td><td>bugfix for <a href="https://bugs.gentoo.org/749162">#749162</a></td><td>myself, with help from <a href="https://bugs.gentoo.org/749162">#749162</a></td></tr>
+  <tr><td>llvm</td><td><tt>llvm-tblgen_linking.patch</tt></td><td>bugfix for <a href="https://bugs.gentoo.org/749162">#749162</a></td><td>Arfrever Frehtes Taifersar Arahesis on <a href="https://bugs.gentoo.org/749162">#749162</a></td></tr>
   <tr><td rowspan=1>sys-kernel</td><td>grsecurity-sources</td><td><tt>random_timestamp.diff</tt></td><td>randomize TCP timestamp</td><td><a href="https://grsecurity.net/~spender/random_timestamp.diff">grsecurity.net</a></td></tr>
 </table>
